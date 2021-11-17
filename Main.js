@@ -1,5 +1,20 @@
 import Phaser from 'phaser'
 
+var config ={
+    type: Phaser.AUTO,
+    scale: {
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+        width: 1280,
+        height: 720,
+    },
+    physics:{
+        default: 'arcade',
+        arcade: {
+            gravity: {y:200}
+        }
+    },}
+
 export default class RacingGame extends Phaser.Scene{
     init()
     {
