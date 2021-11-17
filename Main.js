@@ -14,6 +14,14 @@ export default class RacingGame extends Phaser.Scene{
 
     create()
     {
+        const width = this.scale.width
+        const height = this.scale.height
+
+        this.add.image(width * 0.5 , height * 0.5, 'sky'.setScrollFactor(0))
+
+        this.add.image(0, height, 'trees')
+            .setOrigin(0,1)
+            .setScrollFactor(0.25)
 
     }
 
