@@ -3,20 +3,17 @@ class mainScene extends Phaser.Scene{
         super('MainScene');
     };
 
-    init()
-    {
+    init() {
         this.cursors = this.input.keyboard.createCursorKeys();
     };
 
-    preload()
-    {
+    preload() {
         this.load.image('sky', 'Assets/parallax-mountain-mountains.png');
         this.load.image('foreground_trees', 'Assets/parallax-mountain-foreground-trees.png');
         this.load.image('trees', 'Assets/parallax-mountain-trees.png');
     };
 
-    create()
-    {
+    create() {
         const width = this.scale.width;
         const height = this.scale.height;
 
@@ -27,8 +24,8 @@ class mainScene extends Phaser.Scene{
         this.cameras.main.setBounds(0,1, 800, 600);
     };
 
-    update()
-    {
+    update() {
+
         const cam = this.cameras.main;
         const speed = 5;
 
@@ -40,7 +37,6 @@ class mainScene extends Phaser.Scene{
         {
             cam.scrollX -= speed
         }
-
     };
 
 }
