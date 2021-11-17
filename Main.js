@@ -32,4 +32,7 @@ export default class RacingGame extends Phaser.Scene{
         }
 
     }
+
+
+
 }
