@@ -13,11 +13,7 @@ class mainScene extends Phaser.Scene{
         this.load.image("bg_2", "assets/bg-2.png");
         this.load.image("ground", "assets/ground.png");
         // load spritesheet
-        this.load.spritesheet("player", "assets/player-idle.png",{
-            frameWidth: 33,
-            frameHeight: 32
-        });
-        this.load.spritesheet("player_running", "assets/player-run.png",{
+        this.load.spritesheet("player", "assets/player-Movement.png",{
             frameWidth: 33,
             frameHeight: 32
         });
@@ -55,20 +51,20 @@ class mainScene extends Phaser.Scene{
 
         this.anims.create({
             key: "idle",
-            frames: this.anims.generateFrameNumbers("player"),
+            frames: this.anims.generateFrameNumbers("player",{start:0, end: 3}),
             frameRate: 16,
             repeat: -1
         });
 
         this.anims.create({
             key: "left",
-            frames: this.anims.generateFrameNumbers("player_running"),
+            frames: this.anims.generateFrameNumbers("player",{start:7, end: 11}),
             frameRate: 16,
             repeat: -1
         });
         this.anims.create({
             key: "right",
-            frames: this.anims.generateFrameNumbers("player_running"),
+            frames: this.anims.generateFrameNumbers("player",{start:7, end: 11}),
             frameRate: 16,
             repeat: -1
         });
@@ -95,15 +91,27 @@ class mainScene extends Phaser.Scene{
         if (this.cursors.left.isDown && this.player.x > 0) {
             this.player.x -= 3;
             this.player.scaleX = 1;
+            this.player.anims.stop('idle',true);
             this.player.anims.play('left',true);
             this.player.flipX = true;
 
         } else if (this.cursors.right.isDown && this.player.x < game.config.width * 3) {
             this.player.x += 3;
             this.player.scaleX = -1;
+            this.player.anims.stop('idle',true);
             this.player.anims.play('right',true);
 
         }
+        else if (this.cursors.right.isUp && this.player.x < game.config.width * 3) {
+            this.player.anims.play('idle',true);
+
+        }
+        else if (this.cursors.left.isUp && this.player.x < game.config.width * 3) {
+            this.player.anims.play('idle',true);
+
+        }
+
+
 
         // scroll the texture of the tilesprites proportionally to the camera scroll
         this.bg_1.tilePositionX = this.myCam.scrollX * .3;
