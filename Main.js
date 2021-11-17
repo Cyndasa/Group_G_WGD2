@@ -57,19 +57,12 @@ class mainScene extends Phaser.Scene{
         });
 
         this.anims.create({
-            key: "left",
-            frames: this.anims.generateFrameNumbers("player",{start:7, end: 11}),
-            frameRate: 16,
-            repeat: -1
-        });
-        this.anims.create({
-            key: "right",
+            key: "Movement",
             frames: this.anims.generateFrameNumbers("player",{start:7, end: 11}),
             frameRate: 16,
             repeat: -1
         });
 
-        this.player.play("idle")
 
 
         // allow key inputs to control the player
@@ -90,23 +83,18 @@ class mainScene extends Phaser.Scene{
         // move the player when the arrow keys are pressed
         if (this.cursors.left.isDown && this.player.x > 0) {
             this.player.x -= 3;
-            this.player.scaleX = 1;
+            this.player.scaleX = -1;
             this.player.anims.stop('idle',true);
-            this.player.anims.play('left',true);
-            this.player.flipX = true;
+            this.player.anims.play('Movement',true);
 
         } else if (this.cursors.right.isDown && this.player.x < game.config.width * 3) {
             this.player.x += 3;
-            this.player.scaleX = -1;
+            this.player.scaleX = 1;
             this.player.anims.stop('idle',true);
-            this.player.anims.play('right',true);
+            this.player.anims.play('Movement',true);
 
         }
-        else if (this.cursors.right.isUp && this.player.x < game.config.width * 3) {
-            this.player.anims.play('idle',true);
-
-        }
-        else if (this.cursors.left.isUp && this.player.x < game.config.width * 3) {
+        if (this.cursors.right.isUp && this.cursors.left.isUp ) {
             this.player.anims.play('idle',true);
 
         }
