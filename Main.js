@@ -13,13 +13,19 @@ class mainScene extends Phaser.Scene{
         this.load.image("bg_2", "assets/bg-2.png");
         this.load.image("ground", "assets/ground.png");
         // load spritesheet
-        this.load.spritesheet("player", "assets/bee.png",{
-            frameWidth: 37,
-            frameHeight: 39
+        this.load.spritesheet("player", "assets/player-idle.png",{
+            frameWidth: 33,
+            frameHeight: 32
+        });
+        this.load.spritesheet("player_running", "assets/player-run.png",{
+            frameWidth: 33,
+            frameHeight: 32
         });
     };
 
     create() {
+
+        // ---------------background ----------------
         // create an tiled sprite with the size of our game screen
         this.bg_1 = this.add.tileSprite(0, 0, game.config.width, game.config.height, "bg_1");
         // Set its pivot to the top left corner
@@ -40,16 +46,35 @@ class mainScene extends Phaser.Scene{
         // sinc this tile is shorter I positioned it at the bottom of he screen
         this.ground.y = 12 * 16;
 
+
+        //-------------------Player ---------------------
         // add player
-        this.player = this.add.sprite(game.config.width * 1.5, game.config.height / 2, "player");
+        this.player = this.add.sprite( game.config.width * 1.5, game.config.height / 1.25, "player");
+        //this.physics.add.collider(this.player,this.ground);
         // create an animation for the player
+
         this.anims.create({
-            key: "fly",
+            key: "idle",
             frames: this.anims.generateFrameNumbers("player"),
-            frameRate: 20,
+            frameRate: 16,
             repeat: -1
         });
-        this.player.play("fly");
+
+        this.anims.create({
+            key: "left",
+            frames: this.anims.generateFrameNumbers("player_running"),
+            frameRate: 16,
+            repeat: -1
+        });
+        this.anims.create({
+            key: "right",
+            frames: this.anims.generateFrameNumbers("player_running"),
+            frameRate: 16,
+            repeat: -1
+        });
+
+        this.player.play("idle")
+
 
         // allow key inputs to control the player
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -70,10 +95,13 @@ class mainScene extends Phaser.Scene{
         if (this.cursors.left.isDown && this.player.x > 0) {
             this.player.x -= 3;
             this.player.scaleX = 1;
+            this.player.anims.play('left',true);
+            this.player.flipX = true;
 
         } else if (this.cursors.right.isDown && this.player.x < game.config.width * 3) {
             this.player.x += 3;
             this.player.scaleX = -1;
+            this.player.anims.play('right',true);
 
         }
 
