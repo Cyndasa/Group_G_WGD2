@@ -24,7 +24,7 @@ class mainScene extends Phaser.Scene{
 
         this.add.image(0, height, 'trees').setOrigin(0,1).setScrollFactor(0.25);
 
-        this.cameras.main.setBounds(0,0,3200, 600);
+        this.cameras.main.setBounds(0,1, 800, 600);
     };
 
     update()
