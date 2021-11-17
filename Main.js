@@ -7,7 +7,9 @@ export default class RacingGame extends Phaser.Scene{
     }
     preload()
     {
-        this.load.image('sky', 'assets/parallax-mountain-mountains')
+        this.load.image('sky', 'assets/parallax-mountain-mountains.png')
+        this.load.image('foreground_trees', 'assets/parallax-mountain-foreground-trees.png')
+        this.load.image('trees', 'assets/parallax-mountain-mountains-trees.png')
     }
 
     create()
