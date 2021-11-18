@@ -18,6 +18,9 @@ class mainScene extends Phaser.Scene {
             frameWidth: 33,
             frameHeight: 32
         });
+
+        /* Temporary Collectible */
+        this.load.image("collectible", "gameAssets/imageAssets/Forrest/sprites/misc/star/star-1.png")
     };
 
     create() {
@@ -37,17 +40,24 @@ class mainScene extends Phaser.Scene {
         this.bg_2.setScrollFactor(0);
 
         // add the ground layer which is only 48 pixels tall
-        this.ground = this.add.tileSprite(0, 0, game.config.width, 48, "ground");
+        this.ground = this.add.tileSprite(0, 0, game.config.width * 3, 48, "ground");
         this.ground.setOrigin(0, 0);
         this.ground.setScrollFactor(0);
-        // sinc this tile is shorter I positioned it at the bottom of he screen
+        // since this tile is shorter I positioned it at the bottom of he screen
         this.ground.y = 12 * 16;
+        // Temporary physics for ground sprite
+        this.physics.world.enableBody(this.ground);
+        this.ground.body.setCollideWorldBounds(true);
 
 
         //-------------------Player ---------------------
         // add player
-        this.player = this.add.sprite(game.config.width * 1.5, game.config.height / 1.25, "player");
-        //this.physics.add.collider(this.player,this.ground);
+        this.player = this.add.sprite(game.config.width * 1.5, 0, "player");
+        this.physics.world.enableBody(this.player);
+/*
+        this.player.body.setCollideWorldBounds(true);
+*/
+        this.physics.add.collider(this.player, this.ground);
         // create an animation for the player
 
         this.anims.create({
@@ -69,29 +79,68 @@ class mainScene extends Phaser.Scene {
         this.cursors = this.input.keyboard.createCursorKeys();
 
 
-        // set workd bounds to allow camera to follow the player
+        // set world bounds to allow camera to follow the player
         this.myCam = this.cameras.main;
         this.myCam.setBounds(0, 0, game.config.width * 3, game.config.height);
 
         // making the camera follow the player
         this.myCam.startFollow(this.player);
 
+        /* Temporary Collectible & Player/Collectible Collision */
+        this.collectible = this.add.group({});
+
+        this.collectible.add(this.colItem1 = new Collectible(this, 50, 0));
+        this.collectible.add(this.colItem2 = new Collectible(this, 150, 0));
+        this.collectible.add(this.colItem3 = new Collectible(this, 300, 0));
+
+        this.physics.add.overlap(this.player, this.collectible, this.collectItem, null, this)
+        this.physics.add.collider(this.collectible, this.ground);
+
+        /* Simple UI set-up */
+        const scoreValue = 0;
+        this.scoreValue = scoreValue;
+
+        /* Timer UI */
+        const timeText = this.add.text(10 , 5, "Time: ", {
+            font: "20px",
+            align: "center",
+            color: "red",
+        });
+        timeText.scrollFactorX = 0;
+        timeText.scrollFactorY = 0;
+        this.timeText = timeText;
+
+        /* Score UI */
+        const scoreText = this.add.text(150, 5, "Score: " + scoreValue, {
+            font: "20px",
+            align: "center",
+            color: "white",
+        });
+        scoreText.scrollFactorX = 0;
+        scoreText.scrollFactorY = 0;
+        this.scoreText = scoreText;
+
     };
 
-    update() {
+    update(time, delta) {
+
+        /* UI Update */
+        this.scoreText.setText("Score:" + this.scoreValue);
 
         // move the player when the arrow keys are pressed
         if (this.cursors.left.isDown && this.player.x > 0) {
             this.player.x -= 3;
             this.player.scaleX = -1;
-            this.player.anims.stop('idle', true);
-            this.player.anims.play('Movement', true);
+/*            this.player.anims.stop('idle', true);
+            this.player.anims.play('Movement', true);*/
+            this.updateAnimation();
 
         } else if (this.cursors.right.isDown && this.player.x < game.config.width * 3) {
             this.player.x += 3;
             this.player.scaleX = 1;
-            this.player.anims.stop('idle', true);
-            this.player.anims.play('Movement', true);
+/*            this.player.anims.stop('idle', true);
+            this.player.anims.play('Movement', true);*/
+            this.updateAnimation();
         }
 
         if (this.cursors.right.isUp && this.cursors.left.isUp) {
@@ -106,5 +155,22 @@ class mainScene extends Phaser.Scene {
 
 
     };
+
+    updateAnimation(){
+        if(this.player.scaleX === -1 || this.player.scaleX === 1){
+            this.player.anims.play('Movement', true);
+        }
+        else {
+            this.player.anims.stop('Movement', true);
+        }
+
+    }
+
+    /* Temporary Item Collection Function */
+    collectItem(player, collectObj){
+        this.scoreValue += 5;
+        collectObj.disableBody(true, true);
+    };
+
 
 }

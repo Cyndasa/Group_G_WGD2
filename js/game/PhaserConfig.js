@@ -16,5 +16,7 @@ var config = {
     inputManager: Phaser.Input.InputManager,
     scene: [mainScene,],
 },
+    /* Can declare universal variables here */
+
 
 game = new Phaser.Game(config)
