@@ -14,7 +14,7 @@ var config = {
         }
     },
     inputManager: Phaser.Input.InputManager,
-    scene: [mainScene,],
+    scene: [Menu,],
 },
     /* Can declare universal variables here */
 
