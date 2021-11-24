@@ -21,9 +21,31 @@ class mainScene extends Phaser.Scene {
 
         /* Temporary Collectible */
         this.load.image("collectible", "gameAssets/imageAssets/Forrest/sprites/misc/star/star-1.png")
+
+        // load the PNG file
+        this.load.image('tiles', '../gameAssets/imageAssets/Forrest/environment/layers/tileset.png')
+        this.load.image ('level', '../gameAssets/imageAssets/Forrest/environment/layers/Forest-Map.png')
+        // load the JSON file
+        this.load.tilemapTiledJSON('map', '../gameAssets/imageAssets/Forrest/environment/layers/Forest-Map.json')
     };
 
     create() {
+
+        // 👌 sanity check by displaying the entire tileset image
+
+
+        const map = this.make.tilemap({key: "map", tileWidth: 16, tileHeight: 16 });
+
+        const tileset = map.addTilesetImage("PlatformForrest" , "tiles")
+        const worldlayer = map.createLayer("Ground",tileset, 16,16 );
+
+        worldlayer.setCollisionByProperty({ Collides: true });
+        worldlayer.setDepth(10);
+        worldlayer.setOrigin(0,0);
+
+        const spawnPoint = map.findObject("Objects", obj=> obj.name === "Spawn Point");
+
+
 
         // ---------------background ----------------
         // create an tiled sprite with the size of our game screen
@@ -38,9 +60,9 @@ class mainScene extends Phaser.Scene {
         this.bg_2 = this.add.tileSprite(0, 0, game.config.width, game.config.height, "bg_2");
         this.bg_2.setOrigin(0, 0);
         this.bg_2.setScrollFactor(0);
-
+/*
         // add the ground layer which is only 48 pixels tall
-        this.ground = this.add.tileSprite(0, 0, game.config.width * 3, 48, "ground");
+        this.ground = this.add.tileSprite(0, 0, game.config.width * 3, 32, "ground");
         this.ground.setOrigin(0, 0);
         this.ground.setScrollFactor(0);
         // since this tile is shorter I positioned it at the bottom of he screen
@@ -48,17 +70,17 @@ class mainScene extends Phaser.Scene {
         // Temporary physics for ground sprite
         this.physics.world.enableBody(this.ground);
         this.ground.body.setCollideWorldBounds(true);
-
+*/
 
         //-------------------Player ---------------------
         // add player
-        this.player = this.add.sprite(game.config.width * 1.5, 0, "player");
+        this.player = this.add.sprite(spawnPoint.x,spawnPoint.y, game.config.width * 1.5, 0, "player");
         this.physics.world.enableBody(this.player);
 /*
         this.player.body.setCollideWorldBounds(true);
 */
-        this.physics.add.collider(this.player, this.ground);
         // create an animation for the player
+        this.physics.add.collider(this.player, worldlayer);
 
         this.anims.create({
             key: "idle",
@@ -94,7 +116,7 @@ class mainScene extends Phaser.Scene {
         this.collectible.add(this.colItem3 = new Collectible(this, 300, 0));
 
         this.physics.add.overlap(this.player, this.collectible, this.collectItem, null, this)
-        this.physics.add.collider(this.collectible, this.ground);
+        this.physics.add.collider(this.collectible, worldlayer);
 
         /* Simple UI set-up */
         const scoreValue = 0;
@@ -151,7 +173,7 @@ class mainScene extends Phaser.Scene {
         // scroll the texture of the tilesprites proportionally to the camera scroll
         this.bg_1.tilePositionX = this.myCam.scrollX * .3;
         this.bg_2.tilePositionX = this.myCam.scrollX * .6;
-        this.ground.tilePositionX = this.myCam.scrollX;
+        //this.ground.tilePositionX = this.myCam.scrollX;
 
 
     };

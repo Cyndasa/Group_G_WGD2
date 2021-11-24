@@ -1,0 +1,15 @@
+{ "columns":20,
+ "image":"tileset.png",
+ "imageheight":192,
+ "imagewidth":320,
+ "margin":0,
+ "name":"PlatformForrest",
+ "objectalignment":"topleft",
+ "spacing":0,
+ "tilecount":240,
+ "tiledversion":"1.7.2",
+ "tileheight":16,
+ "tilewidth":16,
+ "type":"tileset",
+ "version":"1.6"
+}
