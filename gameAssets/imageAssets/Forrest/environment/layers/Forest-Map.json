@@ -432,7 +432,7 @@
                         {
                          "name":"Collides",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }]
                 }, 
                 {
@@ -450,7 +450,7 @@
                         {
                          "name":"Collides",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }]
                 }, 
                 {
@@ -468,7 +468,7 @@
                         {
                          "name":"Collides",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }]
                 }, 
                 {
