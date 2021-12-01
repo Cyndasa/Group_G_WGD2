@@ -37,11 +37,11 @@ class mainScene extends Phaser.Scene {
         const map = this.make.tilemap({key: "map", tileWidth: 16, tileHeight: 16 });
 
         const tileset = map.addTilesetImage("PlatformForrest" , "tiles")
-        const worldlayer = map.createLayer("Ground",tileset, 16,16 );
+        this.worldlayer = map.createLayer("Ground",tileset, 0,0 );
 
-        worldlayer.setCollisionByProperty({ Collides: true });
-        worldlayer.setDepth(10);
-        worldlayer.setOrigin(0,0);
+        this.worldlayer.setCollisionByProperty({ Collides: true });
+        this.worldlayer.setDepth(10);
+        this.worldlayer.setOrigin(0,0);
 
         const spawnPoint = map.findObject("Objects", obj=> obj.name === "Spawn Point");
 
@@ -81,7 +81,7 @@ class mainScene extends Phaser.Scene {
         this.player.body.setCollideWorldBounds(true);
 */
         // create an animation for the player
-        this.physics.add.collider(this.player, worldlayer);
+        this.physics.add.collider(this.player, this.worldlayer);
 
         this.anims.create({
             key: "idle",
@@ -104,7 +104,7 @@ class mainScene extends Phaser.Scene {
 
         // set world bounds to allow camera to follow the player
         this.myCam = this.cameras.main;
-        this.myCam.setBounds(0, 0, game.config.width * 3, game.config.height);
+        this.myCam.setBounds(0, 0, game.config.width * 3.0, game.config.height);
 
         // making the camera follow the player
         this.myCam.startFollow(this.player);
@@ -117,7 +117,7 @@ class mainScene extends Phaser.Scene {
         this.collectible.add(this.colItem3 = new Collectible(this, 300, 0));
 
         this.physics.add.overlap(this.player, this.collectible, this.collectItem, null, this)
-        this.physics.add.collider(this.collectible, worldlayer);
+        this.physics.add.collider(this.collectible, this.worldlayer);
 
         /* Simple UI set-up */
         const scoreValue = 0;
