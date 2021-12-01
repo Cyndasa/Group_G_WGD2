@@ -49,7 +49,7 @@ class mainScene extends Phaser.Scene {
 
         // ---------------background ----------------
         // create an tiled sprite with the size of our game screen
-        this.bg_1 = this.add.tileSprite(0, 0, game.config.width, game.config.height, "bg_1");
+        this.bg_1 = this.add.tileSprite(0, 0, game.config.width, game.config.height, "bg_1")/*.setScale(2.5)*/;
         // Set its pivot to the top left corner
         this.bg_1.setOrigin(0, 0);
         // fixe it so it won't move when the camera moves.
@@ -57,7 +57,7 @@ class mainScene extends Phaser.Scene {
         this.bg_1.setScrollFactor(0);
 
         // Add a second background layer. Repeat as in bg_1
-        this.bg_2 = this.add.tileSprite(0, 0, game.config.width, game.config.height, "bg_2");
+        this.bg_2 = this.add.tileSprite(0, 0, game.config.width, game.config.height, "bg_2")/*.setScale(2.5)*/;
         this.bg_2.setOrigin(0, 0);
         this.bg_2.setScrollFactor(0);
 /*
@@ -74,9 +74,10 @@ class mainScene extends Phaser.Scene {
 
         //-------------------Player ---------------------
         // add player
-        this.player = this.add.sprite(spawnPoint.x,spawnPoint.y, game.config.width * 1.5, 0, "player");
+        this.player = this.add.sprite(spawnPoint.x,spawnPoint.y, game.config.width * 1.5, 0, "player")/*.setScale(2.5)*/;
         this.physics.world.enableBody(this.player);
 /*
+// enabling this causes issue with game world
         this.player.body.setCollideWorldBounds(true);
 */
         // create an animation for the player
@@ -122,8 +123,11 @@ class mainScene extends Phaser.Scene {
         const scoreValue = 0;
         this.scoreValue = scoreValue;
 
+        const raceTime = 0;
+        this.raceTime = raceTime;
+
         /* Timer UI */
-        const timeText = this.add.text(10 , 5, "Time: ", {
+        const timeText = this.add.text(10 , 5, "Time: " + raceTime, {
             font: "20px",
             align: "center",
             color: "red",
@@ -133,6 +137,7 @@ class mainScene extends Phaser.Scene {
         this.timeText = timeText;
 
         /* Score UI */
+
         const scoreText = this.add.text(150, 5, "Score: " + scoreValue, {
             font: "20px",
             align: "center",
@@ -148,6 +153,8 @@ class mainScene extends Phaser.Scene {
 
         /* UI Update */
         this.scoreText.setText("Score:" + this.scoreValue);
+        this.timeText.setText("Time: " + this.raceTime);
+
 
         // move the player when the arrow keys are pressed
         if (this.cursors.left.isDown && this.player.x > 0) {
@@ -167,6 +174,11 @@ class mainScene extends Phaser.Scene {
 
         if (this.cursors.right.isUp && this.cursors.left.isUp) {
             this.player.anims.play('idle', true);
+        }
+
+        /* Player jump */
+        if (this.cursors.space.isDown && this.player.body.onFloor()){
+            this.player.body.setVelocityY(-400);
         }
 
 

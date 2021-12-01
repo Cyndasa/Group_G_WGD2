@@ -15,12 +15,10 @@ class Collectible extends Phaser.Physics.Arcade.Sprite{
     }
 
     create(){
-        console.log('The Collectible Exists'); // Debug Line, comment out or delete
-
+        console.log("The Collectible Exists"); // Debug Line, comment out or delete
     }
 
     update(){
-
     }
 
 }

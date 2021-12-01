@@ -4,17 +4,17 @@ var config = {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,
         width: 800,
-        height: 500,
+        height: 600,
     },
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: {y:200},
+            gravity: {y:800},
             debug:true
         }
     },
     inputManager: Phaser.Input.InputManager,
-    scene: [Menu,],
+    scene: [Menu, mainScene],
 },
     /* Can declare universal variables here */
 

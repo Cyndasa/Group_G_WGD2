@@ -9,15 +9,23 @@ class Menu extends Phaser.Scene {
 
     preload(){
         this.load.video('video', '../videos/MenuVideo.webm');
-        this.load.image('play', './gameAssets/imageAssets/uiImages/blue/normal.png)');
+        this.load.image('play', '../gameAssets/imageAssets/uiImages/blue/normal.png');
     }
 
     create(){
+
         this.video = this.add.video(450,350, 'video');
         this.video.play();
         this.video.height = -1000 ;
         this.video.width = -1000;
-        var PlayButton = this.add.image(400, 300, 'play');
+
+
+        var PlayButton = this.add.image(400, 300, 'play').setScale(5);
+        PlayButton.setInteractive();
+        PlayButton.on("pointerup",()=>{
+            this.scene.start('MainScene');
+        });
+
 
 
     }
