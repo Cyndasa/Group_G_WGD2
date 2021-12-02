@@ -75,22 +75,22 @@ function create ()
 {
     // ---------------background ----------------
     // create an tiled sprite with the size of our game screen
-    this.bg_1 = this.add.tileSprite(0, 0, game.config.width, game.config.height, "bg_1")/*.setScale(2.5)*/;
+    this.bg_1 = this.add.tileSprite(0, 0, game.config.width * 3.0, game.config.height, "bg_1").setScale(2.5);
     // Set its pivot to the top left corner
-    this.bg_1.setOrigin(0, 0);
+    this.bg_1.setOrigin(0, 0.4);
     // fixe it so it won't move when the camera moves.
     // Instead we are moving its texture on the update
     this.bg_1.setScrollFactor(0);
 
     // Add a second background layer. Repeat as in bg_1
-    this.bg_2 = this.add.tileSprite(0, 0, game.config.width, game.config.height, "bg_2")/*.setScale(2.5)*/;
-    this.bg_2.setOrigin(0, 0);
+    this.bg_2 = this.add.tileSprite(0, 0, game.config.width * 3.0, game.config.height, "bg_2").setScale(2.5);
+    this.bg_2.setOrigin(0, 0.4);
     this.bg_2.setScrollFactor(0);
 
     //---------tiledmaps------------
     var map = this.make.tilemap({ key: 'map' });
     var tileset = map.addTilesetImage("PlatformForrest" , "tiles");
-    var layer = map.createLayer('Ground', tileset, 0, 0);
+    var layer = map.createLayer('Ground', tileset, 0, 100);
 
     //--------Collisions-------------
 
@@ -193,6 +193,12 @@ function create ()
     this.anims.create({
         key: 'idle',
         frames: this.anims.generateFrameNumbers('player', { start: 12, end: 15 }),
+        frameRate: 16,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'jump',
+        frames: this.anims.generateFrameNumbers('player', { start: 16, end: 17 }),
         frameRate: 16,
         repeat: -1
     });
@@ -333,6 +339,7 @@ function update (time, delta)
             matterSprite.setVelocityX(-playerController.speed.run);
             playerController.lastJumpedAt = time;
         }
+        matterSprite.anims.play('right', true);
     }
 
     smoothMoveCameraTowards(matterSprite, 1);
@@ -340,8 +347,8 @@ function update (time, delta)
 
     //-----------Scrolling Background-------------
     // scroll the texture of the tilesprites proportionally to the camera scroll
-    this.bg_1.tilePositionX = cam.scrollX * .3;
-    this.bg_2.tilePositionX = cam.scrollX * .6;
+    this.bg_1.tilePositionX = cam.scrollX * .1;
+    this.bg_2.tilePositionX = cam.scrollX * .3;
 }
 
 function updateText ()
