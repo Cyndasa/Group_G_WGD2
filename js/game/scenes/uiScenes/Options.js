@@ -1,6 +1,6 @@
-class Menu extends Phaser.Scene {
+class optionsMenu extends Phaser.Scene {
     constructor() {
-        super('Menu');
+        super('OptionsMenu');
     };
 
     init() {
@@ -9,8 +9,6 @@ class Menu extends Phaser.Scene {
 
     preload(){
         this.load.video('video', '../videos/MenuVideo.webm');
-        this.load.image('play', '../../../../gameAssets/imageAssets/uiImages/Buttons/Play/Play-Unclicked.png');
-        this.load.image('options', '../../../../gameAssets/imageAssets/uiImages/Buttons/Options/Options-Unclicked.png');
         this.load.image('exit', '../../../../gameAssets/imageAssets/uiImages/Buttons/Exit/Exit-Unclicked.png');
         this.load.image('title', '../../../../gameAssets/imageAssets/uiImages/Title/Title.png');
     }
@@ -24,22 +22,11 @@ class Menu extends Phaser.Scene {
 
         this.add.image (400, 100 , 'title').setScale(3);
 
-        var PlayButton = this.add.image(400, 230, 'play').setScale(1.5);
-        PlayButton.setInteractive();
-        PlayButton.on("pointerup",()=>{
-            this.scene.start('MainScene');
-        });
-
-        var OptionsButton = this.add.image(400, 330, 'options').setScale(1.5);
-        OptionsButton.setInteractive();
-        OptionsButton.on("pointerup",()=>{
-            this.scene.start('OptionsMenu');
-        });
 
         var ExitButton = this.add.image(400, 430, 'exit').setScale(1.5);
         ExitButton.setInteractive();
         ExitButton.on("pointerup",()=>{
-            this.scene.start('MainScene');
+            this.scene.start('Menu');
         });
 
 
