@@ -1,6 +1,6 @@
-class Menu extends Phaser.Scene {
+class playScene extends Phaser.Scene {
     constructor() {
-        super('Menu');
+        super('PlayScene');
     };
 
     init() {
@@ -9,8 +9,8 @@ class Menu extends Phaser.Scene {
 
     preload(){
         this.load.video('video', '../videos/MenuVideo.webm');
-        this.load.image('play', '../../../../gameAssets/imageAssets/uiImages/Buttons/Play/Play-Unclicked.png');
-        this.load.image('options', '../../../../gameAssets/imageAssets/uiImages/Buttons/Options/Options-Unclicked.png');
+        this.load.image('single', '../../../../gameAssets/imageAssets/uiImages/Buttons/Online/Online-Unclicked.png');
+        this.load.image('online', '../../../../gameAssets/imageAssets/uiImages/Buttons/Single/Single-Unclicked.png');
         this.load.image('exit', '../../../../gameAssets/imageAssets/uiImages/Buttons/Exit/Exit-Unclicked.png');
         this.load.image('title', '../../../../gameAssets/imageAssets/uiImages/Title/Title.png');
     }
@@ -24,13 +24,13 @@ class Menu extends Phaser.Scene {
 
         this.add.image (400, 100 , 'title').setScale(3);
 
-        var PlayButton = this.add.image(400, 230, 'play').setScale(1.5);
+        var PlayButton = this.add.image(400, 230, 'single').setScale(1.5);
         PlayButton.setInteractive();
         PlayButton.on("pointerup",()=>{
-            this.scene.start('PlayScene');
+            this.scene.start('MainScene');
         });
 
-        var OptionsButton = this.add.image(400, 330, 'options').setScale(1.5);
+        var OptionsButton = this.add.image(400, 330, 'online').setScale(1.5);
         OptionsButton.setInteractive();
         OptionsButton.on("pointerup",()=>{
             this.scene.start('OptionsMenu');
@@ -39,7 +39,7 @@ class Menu extends Phaser.Scene {
         var ExitButton = this.add.image(400, 430, 'exit').setScale(1.5);
         ExitButton.setInteractive();
         ExitButton.on("pointerup",()=>{
-            this.scene.start('MainScene');
+            this.scene.start('Menu');
         });
 
 
