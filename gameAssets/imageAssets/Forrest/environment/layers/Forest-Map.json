@@ -7,8 +7,8 @@
          "height":32,
          "id":1,
          "name":"Ground",
-         "offsetx":34,
-         "offsety":-44,
+         "offsetx":-1,
+         "offsety":1,
          "opacity":1,
          "type":"tilelayer",
          "visible":true,
@@ -23,15 +23,15 @@
          "objects":[
                 {
                  "height":0,
-                 "id":28,
+                 "id":36,
                  "name":"Spawn Point",
                  "point":true,
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":20,
-                 "y":402
+                 "x":19,
+                 "y":413
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -40,7 +40,7 @@
          "y":0
         }],
  "nextlayerid":4,
- "nextobjectid":29,
+ "nextobjectid":37,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.7.2",

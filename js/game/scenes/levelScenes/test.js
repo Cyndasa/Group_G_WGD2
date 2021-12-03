@@ -30,6 +30,7 @@ var smoothedControls;
 // the player has been pressing left or right, respectively.
 var SmoothedHorionztalControl = new Phaser.Class({
 
+
     initialize:
 
         function SmoothedHorionztalControl (speed)
@@ -90,7 +91,7 @@ function create ()
     //---------tiledmaps------------
     var map = this.make.tilemap({ key: 'map' });
     var tileset = map.addTilesetImage("PlatformForrest" , "tiles");
-    var layer = map.createLayer('Ground', tileset, 0, 100);
+    var layer = map.createLayer('Ground', tileset, 0, 85);
 
     //--------Collisions-------------
 
