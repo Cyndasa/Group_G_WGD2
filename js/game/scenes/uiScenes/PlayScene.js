@@ -27,13 +27,13 @@ class playScene extends Phaser.Scene {
         var PlayButton = this.add.image(400, 230, 'single').setScale(1.5);
         PlayButton.setInteractive();
         PlayButton.on("pointerup",()=>{
-            this.scene.start('MainScene');
+            this.scene.start('OptionsMenu');
         });
 
         var OptionsButton = this.add.image(400, 330, 'online').setScale(1.5);
         OptionsButton.setInteractive();
         OptionsButton.on("pointerup",()=>{
-            this.scene.start('OptionsMenu');
+            this.scene.start('Test');
         });
 
         var ExitButton = this.add.image(400, 430, 'exit').setScale(1.5);
