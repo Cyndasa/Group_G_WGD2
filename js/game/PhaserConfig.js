@@ -19,7 +19,7 @@ var config = {
         },
     },
     inputManager: Phaser.Input.InputManager,
-    scene: [Menu,optionsMenu,playScene,Test],
+    scene: [Menu, optionsMenu, playScene, Test, staticScene],
 }
     /* Can declare universal variables here */
 var game = new Phaser.Game(config)
@@ -29,4 +29,5 @@ var text;
 var cam;
 var smoothedControls;
 var smoothMoveCameraTowards;
+let playerName;
 

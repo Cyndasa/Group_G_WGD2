@@ -38,7 +38,6 @@ class Test extends Phaser.Scene {
     // Smoothed horizontal controls helper. This gives us a value between -1 and 1 depending on how long
 // the player has been pressing left or right, respectively.
 
-
     preload ()
     {
         // load all assets tile sprites
@@ -79,7 +78,8 @@ class Test extends Phaser.Scene {
         this.matter.world.convertTilemapLayer(layer);
         const spawnPoint = map.findObject("Objects", obj=> obj.name === "Spawn Point");
 
-        this.matter.world.setBounds(map.widthInPixels, map.heightInPixels);
+        /*this.matter.world.setBounds(map.widthInPixels, map.heightInPixels);*/
+        this.matter.world.setBounds(0, 0, map.widthInPixels, 600);
         this.matter.world.createDebugGraphic();
         this.matter.world.drawDebug = false;
 
@@ -111,7 +111,8 @@ class Test extends Phaser.Scene {
             },
             lastJumpedAt: 0,
             speed: {
-                run: 5,
+                /*run: 6,*/
+                run: 3,
                 jump: 7
             }
         };
@@ -149,37 +150,41 @@ class Test extends Phaser.Scene {
             .setFixedRotation() // Sets max inertia to prevent rotation
             .setPosition(spawnPoint.x,spawnPoint.y);
 
-
-
-
+        /* Set up scene camera */
         cam = this.cameras.main;
         cam.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
         smoothMoveCameraTowards(playerController.matterSprite);
         // making the camera follow the player
         cam.startFollow(playerController.matterSprite);
 
+        /* Create player animations */
+
         this.anims.create({
             key: 'left',
             frames: this.anims.generateFrameNumbers('player', { start: 0, end: 5 }),
-            frameRate: 16,
+            /*frameRate: 16,*/
+            frameRate: 12,
             repeat: -1
         });
         this.anims.create({
             key: 'right',
             frames: this.anims.generateFrameNumbers('player', { start: 6, end: 11 }),
-            frameRate: 16,
+            /*frameRate: 16,*/
+            frameRate: 12,
             repeat: -1
         });
         this.anims.create({
             key: 'idle',
             frames: this.anims.generateFrameNumbers('player', { start: 12, end: 15 }),
-            frameRate: 16,
+            /*frameRate: 16,*/
+            frameRate: 12,
             repeat: -1
         });
         this.anims.create({
             key: 'jump',
             frames: this.anims.generateFrameNumbers('player', { start: 16, end: 17 }),
-            frameRate: 16,
+            /*frameRate: 16,*/
+            frameRate: 12,
             repeat: -1
         });
 
@@ -249,11 +254,47 @@ class Test extends Phaser.Scene {
         text.setScrollFactor(0);
         updateText();
 
+        /* Temp placeholder for player identifier */
+        playerName = this.add.text(
+            playerController.matterSprite.x - 20,
+            playerController.matterSprite.y - 25,
+            'Player',{
+                font: '15px',
+                align: 'centre',
+                color: 'white',
+            });
+
+        /* Set alt controls */
+
+/*
+        this.input.keyboard.on('keydown_D', , );
+        this.input.keyboard.on('keydown_A', , );
+        this.input.keyboard.on('keydown_W', , );
+
+ */
+
     }
 
     update (time, delta)
     {
         var matterSprite = playerController.matterSprite;
+
+        /* Updates to have player name follow player */
+        playerName.x = matterSprite.x - 20;
+        playerName.y = matterSprite.y - 25;
+
+        /* Speed up run/sprint
+        *
+        * if leftShift is down
+        * times playerController.speed.run by 2
+        * make framerate of run anim = 16/24
+        *
+        * */
+
+        /* Quick debug trigger to restart level if issue. Can be switch for more applicable uses later. */
+        if(cursors.space.isDown){
+            this.restartLevel();
+        }
 
         // Horizontal movement
 
@@ -329,13 +370,16 @@ class Test extends Phaser.Scene {
         // scroll the texture of the tilesprites proportionally to the camera scroll
         this.bg_1.tilePositionX = cam.scrollX * .1;
         this.bg_2.tilePositionX = cam.scrollX * .3;
+
+        }
+
+    restartLevel(){
+        console.log('restart level');
+        this.scene.start('Test');
     }
 
-
-
-
-
 }
+
 function smoothMoveCameraTowards (target, smoothFactor)
 {
     if (smoothFactor === undefined) { smoothFactor = 0; }

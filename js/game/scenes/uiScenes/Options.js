@@ -22,6 +22,29 @@ class optionsMenu extends Phaser.Scene {
 
         this.add.image (400, 100 , 'title').setScale(3);
 
+        /* Mute all sounds button */
+/*        const muteButton = this.add.image(400, 300, '');
+        muteButton.setInteractive();
+        muteButton.setScale(1.5);
+        muteButton.on('pointerover', ()=>{
+            if(!this.sound.mute){
+                this.sound.mute = true;
+            }
+            else{
+                this.sound.mute = false;
+            }
+        });*/
+
+        /* Apply tint when hovered over */
+/*        muteButton.on('pointerover', ()=>{
+            mute.setTint('');
+        });*/
+
+        /* Remove tint when no longer hovering over */
+/*        muteButton.on('pointerout', ()=>{
+            mute.clearTint();
+        });*/
+
 
         var ExitButton = this.add.image(400, 430, 'exit').setScale(1.5);
         ExitButton.setInteractive();

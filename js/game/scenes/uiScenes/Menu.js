@@ -24,25 +24,47 @@ class Menu extends Phaser.Scene {
 
         this.add.image (400, 100 , 'title').setScale(3);
 
-        var PlayButton = this.add.image(400, 230, 'play').setScale(1.5);
+        const PlayButton = this.add.image(400, 230, 'play').setScale(1.5);
         PlayButton.setInteractive();
         PlayButton.on("pointerup",()=>{
             this.scene.start('PlayScene');
         });
 
-        var OptionsButton = this.add.image(400, 330, 'options').setScale(1.5);
+        PlayButton.on('pointerover', ()=>{
+            PlayButton.setTint('0xFF00F5');
+        });
+
+        PlayButton.on('pointerout', ()=>{
+            PlayButton.clearTint();
+        });
+
+        const OptionsButton = this.add.image(400, 330, 'options').setScale(1.5);
         OptionsButton.setInteractive();
         OptionsButton.on("pointerup",()=>{
             this.scene.start('OptionsMenu');
         });
 
-        var ExitButton = this.add.image(400, 430, 'exit').setScale(1.5);
-        ExitButton.setInteractive();
-        ExitButton.on("pointerup",()=>{
-            this.scene.start('MainScene');
+        OptionsButton.on('pointerover', ()=>{
+            OptionsButton.setTint('0xFF00F5');
         });
 
+        OptionsButton.on('pointerout', ()=>{
+            OptionsButton.clearTint();
+        });
 
+        const ExitButton = this.add.image(400, 430, 'exit').setScale(1.5);
+        ExitButton.setInteractive();
+        ExitButton.on("pointerup",()=>{
+            this.scene.start('StaticScene');
+        });
+
+        ExitButton.on('pointerover', ()=>{
+            ExitButton.setTint('0xFF00F5');
+        });
+
+        ExitButton.on('pointerout', ()=>{
+            ExitButton.clearTint();
+        });
 
     }
 
