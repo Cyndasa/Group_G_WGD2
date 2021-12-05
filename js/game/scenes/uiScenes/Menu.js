@@ -17,7 +17,7 @@ class Menu extends Phaser.Scene {
 
     create(){
 
-        this.video = this.add.video(450,350, 'video');
+        this.video = this.add.video(450,350, 'video').setLoop(true);
         this.video.play();
         this.video.height = -1000 ;
         this.video.width = -1000;
@@ -72,4 +72,4 @@ class Menu extends Phaser.Scene {
 
     }
 
-};
+}

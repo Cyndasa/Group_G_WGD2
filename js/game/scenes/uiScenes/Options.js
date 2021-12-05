@@ -8,14 +8,14 @@ class optionsMenu extends Phaser.Scene {
     };
 
     preload(){
-        this.load.video('video', '../videos/MenuVideo.webm');
+/*        this.load.video('video', '../videos/MenuVideo.webm');
         this.load.image('exit', '../../../../gameAssets/imageAssets/uiImages/Buttons/Exit/Exit-Unclicked.png');
-        this.load.image('title', '../../../../gameAssets/imageAssets/uiImages/Title/Title.png');
+        this.load.image('title', '../../../../gameAssets/imageAssets/uiImages/Title/Title.png');*/
     }
 
     create(){
 
-        this.video = this.add.video(450,350, 'video');
+        this.video = this.add.video(450,350, 'video').setLoop(true);
         this.video.play();
         this.video.height = -1000 ;
         this.video.width = -1000;
@@ -52,6 +52,13 @@ class optionsMenu extends Phaser.Scene {
             this.scene.start('Menu');
         });
 
+        ExitButton.on('pointerover', ()=>{
+            ExitButton.setTint('0xFF00F5');
+        });
+
+        ExitButton.on('pointerout', ()=>{
+            ExitButton.clearTint();
+        });
 
 
     }
@@ -60,4 +67,4 @@ class optionsMenu extends Phaser.Scene {
 
     }
 
-};
+}

@@ -31,6 +31,7 @@ var SmoothedHorionztalControl = new Phaser.Class({
 });
 
 class Test extends Phaser.Scene {
+
     constructor() {
         super('Test');
     };
@@ -264,6 +265,10 @@ class Test extends Phaser.Scene {
         const raceTime = 0;
         this.raceTime = raceTime;
 
+        /* Doesn't work as intended but does display somewhat as intended */
+        timedEvent = new Phaser.Time.TimerEvent({delay: 6000 , duration: 60000, loop: true });
+        this.time.addEvent(timedEvent);
+
         /* Timer UI */
         const timeText = this.add.text(625 , 10, "Time: " + raceTime, {
             font: "25px",
@@ -314,9 +319,12 @@ class Test extends Phaser.Scene {
         playerName.x = matterSprite.x - 20;
         playerName.y = matterSprite.y - 25;
 
+        let timeElapsed = timedEvent.getProgress();
+
         /* Update UI Components */
         this.scoreText.setText("Score: " + this.scoreValue);
-        this.timeText.setText("Time: " + this.raceTime);
+        this.timeText.setText("Time: " + timeElapsed.toString().substr(0,4));
+
 
         /* Speed up run/sprint
         *

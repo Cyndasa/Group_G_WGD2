@@ -34,6 +34,8 @@ let playerName;
 let activePlayers;
 let playerScore;
 
+let timedEvent;
+
 
 
 
