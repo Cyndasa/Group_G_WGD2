@@ -29,5 +29,11 @@ var text;
 var cam;
 var smoothedControls;
 var smoothMoveCameraTowards;
+
 let playerName;
+let activePlayers;
+let playerScore;
+
+
+
 

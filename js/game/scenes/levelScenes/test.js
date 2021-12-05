@@ -254,6 +254,37 @@ class Test extends Phaser.Scene {
         text.setScrollFactor(0);
         updateText();
 
+
+        /* UI Components */
+
+        /* Placeholder Values */
+        const scoreValue = 0;
+        this.scoreValue = scoreValue;
+
+        const raceTime = 0;
+        this.raceTime = raceTime;
+
+        /* Timer UI */
+        const timeText = this.add.text(625 , 10, "Time: " + raceTime, {
+            font: "25px",
+            align: "center",
+            color: "red",
+        });
+        timeText.scrollFactorX = 0;
+        timeText.scrollFactorY = 0;
+        this.timeText = timeText;
+
+        /* Score UI */
+
+        const scoreText = this.add.text(625, 50, "Score: " + scoreValue, {
+            font: "25px",
+            align: "center",
+            color: "white",
+        });
+        scoreText.scrollFactorX = 0;
+        scoreText.scrollFactorY = 0;
+        this.scoreText = scoreText;
+
         /* Temp placeholder for player identifier */
         playerName = this.add.text(
             playerController.matterSprite.x - 20,
@@ -282,6 +313,10 @@ class Test extends Phaser.Scene {
         /* Updates to have player name follow player */
         playerName.x = matterSprite.x - 20;
         playerName.y = matterSprite.y - 25;
+
+        /* Update UI Components */
+        this.scoreText.setText("Score: " + this.scoreValue);
+        this.timeText.setText("Time: " + this.raceTime);
 
         /* Speed up run/sprint
         *
@@ -385,7 +420,7 @@ function smoothMoveCameraTowards (target, smoothFactor)
     if (smoothFactor === undefined) { smoothFactor = 0; }
     cam.scrollX = smoothFactor * cam.scrollX + (1 - smoothFactor) * (target.x - cam.width * 0.5);
     cam.scrollY = smoothFactor * cam.scrollY + (1 - smoothFactor) * (target.y - cam.height * 0.5);
-};
+}
 
 function updateText ()
 {
@@ -398,4 +433,4 @@ function updateText ()
         // '\tLeft blocked: ' + playerController.blocked.left,
         // '\tRight blocked: ' + playerController.blocked.right
     ]);
-};
+}
