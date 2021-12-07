@@ -11,8 +11,8 @@ class playScene extends Phaser.Scene {
 /*
         this.load.video('video', '../videos/MenuVideo.webm');
 */
-        this.load.image('single', '../../../../gameAssets/imageAssets/uiImages/Buttons/Online/Online-Unclicked.png');
-        this.load.image('online', '../../../../gameAssets/imageAssets/uiImages/Buttons/Single/Single-Unclicked.png');
+        this.load.image('online', '../../../../gameAssets/imageAssets/uiImages/Buttons/Online/Online-Unclicked.png');
+        this.load.image('single', '../../../../gameAssets/imageAssets/uiImages/Buttons/Single/Single-Unclicked.png');
 /*        this.load.image('exit', '../../../../gameAssets/imageAssets/uiImages/Buttons/Exit/Exit-Unclicked.png');
         this.load.image('title', '../../../../gameAssets/imageAssets/uiImages/Title/Title.png');*/
     }
@@ -29,7 +29,7 @@ class playScene extends Phaser.Scene {
         var SingleButton = this.add.image(400, 230, 'single').setScale(1.5);
         SingleButton.setInteractive();
         SingleButton.on("pointerup",()=>{
-            this.scene.start('Test');
+            this.scene.start('LvlSelect');
         });
 
         SingleButton.on('pointerover', ()=>{

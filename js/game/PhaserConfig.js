@@ -19,7 +19,7 @@ var config = {
         },
     },
     inputManager: Phaser.Input.InputManager,
-    scene: [Menu, optionsMenu, playScene, Test, staticScene],
+    scene: [Menu, optionsMenu, playScene, Test, staticScene,LvlSelect,City],
 }
     /* Can declare universal variables here */
 var game = new Phaser.Game(config)
