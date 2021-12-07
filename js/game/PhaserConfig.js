@@ -6,6 +6,7 @@ var config = {
         width: 800,
         height: 600,
     },
+    transparent: true,
     physics: {
         default: 'matter',
         arcade: {
@@ -19,7 +20,7 @@ var config = {
         },
     },
     inputManager: Phaser.Input.InputManager,
-    scene: [Menu, optionsMenu, playScene, Test, staticScene,LvlSelect,City],
+    scene: [AudioScene,Menu, optionsMenu, playScene, Test, staticScene,LvlSelect,City,loadingScene,LobbySelect],
 }
     /* Can declare universal variables here */
 var game = new Phaser.Game(config)

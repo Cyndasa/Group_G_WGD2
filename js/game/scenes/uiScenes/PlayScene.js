@@ -43,7 +43,7 @@ class playScene extends Phaser.Scene {
         var OnlineButton = this.add.image(400, 330, 'online').setScale(1.5);
         OnlineButton.setInteractive();
         OnlineButton.on("pointerup",()=>{
-            this.scene.start('Test');
+            this.scene.start('LobbySelect');
         });
 
         OnlineButton.on('pointerover', ()=>{

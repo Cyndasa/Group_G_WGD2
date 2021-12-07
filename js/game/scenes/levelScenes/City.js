@@ -56,20 +56,20 @@ class City extends Phaser.Scene {
     {
         // ---------------background ----------------
         // create an tiled sprite with the size of our game screen
-        this.bg_1 = this.add.tileSprite(0, 0, game.config.width * 3.0, game.config.height, "bg_1").setScale(3.25);
+        this.bg_1 = this.add.tileSprite(0, 0, game.config.width * 3.0, game.config.height, "bg_1").setScale(3.8);
         // Set its pivot to the top left corner
-        this.bg_1.setOrigin(0, -0.01);
+        this.bg_1.setOrigin(0, -0.0);
         // fixe it so it won't move when the camera moves.
         // Instead we are moving its texture on the update
         this.bg_1.setScrollFactor(0);
 
         // Add a second background layer. Repeat as in bg_1
-        this.bg_2 = this.add.tileSprite(0, 0, game.config.width * 3.0, game.config.height, "bg_2").setScale(3.25);
-        this.bg_2.setOrigin(0, -0.01);
+        this.bg_2 = this.add.tileSprite(0, 0, game.config.width * 3.0, game.config.height, "bg_2").setScale(3.4);
+        this.bg_2.setOrigin(0, -0.03);
         this.bg_2.setScrollFactor(0);
 
         this.bg_3 = this.add.tileSprite(0, 0, game.config.width * 3.0, game.config.height, "bg_3").setScale(3.25);
-        this.bg_3.setOrigin(0, -0.01);
+        this.bg_3.setOrigin(0, -0.04);
         this.bg_3.setScrollFactor(0);
 
         //---------tiledmaps------------
@@ -418,7 +418,7 @@ class City extends Phaser.Scene {
         // scroll the texture of the tilesprites proportionally to the camera scroll
         this.bg_1.tilePositionX = cam.scrollX * .1;
         this.bg_2.tilePositionX = cam.scrollX * .2;
-        this.bg_3.tilePositionX = cam.scrollX * .3;
+        this.bg_3.tilePositionX = cam.scrollX * .25;
 
     }
 

@@ -13,10 +13,15 @@ class Menu extends Phaser.Scene {
         this.load.image('options', '../../../../gameAssets/imageAssets/uiImages/Buttons/Options/Options-Unclicked.png');
         this.load.image('exit', '../../../../gameAssets/imageAssets/uiImages/Buttons/Exit/Exit-Unclicked.png');
         this.load.image('title', '../../../../gameAssets/imageAssets/uiImages/Title/Title.png');
+
+
     }
 
     create(){
+        //---------Music-------------
 
+
+        //----------Video-------------
         this.video = this.add.video(450,350, 'video').setLoop(true);
         this.video.play();
         this.video.height = -1000 ;
