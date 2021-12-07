@@ -300,14 +300,29 @@ class Test extends Phaser.Scene {
                 color: 'white',
             });
 
+        /* Temp Finish Line */
+
+        let boxShape = this.matter.add.rectangle(2600, 430, 45, 45);
+        let boxShapeFill = this.add.graphics({fillStyle: {color: '0x00fF45'} });
+
+        boxShapeFill.fillRectShape(boxShape)
+
+        playerBody.setOnCollideWith(boxShape, pair =>{
+            console.log('player has finished race');
+        });
+
+
+        /* Set ability trigger key */
+/*
+        let usePower = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
+*/
+
         /* Set alt controls */
 
-/*
-        this.input.keyboard.on('keydown_D', , );
-        this.input.keyboard.on('keydown_A', , );
-        this.input.keyboard.on('keydown_W', , );
+/*        let jumpAlt = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        let leftAlt = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        let rightAlt = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);*/
 
- */
 
     }
 
@@ -319,11 +334,17 @@ class Test extends Phaser.Scene {
         playerName.x = matterSprite.x - 20;
         playerName.y = matterSprite.y - 25;
 
+        let lapTime = time * 0.001;
+
         let timeElapsed = timedEvent.getProgress();
 
         /* Update UI Components */
         this.scoreText.setText("Score: " + this.scoreValue);
+/*
         this.timeText.setText("Time: " + timeElapsed.toString().substr(0,4));
+*/
+
+        this.timeText.setText("Time: " + Math.round(lapTime));
 
 
         /* Speed up run/sprint
@@ -441,4 +462,8 @@ function updateText ()
         // '\tLeft blocked: ' + playerController.blocked.left,
         // '\tRight blocked: ' + playerController.blocked.right
     ]);
+}
+
+function playerFinish(){
+    console.log('Player has finished race');
 }
