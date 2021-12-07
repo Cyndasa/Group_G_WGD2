@@ -309,6 +309,8 @@ class Test extends Phaser.Scene {
 
         playerBody.setOnCollideWith(boxShape, pair =>{
             console.log('player has finished race');
+            this.scene.start('Menu');
+
         });
 
 
