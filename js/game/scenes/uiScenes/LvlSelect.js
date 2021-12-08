@@ -8,13 +8,12 @@ class LvlSelect extends Phaser.Scene {
     };
 
     preload(){
-        /*
-                this.load.video('video', '../videos/MenuVideo.webm');
-        */
+/*        this.load.video('video', '../videos/MenuVideo.webm');
         this.load.image('Forest', '../../../../gameAssets/imageAssets/uiImages/Buttons/Forest/Forest-Unclicked.png');
         this.load.image('City', '../../../../gameAssets/imageAssets/uiImages/Buttons/City/City-Unclicked.png');
-        /*        this.load.image('exit', '../../../../gameAssets/imageAssets/uiImages/Buttons/Exit/Exit-Unclicked.png');
-                this.load.image('title', '../../../../gameAssets/imageAssets/uiImages/Title/Title.png');*/
+        this.load.image('exit', '../../../../gameAssets/imageAssets/uiImages/Buttons/Exit/Exit-Unclicked.png');
+        this.load.image('title', '../../../../gameAssets/imageAssets/uiImages/Title/Title.png');
+        this.load.image('ForestBGButton', 'gameAssets/imageAssets/Forrest/environment/layers/middleground.png')*/
     }
 
     create(){
@@ -54,7 +53,29 @@ class LvlSelect extends Phaser.Scene {
             ForestButton.clearTint();
         });
 
-        var ExitButton = this.add.image(400, 430, 'exit').setScale(1.5);
+        /* Temp alt style button idea for levels */
+/*        let forestButton = this.add.image(400, 330, 'ForestBGButton').setScale(0.5);
+        let forestButtonText = this.add.text(forestButton.x -40, forestButton.y + 35, 'Forest', {
+            font: '20px',
+            color: 'white',
+        });
+        forestButton.setTint('0x808080');
+        forestButton.setInteractive();
+
+        forestButton.on("pointerup",()=>{
+            this.scene.start('Test');
+        });
+
+        forestButton.on('pointerover', ()=>{
+            forestButton.clearTint();
+        });
+
+        forestButton.on('pointerout', ()=>{
+            forestButton.setTint('0x808080');
+        });*/
+
+
+        var ExitButton = this.add.image(400, 460, 'exit').setScale(1.5);
         ExitButton.setInteractive();
         ExitButton.on("pointerup",()=>{
             this.scene.start('Menu');

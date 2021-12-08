@@ -8,11 +8,11 @@ class optionsMenu extends Phaser.Scene {
     };
 
     preload(){
-        this.load.video('video', '../videos/MenuVideo.webm');
+/*        this.load.video('video', '../videos/MenuVideo.webm');
         this.load.image('exit', '../../../../gameAssets/imageAssets/uiImages/Buttons/Exit/Exit-Unclicked.png');
         this.load.image('title', '../../../../gameAssets/imageAssets/uiImages/Title/Title.png');
         this.load.image('muteButton', '../../../../gameAssets/imageAssets/uiImages/Buttons/MuteButtons/Mute.png')
-        this.load.image('controls', '../../../../gameAssets/imageAssets/uiImages/Buttons/Controls/Controls.png')
+        this.load.image('controls', '../../../../gameAssets/imageAssets/uiImages/Buttons/Controls/Controls.png')*/
        /* this.load.image('muteButton', '../../../../gameAssets/imageAssets/uiImages/Buttons/MuteButtons/ButtonsSpriteSheet.png');*/
     }
 

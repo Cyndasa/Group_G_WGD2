@@ -8,18 +8,26 @@ class Menu extends Phaser.Scene {
     };
 
     preload(){
-        this.load.video('video', '../videos/MenuVideo.webm');
+/*        this.load.video('video', '../videos/MenuVideo.webm');
         this.load.image('play', '../../../../gameAssets/imageAssets/uiImages/Buttons/Play/Play-Unclicked.png');
         this.load.image('options', '../../../../gameAssets/imageAssets/uiImages/Buttons/Options/Options-Unclicked.png');
         this.load.image('exit', '../../../../gameAssets/imageAssets/uiImages/Buttons/Exit/Exit-Unclicked.png');
-        this.load.image('title', '../../../../gameAssets/imageAssets/uiImages/Title/Title.png');
+        this.load.image('title', '../../../../gameAssets/imageAssets/uiImages/Title/Title.png');*/
 
 
     }
 
     create(){
         //---------Music-------------
-
+        this.menuMusic = this.sound.add("theme");
+        var musicConfig = {
+            mute: 0,
+            volume: 0.6,
+            seek: 0,
+            loop: false, //DEBUG. Change back to true for final build
+            delay: 0
+        }
+        this.menuMusic.play(musicConfig); // Start Playing the menu bg music
 
         //----------Video-------------
         this.video = this.add.video(450,350, 'video').setLoop(true);

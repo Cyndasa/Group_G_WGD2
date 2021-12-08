@@ -8,13 +8,11 @@ class LobbySelect extends Phaser.Scene {
     };
 
     preload(){
-        /*
-                this.load.video('video', '../videos/MenuVideo.webm');
-        */
+/*        this.load.video('video', '../videos/MenuVideo.webm');
         this.load.image('Forest', '../../../../gameAssets/imageAssets/uiImages/Buttons/Forest/Forest-Unclicked.png');
         this.load.image('City', '../../../../gameAssets/imageAssets/uiImages/Buttons/City/City-Unclicked.png');
-        /*        this.load.image('exit', '../../../../gameAssets/imageAssets/uiImages/Buttons/Exit/Exit-Unclicked.png');
-                this.load.image('title', '../../../../gameAssets/imageAssets/uiImages/Title/Title.png');*/
+        this.load.image('exit', '../../../../gameAssets/imageAssets/uiImages/Buttons/Exit/Exit-Unclicked.png');
+        this.load.image('title', '../../../../gameAssets/imageAssets/uiImages/Title/Title.png');*/
     }
 
     create(){

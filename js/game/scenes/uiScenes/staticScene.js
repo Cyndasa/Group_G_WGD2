@@ -13,6 +13,7 @@ class staticScene extends Phaser.Scene {
     preload(){
 
         /* Load necessary files for scene */
+        this.load.image('play', 'gameAssets/imageAssets/uiImages/Buttons/Play/Play-Unclicked.png')
 
     }
 
@@ -40,7 +41,6 @@ class staticScene extends Phaser.Scene {
         startButton.setInteractive();
         startButton.setScale(2);
 
-
         /* Change colour of image when hovered over/ off */
         startButton.on('pointerover', ()=>{
             startButton.setTint('0xFF00F5');
@@ -52,14 +52,14 @@ class staticScene extends Phaser.Scene {
         /* Change scene when clicked */
         startButton.on("pointerup",()=>{
             // Change to Main Menu
-            this.scene.start('Menu');
+            this.scene.start('StartUp');
         });
 
-    }
+    };
 
     update(){
 
-    }
+    };
 
 }
 

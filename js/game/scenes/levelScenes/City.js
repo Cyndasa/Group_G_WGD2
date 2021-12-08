@@ -48,8 +48,8 @@ class City extends Phaser.Scene {
         // load tiled
         this.load.tilemapTiledJSON('map', '../gameAssets/imageAssets/City/Worldfiles/City.json');
         this.load.image('tiles', '../../../../gameAssets/imageAssets/City/Environmet/tileset.png');
-        // load spritesheet
-        this.load.spritesheet('player', 'gameAssets/imageAssets/characterSprites/foxSprite/Player-Movement.png',{ frameWidth: 33, frameHeight: 32 });
+/*        // load spritesheet
+        this.load.spritesheet('player', 'gameAssets/imageAssets/characterSprites/foxSprite/Player-Movement.png',{ frameWidth: 33, frameHeight: 32 });*/
     }
 
     create ()
@@ -424,7 +424,7 @@ class City extends Phaser.Scene {
 
     restartLevel(){
         console.log('restart level');
-        this.scene.start('Test');
+        this.scene.start('City');
     }
 
 }

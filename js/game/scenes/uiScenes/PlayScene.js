@@ -8,12 +8,10 @@ class playScene extends Phaser.Scene {
     };
 
     preload(){
-/*
-        this.load.video('video', '../videos/MenuVideo.webm');
-*/
+/*        this.load.video('video', '../videos/MenuVideo.webm');
         this.load.image('online', '../../../../gameAssets/imageAssets/uiImages/Buttons/Online/Online-Unclicked.png');
         this.load.image('single', '../../../../gameAssets/imageAssets/uiImages/Buttons/Single/Single-Unclicked.png');
-/*        this.load.image('exit', '../../../../gameAssets/imageAssets/uiImages/Buttons/Exit/Exit-Unclicked.png');
+        this.load.image('exit', '../../../../gameAssets/imageAssets/uiImages/Buttons/Exit/Exit-Unclicked.png');
         this.load.image('title', '../../../../gameAssets/imageAssets/uiImages/Title/Title.png');*/
     }
 

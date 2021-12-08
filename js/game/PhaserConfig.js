@@ -6,7 +6,7 @@ var config = {
         width: 800,
         height: 600,
     },
-    transparent: true,
+    /*transparent: true,*/
     physics: {
         default: 'matter',
         arcade: {
@@ -20,10 +20,12 @@ var config = {
         },
     },
     inputManager: Phaser.Input.InputManager,
-    scene: [AudioScene,Menu, optionsMenu, playScene, Test, staticScene,LvlSelect,City,loadingScene,LobbySelect],
+/*    scene: [Test]*/  // Use to test specific scene. Swap with other.
+    scene: [staticScene, startUp, Menu, playScene, optionsMenu, LvlSelect, Test, City, LobbySelect, ], // Used for full game
+
 }
     /* Can declare universal variables here */
-var game = new Phaser.Game(config)
+
 var playerController;
 var cursors;
 var text;
@@ -31,11 +33,15 @@ var cam;
 var smoothedControls;
 var smoothMoveCameraTowards;
 
-let playerName;
-let activePlayers;
+/*
 let playerScore;
-
+let activePlayers = [playerController];
+let activePlayers = ['player1', 'player2', 'player3', 'player4']
+*/
+let playerName;
 let timedEvent;
+
+let game = new Phaser.Game(config);
 
 
 

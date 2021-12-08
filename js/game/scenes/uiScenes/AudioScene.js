@@ -24,7 +24,7 @@ class AudioScene extends Phaser.Scene {
             loop: false, //DEBUG. Change back to true for final build
             delay: 0
         }
-        this.menuMusic.play(musicConfig); // Start Playing the menu bg music
+        /*this.menuMusic.play(musicConfig);*/ // Start Playing the menu bg music
         this.scene.start("Menu");
     }
 

@@ -47,8 +47,8 @@ class Test extends Phaser.Scene {
         // load tiled
         this.load.tilemapTiledJSON('map', '../gameAssets/imageAssets/Forrest/environment/layers/Forest-Map.json');
         this.load.image('tiles', '../gameAssets/imageAssets/Forrest/environment/layers/tileset.png');
-        // load spritesheet
-        this.load.spritesheet('player', 'gameAssets/imageAssets/characterSprites/foxSprite/Player-Movement.png',{ frameWidth: 33, frameHeight: 32 });
+/*        // load spritesheet
+        this.load.spritesheet('player', 'gameAssets/imageAssets/characterSprites/foxSprite/Player-Movement.png',{ frameWidth: 33, frameHeight: 32 });*/
     }
 
     create ()
@@ -302,17 +302,25 @@ class Test extends Phaser.Scene {
 
         /* Temp Finish Line */
 
-        let boxShape = this.matter.add.rectangle(2600, 430, 45, 45);
+        let boxShape = this.matter.add.rectangle(2500, 0, 50, 300);
         let boxShapeFill = this.add.graphics({fillStyle: {color: '0x00fF45'} });
 
         boxShapeFill.fillRectShape(boxShape)
 
+
+        // change to overlap so that player passes through finish line
         playerBody.setOnCollideWith(boxShape, pair =>{
             console.log('player has finished race');
-            this.scene.start('Menu');
+            /*this.scene.start('Menu');*/
             /*this.scene.pause();*/
-
         });
+
+
+
+
+
+
+
 
 
         /* Set ability trigger key */
@@ -348,6 +356,7 @@ class Test extends Phaser.Scene {
 */
 
         this.timeText.setText("Time: " + Math.round(lapTime));
+
 
 
         /* Speed up run/sprint
@@ -465,8 +474,4 @@ function updateText ()
         // '\tLeft blocked: ' + playerController.blocked.left,
         // '\tRight blocked: ' + playerController.blocked.right
     ]);
-}
-
-function playerFinish(){
-    console.log('Player has finished race');
 }
