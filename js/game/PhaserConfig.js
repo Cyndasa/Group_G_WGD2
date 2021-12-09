@@ -21,7 +21,7 @@ var config = {
     },
     inputManager: Phaser.Input.InputManager,
 /*    scene: [Test]*/  // Use to test specific scene. Swap with other.
-    scene: [staticScene, startUp, Menu, playScene, optionsMenu, LvlSelect, Test, City, LobbySelect, ], // Used for full game
+    scene: [staticScene,AudioScene, startUp, Menu, playScene, optionsMenu, LvlSelect, Test, City, LobbySelect, ], // Used for full game
 
 }
     /* Can declare universal variables here */

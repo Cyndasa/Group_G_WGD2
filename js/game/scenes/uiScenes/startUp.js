@@ -71,6 +71,8 @@ class startUp extends Phaser.Scene {
         this.load.image('controls', '../../../../gameAssets/imageAssets/uiImages/Buttons/Controls/Controls.png')
         this.load.image('Forest', '../../../../gameAssets/imageAssets/uiImages/Buttons/Forest/Forest-Unclicked.png');
         this.load.image('City', '../../../../gameAssets/imageAssets/uiImages/Buttons/City/City-Unclicked.png');
+        this.load.image('online', '../../../../gameAssets/imageAssets/uiImages/Buttons/Online/Online-Unclicked.png');
+        this.load.image('single', '../../../../gameAssets/imageAssets/uiImages/Buttons/Single/Single-Unclicked.png');
 
         /* Player sprites */
         this.load.spritesheet('player', 'gameAssets/imageAssets/characterSprites/foxSprite/Player-Movement.png',{ frameWidth: 33, frameHeight: 32 });
@@ -91,10 +93,10 @@ class startUp extends Phaser.Scene {
     }
 
     create(){
-
+        this.sound.mute = true;
         /* Create necessary assets or functions for scene */
-
         /* Start next scene */
+        this.scene.start("AudioScene");
         this.scene.start('Menu');
 
     };

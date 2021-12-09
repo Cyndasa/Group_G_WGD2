@@ -19,7 +19,8 @@ class Menu extends Phaser.Scene {
 
     create(){
         //---------Music-------------
-        this.menuMusic = this.sound.add("theme");
+        //Cant have this here as causes an audio glitch which everytime a new scene starts it restarts the music
+        /*this.menuMusic = this.sound.add("theme");
         var musicConfig = {
             mute: 0,
             volume: 0.6,
@@ -27,9 +28,10 @@ class Menu extends Phaser.Scene {
             loop: false, //DEBUG. Change back to true for final build
             delay: 0
         }
-        this.menuMusic.play(musicConfig); // Start Playing the menu bg music
-
+        this.menuMusic.play(musicConfig); // Start Playing the menu bg music*/
+        this.sound.mute = false;
         //----------Video-------------
+
         this.video = this.add.video(450,350, 'video').setLoop(true);
         this.video.play();
         this.video.height = -1000 ;
