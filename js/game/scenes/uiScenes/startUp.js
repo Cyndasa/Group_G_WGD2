@@ -73,6 +73,8 @@ class startUp extends Phaser.Scene {
         this.load.image('City', '../../../../gameAssets/imageAssets/uiImages/Buttons/City/City-Unclicked.png');
         this.load.image('online', '../../../../gameAssets/imageAssets/uiImages/Buttons/Online/Online-Unclicked.png');
         this.load.image('single', '../../../../gameAssets/imageAssets/uiImages/Buttons/Single/Single-Unclicked.png');
+        this.load.image('ForestButton', 'gameAssets/imageAssets/uiImages/Buttons/forestLevelImage.png');
+        this.load.image('CityButton', 'gameAssets/imageAssets/City/Environmet/background/cyberpunk-city-2-back-preview.png');
 
         /* Player sprites */
         this.load.spritesheet('player', 'gameAssets/imageAssets/characterSprites/foxSprite/Player-Movement.png',{ frameWidth: 33, frameHeight: 32 });

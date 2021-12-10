@@ -13,7 +13,7 @@ class LvlSelect extends Phaser.Scene {
         this.load.image('City', '../../../../gameAssets/imageAssets/uiImages/Buttons/City/City-Unclicked.png');
         this.load.image('exit', '../../../../gameAssets/imageAssets/uiImages/Buttons/Exit/Exit-Unclicked.png');
         this.load.image('title', '../../../../gameAssets/imageAssets/uiImages/Title/Title.png');
-        this.load.image('ForestBGButton', 'gameAssets/imageAssets/Forrest/environment/layers/middleground.png')*/
+*/
     }
 
     create(){
@@ -25,7 +25,7 @@ class LvlSelect extends Phaser.Scene {
 
         this.add.image (400, 100 , 'title').setScale(3);
 
-        var CityButton = this.add.image(400, 230, 'City').setScale(1.5);
+/*        var CityButton = this.add.image(400, 230, 'City').setScale(1.5);
         CityButton.setInteractive();
         CityButton.on("pointerup",()=>{
             this.scene.start('City');
@@ -51,15 +51,36 @@ class LvlSelect extends Phaser.Scene {
 
         ForestButton.on('pointerout', ()=>{
             ForestButton.clearTint();
-        });
+        });*/
 
         /* Temp alt style button idea for levels */
-/*        let forestButton = this.add.image(400, 330, 'ForestBGButton').setScale(0.5);
-        let forestButtonText = this.add.text(forestButton.x -40, forestButton.y + 35, 'Forest', {
+
+        let cityButton = this.add.image(150, 330, 'CityButton').setScale(0.25);
+        let cityButtonText = this.add.text(cityButton.x - 25, cityButton.y + 35, 'City', {
             font: '20px',
             color: 'white',
         });
-        forestButton.setTint('0x808080');
+        cityButton.setTint('0x404040');
+        cityButton.setInteractive();
+
+        cityButton.on("pointerup",()=>{
+            this.scene.start('City');
+        });
+
+        cityButton.on('pointerover', ()=>{
+            cityButton.clearTint();
+        });
+
+        cityButton.on('pointerout', ()=>{
+            cityButton.setTint('0x404040');
+        });
+
+        let forestButton = this.add.image(400, 330, 'ForestButton').setScale(0.5);
+        let forestButtonText = this.add.text(forestButton.x -35, forestButton.y + 35, 'Forest', {
+            font: '20px',
+            color: 'white',
+        });
+        forestButton.setTint('0x404040');
         forestButton.setInteractive();
 
         forestButton.on("pointerup",()=>{
@@ -71,11 +92,11 @@ class LvlSelect extends Phaser.Scene {
         });
 
         forestButton.on('pointerout', ()=>{
-            forestButton.setTint('0x808080');
-        });*/
+            forestButton.setTint('0x404040');
+        });
 
 
-        var ExitButton = this.add.image(400, 460, 'exit').setScale(1.5);
+        var ExitButton = this.add.image(400, 500, 'exit').setScale(1.5);
         ExitButton.setInteractive();
         ExitButton.on("pointerup",()=>{
             this.scene.start('Menu');
