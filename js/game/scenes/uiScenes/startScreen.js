@@ -1,9 +1,9 @@
-class staticScene extends Phaser.Scene {
+class startScreen extends Phaser.Scene {
 
     /* Semi-static initial scene */
 
     constructor(){
-        super('StaticScene');
+        super('StartScreen');
     }
 
     init(){
@@ -13,17 +13,17 @@ class staticScene extends Phaser.Scene {
     preload(){
 
         /* Load necessary files for scene */
-        this.load.image('play', 'gameAssets/imageAssets/uiImages/Buttons/Play/Play-Unclicked.png')
+        this.load.image('startButton', 'gameAssets/imageAssets/uiImages/Buttons/Play/Play-Unclicked.png');
 
     }
 
     create(){
 
         /* Add informative text to scene */
-        const infoText = this.add.text(190, 150, '--- Click Button To Start ---', {
-            font: '25px',
-            align: 'centre',
+        const infoText = this.add.text(140, 150, '--- Click Button To Start ---', {
+            font: '30px',
             color: 'white',
+            align: 'center',
         });
         infoText.setAlpha(0);
 
@@ -37,9 +37,10 @@ class staticScene extends Phaser.Scene {
 
 
         /* Create button to move to next scene */
-        const startButton = this.add.image(400, 300, 'play');
+        const startButton = this.add.image(400, 350, 'startButton');
         startButton.setInteractive();
         startButton.setScale(2);
+
 
         /* Change colour of image when hovered over/ off */
         startButton.on('pointerover', ()=>{
@@ -55,11 +56,9 @@ class staticScene extends Phaser.Scene {
             this.scene.start('StartUp');
         });
 
-    };
+    }
 
     update(){
 
-    };
-
+    }
 }
-

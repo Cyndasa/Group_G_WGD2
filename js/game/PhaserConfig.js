@@ -21,7 +21,8 @@ var config = {
     },
     inputManager: Phaser.Input.InputManager,
 /*    scene: [Test]*/  // Used to test specific scene. Swap with other.
-    scene: [staticScene, AudioScene, startUp, Menu, playScene, optionsMenu, LvlSelect, Test, City, LobbySelect, ], // Used for full game
+    scene: [startScreen, startUp, mainMenu, mainMenuButtons, playerProfile, playModeSelect, gameSettings, multiplayerModeSelect,
+        characterSelect, levelSelect, multiplayerLevelSelect, Test, City, LobbySelect], // Comment in/out with above for testing specific scene vs testing game as whole.
 
 }
     /* Can declare universal variables here */
@@ -33,13 +34,26 @@ var cam;
 var smoothedControls;
 var smoothMoveCameraTowards;
 
-/*
-let playerScore;
-let activePlayers = [playerController];
-let activePlayers = ['player1', 'player2', 'player3', 'player4']
-*/
-let playerName;
+
+let previousScene;
 let timedEvent;
+let bgRNG;
+
+let use3Layers = false;
+let use5Layers = false;
+
+let isSinglePlayer = true;
+let isOnlinePlay = false;
+
+let playerManager;
+let playerUsername = 'Guest';
+let playerCharacter;
+let playerScore;
+let raceTime;
+
+let activePlayers = [];
+
+/* Declare global functions */
 
 let game = new Phaser.Game(config);
 

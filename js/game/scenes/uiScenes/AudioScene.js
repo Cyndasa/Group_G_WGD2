@@ -9,8 +9,8 @@ class AudioScene extends Phaser.Scene {
 
     preload(){
         this.load.audio('theme', [
-            'Music/Menu_Music.ogg',
-            'Music/Menu_Music.mp3'
+            'gameAssets/audioAssets/bgm/Menu_Music.ogg',
+            'gameAssets/audioAssets/bgm/Menu_Music.mp3'
         ]);
     }
 

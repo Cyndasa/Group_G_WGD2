@@ -291,7 +291,9 @@ class Test extends Phaser.Scene {
         this.scoreText = scoreText;
 
         /* Temp placeholder for player identifier */
-        playerName = this.add.text(
+        let playerName = playerUsername;
+        this.playerName = playerName;
+        this.playerName = this.add.text(
             playerController.matterSprite.x - 20,
             playerController.matterSprite.y - 25,
             'Player',{
@@ -342,8 +344,8 @@ class Test extends Phaser.Scene {
         var matterSprite = playerController.matterSprite;
 
         /* Updates to have player name follow player */
-        playerName.x = matterSprite.x - 20;
-        playerName.y = matterSprite.y - 25;
+        this.playerName.x = matterSprite.x - 20;
+        this.playerName.y = matterSprite.y - 25;
 
         let lapTime = time * 0.001;
 
