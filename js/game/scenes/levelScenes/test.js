@@ -374,6 +374,7 @@ class Test extends Phaser.Scene {
             this.restartLevel();
         }
 
+
         // Horizontal movement
 
         var oldVelocityX;

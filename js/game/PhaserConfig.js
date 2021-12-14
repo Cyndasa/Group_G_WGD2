@@ -21,7 +21,7 @@ var config = {
     },
     inputManager: Phaser.Input.InputManager,
 /*    scene: [Test]*/  // Used to test specific scene. Swap with other.
-    scene: [startScreen, startUp, mainMenu, mainMenuButtons, playerProfile, playModeSelect, gameSettings, multiplayerModeSelect,
+    scene: [startScreen, startUp, mainMenu, mainMenuButtons, playerProfile, playModeSelect, gameSettings,Controls, multiplayerModeSelect,
         characterSelect, levelSelect, multiplayerLevelSelect, Test, City, LobbySelect], // Comment in/out with above for testing specific scene vs testing game as whole.
 
 }

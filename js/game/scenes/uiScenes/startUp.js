@@ -74,6 +74,10 @@ class startUp extends Phaser.Scene{
         this.load.image('singlePlayer', 'gameAssets/imageAssets/uiImages/Buttons/Single/Single-Unclicked.png');
         this.load.image('onlinePlay', 'gameAssets/imageAssets/uiImages/Buttons/Online/Online-Unclicked.png');
         this.load.image('controlButton', 'gameAssets/imageAssets/uiImages/Buttons/Controls/Controls-Unclicked.png');
+
+        /* Fonts */
+        this.load.bitmapFont('arcade', 'gameAssets/imageAssets/fonts/arcade.png', 'gameAssets/imageAssets/fonts/arcade.xml');
+
         // Start
         // Profile
         // Return

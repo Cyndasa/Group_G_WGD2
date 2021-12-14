@@ -67,7 +67,8 @@ class gameSettings extends Phaser.Scene{
 
         /* functionality  */
         tbdButton.on('pointerup', ()=>{
-
+            this.scene.launch('Controls');
+            this.scene.stop('GameSettings');
         });
 
         /* Return button */
