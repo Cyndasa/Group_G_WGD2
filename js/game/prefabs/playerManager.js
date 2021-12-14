@@ -2,11 +2,17 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite{
 /* Player prefab which should be useful for later version(s) of game*/
 
     /* Declare Variables */
+    // Selected Character
+    // Score
+    // Race Time
+    // Selected Player Controls
+    // Use Power Up
+    //
 
 
     /* Constructor for placing player character into a scene */
-    constructor(scene, x, y,) {
-        super(scene, x, y, );
+    constructor(scene, x, y) {
+        super(scene, x, y );
 
 
     };
@@ -24,6 +30,8 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite{
     updateAnimation(){
 
     };
+
+    /* Smooth Movement */
 
     /* Use collected power-up ability */
     useAbility(){

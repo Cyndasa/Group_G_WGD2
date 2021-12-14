@@ -51,11 +51,13 @@ class startUp extends Phaser.Scene{
         /* Forest */
         this.load.image('forestBG', 'gameAssets/imageAssets/levelImages/forestSet/bg-1.png');
         this.load.image('forestMG', 'gameAssets/imageAssets/levelImages/forestSet/bg-2.png');
+        // Tilemap
 
         /* City */
         this.load.image('cityBG', 'gameAssets/imageAssets/City/Environmet/background/back.png');
         this.load.image('cityMG', 'gameAssets/imageAssets/City/Environmet/background/middle.png');
         this.load.image('cityFG', 'gameAssets/imageAssets/City/Environmet/background/front.png')
+        // Tilemap
 
         /* Mountains dusk */
         this.load.image('mountainBG', 'gameAssets/imageAssets/levelImages/mountainSet/parallax-mountain-bg.png');
@@ -63,6 +65,7 @@ class startUp extends Phaser.Scene{
         this.load.image('mountainMG2', 'gameAssets/imageAssets/levelImages/mountainSet/parallax-mountain-mountains.png');
         this.load.image('mountainFG', 'gameAssets/imageAssets/levelImages/mountainSet/parallax-mountain-trees.png');
         this.load.image('mountainFG2', 'gameAssets/imageAssets/levelImages/mountainSet/parallax-mountain-foreground-trees.png');
+        // Tilemap
 
 
         /* UI buttons */

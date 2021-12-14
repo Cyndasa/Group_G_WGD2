@@ -1,43 +1,8 @@
-var SmoothedHorionztalControl = new Phaser.Class({
-
-    initialize:
-        function SmoothedHorionztalControl (speed)
-        {
-            this.msSpeed = speed;
-            this.value = 0;
-        },
-
-    moveLeft: function (delta)
-    {
-        if (this.value > 0) { this.reset(); }
-        this.value -= this.msSpeed * delta;
-        if (this.value < -1) { this.value = -1; }
-        playerController.time.rightDown += delta;
-    },
-
-    moveRight: function (delta)
-    {
-        if (this.value < 0) { this.reset(); }
-        this.value += this.msSpeed * delta;
-        if (this.value > 1) { this.value = 1; }
-    },
-
-    reset: function ()
-    {
-        this.value = 0;
-    }
-
-
-});
-
 class Test extends Phaser.Scene {
 
     constructor() {
         super('Test');
     };
-
-    // Smoothed horizontal controls helper. This gives us a value between -1 and 1 depending on how long
-// the player has been pressing left or right, respectively.
 
     preload ()
     {
@@ -47,13 +12,34 @@ class Test extends Phaser.Scene {
         // load tiled
         this.load.tilemapTiledJSON('map', '../gameAssets/imageAssets/Forrest/environment/layers/Forest-Map.json');
         this.load.image('tiles', '../gameAssets/imageAssets/Forrest/environment/layers/tileset.png');
+
 /*        // load spritesheet
         this.load.spritesheet('player', 'gameAssets/imageAssets/characterSprites/foxSprite/Player-Movement.png',{ frameWidth: 33, frameHeight: 32 });*/
     }
 
     create ()
     {
+
+        /* Different key bindings for player options / local play */
+        playerControls[0] = this.input.keyboard.addKeys({
+            'up': Phaser.Input.Keyboard.KeyCodes.UP,
+            'down': Phaser.Input.Keyboard.KeyCodes.DOWN,
+            'left': Phaser.Input.Keyboard.KeyCodes.LEFT,
+            'right': Phaser.Input.Keyboard.KeyCodes.RIGHT,
+            'sprint': Phaser.Input.Keyboard.KeyCodes.P,
+            'ability': Phaser.Input.Keyboard.KeyCodes.L
+        });
+        playerControls[1] = this.input.keyboard.addKeys({
+            'up': Phaser.Input.Keyboard.KeyCodes.W,
+            'down': Phaser.Input.Keyboard.KeyCodes.S,
+            'left': Phaser.Input.Keyboard.KeyCodes.A,
+            'right': Phaser.Input.Keyboard.KeyCodes.D,
+            'sprint': Phaser.Input.Keyboard.KeyCodes.G,
+            'ability': Phaser.Input.Keyboard.KeyCodes.H
+        });
+
         // ---------------background ----------------
+
         // create an tiled sprite with the size of our game screen
         this.bg_1 = this.add.tileSprite(0, 0, game.config.width * 3.0, game.config.height, "bg_1").setScale(2.5);
         // Set its pivot to the top left corner
@@ -84,7 +70,8 @@ class Test extends Phaser.Scene {
         this.matter.world.createDebugGraphic();
         this.matter.world.drawDebug = false;
 
-        cursors = this.input.keyboard.createCursorKeys();
+        //cursors = this.input.keyboard.createCursorKeys();
+        cursors = playerControls[0]; // Set controls to players chosen set
         smoothedControls = new SmoothedHorionztalControl(1);
 
         // The player is a collection of bodies and sensorsl;
@@ -185,7 +172,7 @@ class Test extends Phaser.Scene {
             key: 'jump',
             frames: this.anims.generateFrameNumbers('player', { start: 16, end: 17 }),
             /*frameRate: 16,*/
-            frameRate: 12,
+            frameRate: 16,
             repeat: -1
         });
 
@@ -262,15 +249,13 @@ class Test extends Phaser.Scene {
         const scoreValue = 0;
         this.scoreValue = scoreValue;
 
-        const raceTime = 0;
-        this.raceTime = raceTime;
+        /* Time Trigger */
+        this.start = this.getTime();
+        //this.input.on('pointerdown', this.getRaceTime.bind(this));
 
-        /* Doesn't work as intended but does display somewhat as intended */
-        timedEvent = new Phaser.Time.TimerEvent({delay: 6000 , duration: 60000, loop: true });
-        this.time.addEvent(timedEvent);
 
         /* Timer UI */
-        const timeText = this.add.text(625 , 10, "Time: " + raceTime, {
+        const timeText = this.add.text(600 , 10, "Time: " + raceTime, {
             font: "25px",
             align: "center",
             color: "red",
@@ -281,7 +266,7 @@ class Test extends Phaser.Scene {
 
         /* Score UI */
 
-        const scoreText = this.add.text(625, 50, "Score: " + scoreValue, {
+        const scoreText = this.add.text(600, 50, "Score: " + scoreValue, {
             font: "25px",
             align: "center",
             color: "white",
@@ -291,8 +276,7 @@ class Test extends Phaser.Scene {
         this.scoreText = scoreText;
 
         /* Temp placeholder for player identifier */
-        let playerName = playerUsername;
-        this.playerName = playerName;
+        this.playerName = playerUsername;
         this.playerName = this.add.text(
             playerController.matterSprite.x - 20,
             playerController.matterSprite.y - 25,
@@ -302,39 +286,19 @@ class Test extends Phaser.Scene {
                 color: 'white',
             });
 
+
         /* Temp Finish Line */
-
-        let boxShape = this.matter.add.rectangle(2500, 0, 50, 300);
-        let boxShapeFill = this.add.graphics({fillStyle: {color: '0x00fF45'} });
-
-        boxShapeFill.fillRectShape(boxShape)
-
-
-        // change to overlap so that player passes through finish line
-        playerBody.setOnCollideWith(boxShape, pair =>{
-            console.log('player has finished race');
-            /*this.scene.start('Menu');*/
-            /*this.scene.pause();*/
-        });
+        let finishLine = this.add.graphics({lineStyle: {width: 30, color: '0x00FF05', alpha: 0.3}});
+        this.lineShape = new Phaser.Geom.Line(2575, 0, 2575, 600);
+        finishLine.strokeLineShape(this.lineShape);
+        this.matter.add.gameObject(finishLine).setStatic(true).setSensor(true);
 
 
 
+        // this will be the death of me, everything seems to be about preventing overlap with matter physics not causing it.
+        //this.matter.overlap(boxShape, playerController.matterSprite, this.finishRace, this);
 
 
-
-
-
-
-        /* Set ability trigger key */
-/*
-        let usePower = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
-*/
-
-        /* Set alt controls */
-
-/*        let jumpAlt = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
-        let leftAlt = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
-        let rightAlt = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);*/
 
 
     }
@@ -347,31 +311,31 @@ class Test extends Phaser.Scene {
         this.playerName.x = matterSprite.x - 20;
         this.playerName.y = matterSprite.y - 25;
 
-        let lapTime = time * 0.001;
+        let elapsed = this.getTime()-this.start;
+        raceTime = elapsed;
+        this.raceTime = raceTime;
 
-        let timeElapsed = timedEvent.getProgress();
+
 
         /* Update UI Components */
         this.scoreText.setText("Score: " + this.scoreValue);
-/*
-        this.timeText.setText("Time: " + timeElapsed.toString().substr(0,4));
-*/
-
-        this.timeText.setText("Time: " + Math.round(lapTime));
+        this.timeText.setText("Time: " + this.raceTime);
 
 
 
-        /* Speed up run/sprint
-        *
-        * if leftShift is down
-        * times playerController.speed.run by 2
-        * make framerate of run anim = 16/24
-        *
-        * */
+        /* Speed up run/sprint */
+        if(cursors.sprint.isDown){
+            // modify player run speed for x seconds
+            console.log('Player is sprinting');
+        }
 
-        /* Quick debug trigger to restart level if issue. Can be switch for more applicable uses later. */
-        if(cursors.space.isDown){
-            this.restartLevel();
+
+        /* Use power-up ability */
+        if(cursors.ability.isDown){
+            // if player has power up, can use & activate power up
+            console.log('Player used power-up');
+            this.getRaceTime();
+            //this.restartLevel(); // Temp debug line
         }
 
 
@@ -420,6 +384,7 @@ class Test extends Phaser.Scene {
         var canJump = (time - playerController.lastJumpedAt) > 250;
         if (cursors.up.isDown & canJump)
         {
+            //matterSprite.anims.play('jump', true);
             if (playerController.blocked.bottom)
             {
                 matterSprite.setVelocityY(-playerController.speed.jump);
@@ -439,7 +404,7 @@ class Test extends Phaser.Scene {
                 matterSprite.setVelocityX(-playerController.speed.run);
                 playerController.lastJumpedAt = time;
             }
-            matterSprite.anims.play('right', true);
+            /*matterSprite.anims.play('right', true);*/
         }
 
         smoothMoveCameraTowards(matterSprite, 1);
@@ -457,13 +422,20 @@ class Test extends Phaser.Scene {
         this.scene.start('Test');
     }
 
-}
+    finishRace(){
 
-function smoothMoveCameraTowards (target, smoothFactor)
-{
-    if (smoothFactor === undefined) { smoothFactor = 0; }
-    cam.scrollX = smoothFactor * cam.scrollX + (1 - smoothFactor) * (target.x - cam.width * 0.5);
-    cam.scrollY = smoothFactor * cam.scrollY + (1 - smoothFactor) * (target.y - cam.height * 0.5);
+    }
+
+    getTime() {
+        let d = new Date();
+        return d.getTime();
+    }
+
+    getRaceTime(){
+        let elapsed = this.getTime()-this.start;
+        raceTime = elapsed;
+        console.log('delta time = ' + elapsed);
+    }
 }
 
 function updateText ()
