@@ -73,6 +73,7 @@ class startUp extends Phaser.Scene{
         this.load.image('unMuteButton', 'gameAssets/imageAssets/uiImages/Buttons/MuteButtons/Unmute.png');
         this.load.image('singlePlayer', 'gameAssets/imageAssets/uiImages/Buttons/Single/Single-Unclicked.png');
         this.load.image('onlinePlay', 'gameAssets/imageAssets/uiImages/Buttons/Online/Online-Unclicked.png');
+        this.load.image('controlButton', 'gameAssets/imageAssets/uiImages/Buttons/Controls/Controls-Unclicked.png');
         // Start
         // Profile
         // Return

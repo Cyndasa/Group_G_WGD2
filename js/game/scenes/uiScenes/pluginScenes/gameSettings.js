@@ -52,7 +52,7 @@ class gameSettings extends Phaser.Scene{
         });
 
         /* TBD button */
-        const tbdButton = this.add.image(400, 440, 'unMuteButton');
+        const tbdButton = this.add.image(400, 440, 'controlButton');
         tbdButton.setInteractive();
         tbdButton.setScale(1.5);
         tbdButton.setScrollFactor(0);
