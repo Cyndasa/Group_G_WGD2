@@ -251,11 +251,10 @@ class Test extends Phaser.Scene {
 
         /* Time Trigger */
         this.start = this.getTime();
-        //this.input.on('pointerdown', this.getRaceTime.bind(this));
 
 
         /* Timer UI */
-        const timeText = this.add.text(600 , 10, "Time: " + raceTime, {
+        const timeText = this.add.text(600 , 10, "Time: 00:00:00",{
             font: "25px",
             align: "center",
             color: "red",
@@ -286,22 +285,27 @@ class Test extends Phaser.Scene {
                 color: 'white',
             });
 
-
         /* Temp Finish Line */
-        let finishLine = this.add.graphics({lineStyle: {width: 30, color: '0x00FF05', alpha: 0.3}});
-        this.lineShape = new Phaser.Geom.Line(2575, 0, 2575, 600);
-        finishLine.strokeLineShape(this.lineShape);
-        this.matter.add.gameObject(finishLine).setStatic(true).setSensor(true);
+        //let lineShape = new Phaser.Geom.Line(2575, 0, 2575, 600);
+        let lineShape = this.add.line(2580, 300, 2570, 0, 2650, 600);
+        let finishLine = this.matter.add.gameObject(lineShape, {lineStyle: {width: 30, color: '0x00FF05', alpha: 0.3}});
+        //finishLine.strokeLineShape(lineShape);
+        finishLine.setStatic(true);
+        finishLine.setSensor(true);
 
+        // Phaser wins
+        //this.matter.world.on('collisionstart', this.finishRace, playerBody, finishLine);
 
+        finishLine.setOnCollideWith(playerBody, pair =>{
+            this.finishRace();
+        });
 
-        // this will be the death of me, everything seems to be about preventing overlap with matter physics not causing it.
-        //this.matter.overlap(boxShape, playerController.matterSprite, this.finishRace, this);
-
-
-
+/*        playerBody.setOnCollideWith(finishLine, pair =>{
+            this.finishRace();
+        })*/
 
     }
+
 
     update (time, delta)
     {
@@ -313,15 +317,32 @@ class Test extends Phaser.Scene {
 
         let elapsed = this.getTime()-this.start;
         raceTime = elapsed;
-        this.raceTime = raceTime;
 
+        let minutes = Math.floor(elapsed / 60000);
+        let maxSeconds = 60;
+        let seconds = Math.floor(elapsed / 1000);
+        let hSeconds = elapsed % 60;
+
+        if (seconds >= maxSeconds){
+            seconds -= 60;
+        }
+
+        if (seconds < 10){
+            seconds = '0' + seconds;
+        }
+
+        this.minutes = minutes;
+        this.seconds = seconds;
+        this.hSeconds = hSeconds;
+
+
+        this.raceTime = raceTime;
 
 
         /* Update UI Components */
         this.scoreText.setText("Score: " + this.scoreValue);
-        this.timeText.setText("Time: " + this.raceTime);
-
-
+        //this.timeText.setText("Time: " + this.raceTime);
+        this.timeText.setText('Time:' + minutes + ':' + seconds + ':' + hSeconds);
 
         /* Speed up run/sprint */
         if(cursors.sprint.isDown){
@@ -423,7 +444,8 @@ class Test extends Phaser.Scene {
     }
 
     finishRace(){
-
+        console.log('Race Finished');
+        console.log('Lap Time: ' + this.minutes + ':' + this.seconds + ':' + this.hSeconds);
     }
 
     getTime() {

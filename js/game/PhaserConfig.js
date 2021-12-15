@@ -16,7 +16,10 @@ var config = {
         matter: {
             gravity: { y: 1 },
             enableSleep: false,
-            debug: true
+            debug: {
+                showBody: true,
+                showStaticBody: true
+            }
         },
     },
     inputManager: Phaser.Input.InputManager,
