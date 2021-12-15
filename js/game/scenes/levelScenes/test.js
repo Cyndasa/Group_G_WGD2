@@ -450,7 +450,15 @@ class Test extends Phaser.Scene {
     finishRace(){
         console.log('Race Finished');
         console.log('Lap Time: ' + this.minutes + ':' + this.seconds + ':' + this.hSeconds);
+        console.log('Delta Race Time: ' + this.elapsed);
         console.log('Score: ' + this.scoreValue);
+
+        playerScore = this.scoreValue;
+        raceTime = (' ' + (this.minutes) + ' : ' + (this.seconds) + ' : ' + (this.hSeconds)) + ' '; // Not currently working right
+        deltaRaceTime = this.elapsed;
+
+        this.scene.start('ResultsScreen');
+
     }
 
     getTime() {

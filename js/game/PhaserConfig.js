@@ -25,7 +25,7 @@ var config = {
     inputManager: Phaser.Input.InputManager,
 /*    scene: [Test]*/  // Used to test specific scene. Swap with other.
     scene: [startScreen, startUp, mainMenu, mainMenuButtons, playerProfile, playModeSelect, gameSettings,Controls, multiplayerModeSelect,
-        characterSelect, levelSelect, multiplayerLevelSelect, Test, City, LobbySelect], // Comment in/out with above for testing specific scene vs testing game as whole.
+        characterSelect, levelSelect, multiplayerLevelSelect, Test, City, LobbySelect, resultsScreen], // Comment in/out with above for testing specific scene vs testing game as whole.
 
 }
     /* Can declare universal variables here */
@@ -55,6 +55,7 @@ let playerUsername = 'Guest';
 let playerCharacter;
 let playerScore;
 let raceTime;
+let deltaRaceTime;
 
 // For Local Play
 //let playerManager2;

@@ -19,7 +19,7 @@ class Controls extends Phaser.Scene {
         titleHeader.setScrollFactor(0); // Set scroll factor to zero to prevent movement
 
         /* Temporary text to mark scene - COMMENT OUT OR REMOVE FOR SUBMISSION */
-        this.add.text(250, 150, '----Game Settings----', {
+        this.add.text(250, 150, '----Game Controls----', {
             font: '20px',
             color: 'white',
             backgroundColor: 'darkblue',
@@ -41,6 +41,7 @@ class Controls extends Phaser.Scene {
             'Spacebar - Use Power Ups',
             'Esc - Escape'
         ]);
+
         /* Create menu buttons */
         /* Return button */
         const returnButton = this.add.image(400, 540, 'exitButton');
