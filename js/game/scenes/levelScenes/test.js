@@ -246,8 +246,7 @@ class Test extends Phaser.Scene {
         /* UI Components */
 
         /* Placeholder Values */
-        const scoreValue = 0;
-        this.scoreValue = scoreValue;
+        const scoreValue = 50000;
 
         /* Time Trigger */
         this.start = this.getTime();
@@ -315,33 +314,38 @@ class Test extends Phaser.Scene {
         this.playerName.x = matterSprite.x - 20;
         this.playerName.y = matterSprite.y - 25;
 
+        /* Set up elapsed time */
         let elapsed = this.getTime()-this.start;
         raceTime = elapsed;
 
+        /* Create race time components */
         let minutes = Math.floor(elapsed / 60000);
         let maxSeconds = 60;
         let seconds = Math.floor(elapsed / 1000);
         let hSeconds = elapsed % 60;
 
+        /* Reset seconds value to 0 when equal to or greater than 60 */
         if (seconds >= maxSeconds){
             seconds -= 60;
         }
 
+        /* Display 0 in front of seconds value if less than 10 */
         if (seconds < 10){
             seconds = '0' + seconds;
         }
 
+        /* Make race time components accessible */
         this.minutes = minutes;
         this.seconds = seconds;
         this.hSeconds = hSeconds;
+        this.elapsed = elapsed;
 
-
-        this.raceTime = raceTime;
+        // Calculate score as it's subtracted by elapsed time
+        this.scoreValue = 50000 - (Math.floor(elapsed/10));
 
 
         /* Update UI Components */
         this.scoreText.setText("Score: " + this.scoreValue);
-        //this.timeText.setText("Time: " + this.raceTime);
         this.timeText.setText('Time:' + minutes + ':' + seconds + ':' + hSeconds);
 
         /* Speed up run/sprint */
@@ -446,6 +450,7 @@ class Test extends Phaser.Scene {
     finishRace(){
         console.log('Race Finished');
         console.log('Lap Time: ' + this.minutes + ':' + this.seconds + ':' + this.hSeconds);
+        console.log('Score: ' + this.scoreValue);
     }
 
     getTime() {
