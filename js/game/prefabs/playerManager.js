@@ -1,4 +1,4 @@
-class PlayerManager extends Phaser.Physics.Matter.Sprite(){
+class PlayerManager extends Phaser.Physics.Matter.Sprite{
 /* Player prefab which should be useful for later version(s) of game*/
 
     /* Declare Variables */
@@ -27,9 +27,8 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite(){
         this.cursors = playerControls[controlScheme];
 
 
-
         switch(character){
-            case 'headsFox':
+            case 'HeadsTheFox':
                 this.moveSpeed = 3;
                 this.jumpHeight = 6;
 

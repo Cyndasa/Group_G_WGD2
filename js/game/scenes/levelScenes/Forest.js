@@ -85,9 +85,24 @@ class Forest extends Phaser.Scene {
         smoothedControls = new SmoothedHorionztalControl(1);
 
         // The player is a collection of bodies and sensors;
+/*
+        if(playerCharacter === 'HeadsTheFox'){
+            this.thisChar = this.matter.add.sprite(0, 0, 'headsFox', 4);
+        }
+        if (playerCharacter === 'default'){
+            this.thisChar = this.matter.add.sprite(0, 0, 'headsFox', 4).setTint('0x00F4FF')
+        }*/
+
+        switch(playerCharacter){
+            case 'HeadsTheFox':
+                this.thisChar = this.matter.add.sprite(0, 0, 'headsFox', 4);
+                break;
+            default:
+                this.thisChar = this.matter.add.sprite(0, 0, 'headsFox', 4).setTint('0x00F4FF');
+        }
 
         playerController = {
-            matterSprite: this.matter.add.sprite(0, 0, 'headsFox', 4),
+            matterSprite: this.thisChar,
             blocked: {
                 left: false,
                 right: false,
