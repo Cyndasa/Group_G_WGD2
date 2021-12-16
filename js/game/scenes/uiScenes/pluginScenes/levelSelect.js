@@ -80,13 +80,13 @@ class levelSelect extends Phaser.Scene{
             // Write Message saying level not currently available
         });
 
-        mountainSelect.on('pointerover', ()=>{
+/*        mountainSelect.on('pointerover', ()=>{
             mountainSelect.clearTint();
         });
 
         mountainSelect.on('pointerout', ()=>{
             mountainSelect.setTint('0x404040');
-        });
+        });*/
 
 
         /* Return button */

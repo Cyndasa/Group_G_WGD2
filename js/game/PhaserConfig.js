@@ -54,7 +54,7 @@ let playerManager;
 let playerUsername = 'Guest';
 let playerCharacter;
 let playerScore;
-let raceTime;
+let raceTime = [];
 let deltaRaceTime;
 
 // For Local Play

@@ -1,8 +1,12 @@
 class characterSelect extends Phaser.Scene{
 
+    isSelected = false;
+
     constructor() {
         super('CharacterSelect');
+
     }
+
     init(){
 
     }
@@ -53,7 +57,46 @@ class characterSelect extends Phaser.Scene{
         // If implemented display stats (run speed, sprint speed, health etc) beside flavour text
         // If local play is implemented will need to ensure player 2 can select/display character
 
-        /* Heads the Fox - Default Character  */
+
+        /* Create Character Select buttons */
+
+        /* Heads the Fox select */
+        let headsSelect = this.add.image(100, 250, 'headsTheFoxCharSelect').setScale(0.25);
+        headsSelect.setTint('0x404040');
+        headsSelect.setInteractive();
+
+        headsSelect.on("pointerup",()=>{
+            if(this.isSelected === true){
+                this.isSelected = false;
+            }
+            else{
+                this.isSelected = true;
+                headsSelect.clearTint();
+                // set character to display in section
+            }
+        });
+
+        headsSelect.on('pointerover', ()=>{
+            if(this.isSelected === false){
+                headsSelect.clearTint();
+            }
+        });
+
+        headsSelect.on('pointerout', ()=>{
+            if(this.isSelected === false){
+                headsSelect.setTint('0x404040');
+            }
+        });
+
+
+        /* Section that displays the idle animation of selected character */
+
+        /* Section that displays the stats of selected character */
+
+        /* Section that displays the flavour text of selected character */
+
+        /* Confirm selection button ?
+        * Add if statement for displaying local multiplayer option so player 2 can confirm selection */
 
 
         /* Create menu buttons depending on previous scene */

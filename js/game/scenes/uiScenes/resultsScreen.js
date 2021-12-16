@@ -19,7 +19,7 @@ class resultsScreen extends Phaser.Scene{
 
         resultsText.setText([
             'Player: ' + playerUsername,
-            'Race Time: ' + raceTime,
+            'Race Time: ' + raceTime, //Doesn't display correctly, shows the delta time + additional amount compared to race end
             'Score: ' + playerScore,
             'Position: ',
         ]);

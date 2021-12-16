@@ -98,10 +98,13 @@ class startUp extends Phaser.Scene{
         /* Level select images */
         this.load.image('forestLevelSelect', 'gameAssets/imageAssets/uiImages/Buttons/forestLevelImage.png');
         this.load.image('cityLevelSelect', 'gameAssets/imageAssets/City/Environmet/background/cyberpunk-city-2-back-preview.png');
-        this.load.image('mountainLevelSelect', 'gameAssets/imageAssets/uiImages/Buttons/mountainLevelSelect.png')
+        this.load.image('mountainLevelSelect', 'gameAssets/imageAssets/uiImages/Buttons/mountainLevelSelect.png');
         // Frame to go on top of above images
 
         /* Character assets */
+
+        /* Heads the Fox */
+        this.load.image('headsTheFoxCharSelect', 'gameAssets/imageAssets/uiImages/Buttons/heads-the-fox-charSelect.png');
         this.load.spritesheet('headsFox', 'gameAssets/imageAssets/characterSprites/foxSprite/Player-Movement.png',{ frameWidth: 33, frameHeight: 32 });
 
         /* Music assets */

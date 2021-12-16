@@ -417,7 +417,7 @@ class Forest extends Phaser.Scene {
         console.log('Score: ' + this.scoreValue);
 
         playerScore = this.scoreValue;
-        raceTime = (' ' + (this.minutes) + ' : ' + (this.seconds) + ' : ' + (this.hSeconds)) + ' '; // Not currently working right
+        raceTime = ([this.minutes, this.seconds, this.hSeconds]); // Not currently working right
         deltaRaceTime = this.elapsed;
 
         this.scene.start('ResultsScreen');
