@@ -309,7 +309,7 @@ class Forest extends Phaser.Scene {
 
         /* Update UI Components */
         this.scoreText.setText("Score: " + this.scoreValue);
-        this.timeText.setText('Time:' + minutes + ':' + seconds + ':' + hSeconds);
+        this.timeText.setText('Time: 0' + minutes + ':' + seconds + ':' + hSeconds);
         this.playerName.setText(playerUsername);
 
         /* Speed up run/sprint */
@@ -325,6 +325,12 @@ class Forest extends Phaser.Scene {
             console.log('Player used power-up');
             this.getRaceTime();
             //this.restartLevel(); // Temp debug line
+        }
+
+        /* Fail condition / Timed out connection */
+        if(this.scoreValue<= 0){
+            console.log('Game Over, your connection timed out or you took too long');
+            this.scene.start('MainMenu');
         }
 
 
