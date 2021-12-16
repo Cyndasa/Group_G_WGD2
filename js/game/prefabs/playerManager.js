@@ -27,7 +27,6 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite{
 
 
 
-
         switch(character){
             case 'headsFox':
 
@@ -48,11 +47,9 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite{
     };
 
     create(){
-        console.log("The Player Lives"); // Debug Line, comment out or delete
     };
 
     update(){
-        console.log("The Player Thinks & Acts"); // Debug Line, comment out or delete
 
     };
 
@@ -65,20 +62,19 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite{
 
     /* Use collected power-up ability */
     useAbility(){
-        console.log('The Player Uses A Power'); // Debug Line, comment out or delete
 
     }
 
     /* Set collision function for collision with Collectible */
     collectItem(player, collectObj){
         console.log('Collected' + collectObj + ' '); // Debug Line, comment out or delete
+
     };
 
 
     /* Calculate final score for player */
     finalScoreCalculation(){
+
     };
-
-
 
 }

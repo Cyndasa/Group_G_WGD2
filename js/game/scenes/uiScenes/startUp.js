@@ -122,6 +122,24 @@ class startUp extends Phaser.Scene{
     create(){
 
         /* Create any necessary assets */
+        /* Different key bindings for player options / local play */
+        this.playerControls = [];
+        this.playerControls[0] = this.input.keyboard.addKeys({
+            'up': Phaser.Input.Keyboard.KeyCodes.UP,
+            'down': Phaser.Input.Keyboard.KeyCodes.DOWN,
+            'left': Phaser.Input.Keyboard.KeyCodes.LEFT,
+            'right': Phaser.Input.Keyboard.KeyCodes.RIGHT,
+            'sprint': Phaser.Input.Keyboard.KeyCodes.P,
+            'ability': Phaser.Input.Keyboard.KeyCodes.L
+        });
+        this.playerControls[1] = this.input.keyboard.addKeys({
+            'up': Phaser.Input.Keyboard.KeyCodes.W,
+            'down': Phaser.Input.Keyboard.KeyCodes.S,
+            'left': Phaser.Input.Keyboard.KeyCodes.A,
+            'right': Phaser.Input.Keyboard.KeyCodes.D,
+            'sprint': Phaser.Input.Keyboard.KeyCodes.G,
+            'ability': Phaser.Input.Keyboard.KeyCodes.H
+        });
 
 
         /* Character sprite animations */
