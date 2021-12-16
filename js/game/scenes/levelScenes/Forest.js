@@ -2,7 +2,12 @@ class Forest extends Phaser.Scene {
 
     constructor() {
         super('Forest');
+
     };
+
+    init(){
+
+    }
 
     preload ()
     {
@@ -23,6 +28,7 @@ class Forest extends Phaser.Scene {
     {
 
         /* Different key bindings for player options / local play */
+        // Default key bindings
         playerControls[0] = this.input.keyboard.addKeys({
             'up': Phaser.Input.Keyboard.KeyCodes.UP,
             'down': Phaser.Input.Keyboard.KeyCodes.DOWN,
@@ -31,6 +37,7 @@ class Forest extends Phaser.Scene {
             'sprint': Phaser.Input.Keyboard.KeyCodes.P,
             'ability': Phaser.Input.Keyboard.KeyCodes.L
         });
+        // Alt key bindings
         playerControls[1] = this.input.keyboard.addKeys({
             'up': Phaser.Input.Keyboard.KeyCodes.W,
             'down': Phaser.Input.Keyboard.KeyCodes.S,
@@ -140,6 +147,7 @@ class Forest extends Phaser.Scene {
             .setExistingBody(compoundBody)
             .setFixedRotation() // Sets max inertia to prevent rotation
             .setPosition(spawnPoint.x,spawnPoint.y);
+
 
         /* Set up scene camera */
         cam = this.cameras.main;
@@ -261,9 +269,9 @@ class Forest extends Phaser.Scene {
         });
 
         // Create player(s)
-        //this.player = new playerManager(this, 0, 0, playerCharacter, playerControls[0]);
-        /* If local multiplayer has been chosen */
-/*        if (isSinglePlayer === false && isOnlinePlay === false){
+        //this.player2 = new PlayerManager(this, 0, 0, playerCharacter, 1);
+/*         If local multiplayer has been chosen
+        if (isSinglePlayer === false && isOnlinePlay === false){
             this.player2 = new playerManager(this, )
         }*/
     }

@@ -50,7 +50,7 @@ let playerControls = [];
 let isSinglePlayer = true;
 let isOnlinePlay = false;
 
-let playerManager;
+//let playerManager;
 let playerUsername = 'Guest';
 let playerCharacter;
 let playerScore;

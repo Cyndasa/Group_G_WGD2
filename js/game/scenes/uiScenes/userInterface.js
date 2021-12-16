@@ -1,4 +1,12 @@
 class userInterface extends Phaser.Scene{
+    /* Ideally this could be loaded in to display all of the ui elements for a game level such as:
+    * Race Time
+    * Score Counter
+    * Full Screen
+    * Player Name
+    * Available power up
+    * and other */
+
     constructor() {
         super();
     }

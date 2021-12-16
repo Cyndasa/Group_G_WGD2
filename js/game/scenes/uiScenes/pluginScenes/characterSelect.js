@@ -68,10 +68,13 @@ class characterSelect extends Phaser.Scene{
         headsSelect.on("pointerup",()=>{
             if(this.isSelected === true){
                 this.isSelected = false;
+                playerCharacter = 'default';
             }
             else{
                 this.isSelected = true;
                 headsSelect.clearTint();
+                playerCharacter = 'headsFox';
+                console.log('player has currently selected' + playerCharacter);
                 // set character to display in section
             }
         });

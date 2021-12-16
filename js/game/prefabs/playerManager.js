@@ -1,4 +1,4 @@
-class PlayerManager extends Phaser.Physics.Matter.Sprite{
+class PlayerManager extends Phaser.Physics.Matter.Sprite(){
 /* Player prefab which should be useful for later version(s) of game*/
 
     /* Declare Variables */
@@ -9,34 +9,41 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite{
     // Use Power Up
     //
 
-    cursors;
+    matterSprite;
+    blocked;
+    numTouching;
+    sensors;
+    time;
+    lastJumpedAt;
+    moveSpeed;
+    jumpHeight;
     selectedCharacter;
-    selectedControls;
 
 
     /* Constructor for placing player character into a scene */
     constructor(scene, x, y, character, controlScheme) {
         super(scene, x, y, 'player');
-
         scene.add.existing(this);
-        this.selectedCharacter = character;
-        this.cursors = scene.playerControls[controlScheme];
-
-
-
+        this.cursors = playerControls[controlScheme];
 
 
 
         switch(character){
             case 'headsFox':
-
+                this.moveSpeed = 3;
+                this.jumpHeight = 6;
 
                 break;
-            case 'other':
+            case 'newChar':
+                this.moveSpeed = 4;
+                this.jumpHeight = 4;
 
                 break;
             default:
-
+                this.selectedCharacter = 'headsFox';
+                this.moveSpeed = 3;
+                this.jumpHeight = 6;
+                // Add a tint to character sprite
 
 
         }
@@ -50,6 +57,27 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite{
     };
 
     update(){
+
+        if (this.cursors.right.isDown){
+            this.setVelocityX(this.moveSpeed);
+            this.anims.play('right');
+        }
+        else if(this.cursors.left.isDown){
+            this.setVelocityX(this.moveSpeed);
+            this.anims.play('left');
+        }
+        else{
+            this.anims.play('idle');
+        }
+
+        if(this.cursors.up.isDown){
+            this.setVelocityY(-this.jumpHeight);
+            this.anims.play('jump');
+        }
+
+        if(this.cursors.sprint.isDown){
+            this.moveSpeed *= 2;
+        }
 
     };
 
