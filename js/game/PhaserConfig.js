@@ -23,9 +23,9 @@ var config = {
         },
     },
     inputManager: Phaser.Input.InputManager,
-/*    scene: [Test]*/  // Used to test specific scene. Swap with other.
+/*    scene: [Forest]*/  // Used to test specific scene. Swap with other.
     scene: [startScreen, startUp, mainMenu, mainMenuButtons, playerProfile, playModeSelect, gameSettings,Controls, multiplayerModeSelect,
-        characterSelect, levelSelect, multiplayerLevelSelect, Test, City, LobbySelect, resultsScreen], // Comment in/out with above for testing specific scene vs testing game as whole.
+        characterSelect, levelSelect, multiplayerLevelSelect, Forest, City, LobbySelect, resultsScreen], // Comment in/out with above for testing specific scene vs testing game as whole.
 
 }
     /* Can declare universal variables here */
@@ -45,7 +45,7 @@ let bgRNG;
 let use3Layers = false;
 let use5Layers = false;
 
-const playerControls = [];
+let playerControls = [];
 
 let isSinglePlayer = true;
 let isOnlinePlay = false;

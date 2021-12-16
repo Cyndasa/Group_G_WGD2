@@ -1,27 +1,30 @@
-class Test extends Phaser.Scene {
+class Forest extends Phaser.Scene {
 
     constructor() {
-        super('Test');
+        super('Forest');
     };
 
     preload ()
     {
+/*
+        // Uncomment when testing level on it's own
         // load all assets tile sprites
-        this.load.image("bg_1", "gameAssets/imageAssets/levelImages/forestSet/bg-1.png");
-        this.load.image("bg_2", "gameAssets/imageAssets/levelImages/forestSet/bg-2.png");
+        this.load.image("forestBG", "gameAssets/imageAssets/levelImages/forestSet/bg-1.png");
+        this.load.image("forestMG", "gameAssets/imageAssets/levelImages/forestSet/bg-2.png");
         // load tiled
-        this.load.tilemapTiledJSON('map', '../gameAssets/imageAssets/Forrest/environment/layers/Forest-Map.json');
-        this.load.image('tiles', '../gameAssets/imageAssets/Forrest/environment/layers/tileset.png');
-
-/*        // load spritesheet
-        this.load.spritesheet('player', 'gameAssets/imageAssets/characterSprites/foxSprite/Player-Movement.png',{ frameWidth: 33, frameHeight: 32 });*/
+        this.load.tilemapTiledJSON('forestMap', '../gameAssets/imageAssets/Forrest/environment/layers/Forest-Map.json');
+        this.load.image('forestTiles', '../gameAssets/imageAssets/Forrest/environment/layers/tileset.png');
+        // load spritesheet
+        this.load.spritesheet('headsFox', 'gameAssets/imageAssets/characterSprites/foxSprite/Player-Movement.png',{ frameWidth: 33, frameHeight: 32 });
+   */
     }
 
     create ()
     {
 
         /* Different key bindings for player options / local play */
-        playerControls[0] = this.input.keyboard.addKeys({
+        this.playerControls = [];
+        this.playerControls[0] = this.input.keyboard.addKeys({
             'up': Phaser.Input.Keyboard.KeyCodes.UP,
             'down': Phaser.Input.Keyboard.KeyCodes.DOWN,
             'left': Phaser.Input.Keyboard.KeyCodes.LEFT,
@@ -29,7 +32,7 @@ class Test extends Phaser.Scene {
             'sprint': Phaser.Input.Keyboard.KeyCodes.P,
             'ability': Phaser.Input.Keyboard.KeyCodes.L
         });
-        playerControls[1] = this.input.keyboard.addKeys({
+        this.playerControls[1] = this.input.keyboard.addKeys({
             'up': Phaser.Input.Keyboard.KeyCodes.W,
             'down': Phaser.Input.Keyboard.KeyCodes.S,
             'left': Phaser.Input.Keyboard.KeyCodes.A,
@@ -38,10 +41,10 @@ class Test extends Phaser.Scene {
             'ability': Phaser.Input.Keyboard.KeyCodes.H
         });
 
-        // ---------------background ----------------
+        // --------------- background ----------------
 
         // create an tiled sprite with the size of our game screen
-        this.bg_1 = this.add.tileSprite(0, 0, game.config.width * 3.0, game.config.height, "bg_1").setScale(2.5);
+        this.bg_1 = this.add.tileSprite(0, 0, game.config.width * 3.0, game.config.height, "forestBG").setScale(2.5);
         // Set its pivot to the top left corner
         this.bg_1.setOrigin(0, 0.4);
         // fixe it so it won't move when the camera moves.
@@ -49,16 +52,17 @@ class Test extends Phaser.Scene {
         this.bg_1.setScrollFactor(0);
 
         // Add a second background layer. Repeat as in bg_1
-        this.bg_2 = this.add.tileSprite(0, 0, game.config.width * 3.0, game.config.height, "bg_2").setScale(2.5);
+        this.bg_2 = this.add.tileSprite(0, 0, game.config.width * 3.0, game.config.height, "forestMG").setScale(2.5);
         this.bg_2.setOrigin(0, 0.4);
         this.bg_2.setScrollFactor(0);
 
-        //---------tiledmaps------------
-        var map = this.make.tilemap({ key: 'map' });
-        var tileset = map.addTilesetImage("PlatformForrest" , "tiles");
+        //--------- tiledmaps ------------
+        var map = this.make.tilemap({ key: 'forestMap' });
+        var tileset = map.addTilesetImage("PlatformForrest" , "forestTiles");
         var layer = map.createLayer('Ground', tileset, 0, 85);
 
-        //--------Collisions-------------
+
+        //-------- Collisions -------------
 
         // Set up the layer to have matter bodies. Any colliding tiles will be given a Matter body.
         map.setCollisionByProperty({ collides: true });
@@ -74,10 +78,10 @@ class Test extends Phaser.Scene {
         cursors = playerControls[0]; // Set controls to players chosen set
         smoothedControls = new SmoothedHorionztalControl(1);
 
-        // The player is a collection of bodies and sensorsl;
+        // The player is a collection of bodies and sensors;
 
         playerController = {
-            matterSprite: this.matter.add.sprite(0, 0, 'player', 4),
+            matterSprite: this.matter.add.sprite(0, 0, 'headsFox', 4),
             blocked: {
                 left: false,
                 right: false,
@@ -145,36 +149,6 @@ class Test extends Phaser.Scene {
         // making the camera follow the player
         cam.startFollow(playerController.matterSprite);
 
-        /* Create player animations */
-
-        this.anims.create({
-            key: 'left',
-            frames: this.anims.generateFrameNumbers('player', { start: 0, end: 5 }),
-            /*frameRate: 16,*/
-            frameRate: 12,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'right',
-            frames: this.anims.generateFrameNumbers('player', { start: 6, end: 11 }),
-            /*frameRate: 16,*/
-            frameRate: 12,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'idle',
-            frames: this.anims.generateFrameNumbers('player', { start: 12, end: 15 }),
-            /*frameRate: 16,*/
-            frameRate: 12,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'jump',
-            frames: this.anims.generateFrameNumbers('player', { start: 16, end: 17 }),
-            /*frameRate: 16,*/
-            frameRate: 16,
-            repeat: -1
-        });
 
         // Use matter events to detect whether the player is touching a surface to the left, right or
         // bottom.
@@ -228,35 +202,26 @@ class Test extends Phaser.Scene {
             playerController.blocked.bottom = playerController.numTouching.bottom > 0 ? true : false;
         });
 
+        // Show/Hide Physics Debug - Comment out fully for submission
         this.input.on('pointerdown', function () {
             this.matter.world.drawDebug = !this.matter.world.drawDebug;
             this.matter.world.debugGraphic.visible = this.matter.world.drawDebug;
         }, this);
 
-        text = this.add.text(16, 16, '', {
-            fontSize: '20px',
-            padding: { x: 20, y: 10 },
-            backgroundColor: '#ffffff',
-            fill: '#000000'
-        });
-        text.setScrollFactor(0);
-        updateText();
-
-
         /* UI Components */
 
-        /* Placeholder Values */
+        /* Start Score Value */
         const scoreValue = 50000;
 
         /* Time Trigger */
         this.start = this.getTime();
 
-
         /* Timer UI */
-        const timeText = this.add.text(600 , 10, "Time: 00:00:00",{
-            font: "25px",
-            align: "center",
-            color: "red",
+        const timeText = this.add.text(25 , 10, 'Time: 00:00:00',{
+            font: '30px',
+            align: 'center',
+            color: 'white',
+            backgroundColor: 'black',
         });
         timeText.scrollFactorX = 0;
         timeText.scrollFactorY = 0;
@@ -264,10 +229,11 @@ class Test extends Phaser.Scene {
 
         /* Score UI */
 
-        const scoreText = this.add.text(600, 50, "Score: " + scoreValue, {
-            font: "25px",
+        const scoreText = this.add.text(25, 50, "Score: " + scoreValue, {
+            font: "30px",
             align: "center",
             color: "white",
+            backgroundColor: 'black',
         });
         scoreText.scrollFactorX = 0;
         scoreText.scrollFactorY = 0;
@@ -278,31 +244,29 @@ class Test extends Phaser.Scene {
         this.playerName = this.add.text(
             playerController.matterSprite.x - 20,
             playerController.matterSprite.y - 25,
-            'Player',{
+            'NAME-HERE',{
                 font: '15px',
                 align: 'centre',
                 color: 'white',
             });
 
-        /* Temp Finish Line */
-        //let lineShape = new Phaser.Geom.Line(2575, 0, 2575, 600);
+        /* Finish Line */
         let lineShape = this.add.line(2580, 300, 2570, 0, 2650, 600);
         let finishLine = this.matter.add.gameObject(lineShape, {lineStyle: {width: 30, color: '0x00FF05', alpha: 0.3}});
-        //finishLine.strokeLineShape(lineShape);
         finishLine.setStatic(true);
         finishLine.setSensor(true);
 
-        // Phaser wins
-        //this.matter.world.on('collisionstart', this.finishRace, playerBody, finishLine);
-
+        /* Set Collision for Player and Finish Line */
         finishLine.setOnCollideWith(playerBody, pair =>{
             this.finishRace();
         });
 
-/*        playerBody.setOnCollideWith(finishLine, pair =>{
-            this.finishRace();
-        })*/
-
+        // Create player(s)
+        //this.player = new playerManager(this, 0, 0, playerCharacter, playerControls[0]);
+        /* If local multiplayer has been chosen */
+/*        if (isSinglePlayer === false && isOnlinePlay === false){
+            this.player2 = new playerManager(this, )
+        }*/
     }
 
 
@@ -320,7 +284,7 @@ class Test extends Phaser.Scene {
 
         /* Create race time components */
         let minutes = Math.floor(elapsed / 60000);
-        let maxSeconds = 60;
+        const maxSeconds = 60;
         let seconds = Math.floor(elapsed / 1000);
         let hSeconds = elapsed % 60;
 
@@ -341,12 +305,13 @@ class Test extends Phaser.Scene {
         this.elapsed = elapsed;
 
         // Calculate score as it's subtracted by elapsed time
-        this.scoreValue = 50000 - (Math.floor(elapsed/10));
+        this.scoreValue = 50000 - (Math.floor(elapsed/5));
 
 
         /* Update UI Components */
         this.scoreText.setText("Score: " + this.scoreValue);
         this.timeText.setText('Time:' + minutes + ':' + seconds + ':' + hSeconds);
+        this.playerName.setText(playerUsername);
 
         /* Speed up run/sprint */
         if(cursors.sprint.isDown){
@@ -433,7 +398,6 @@ class Test extends Phaser.Scene {
         }
 
         smoothMoveCameraTowards(matterSprite, 1);
-        updateText();
 
         //-----------Scrolling Background-------------
         // scroll the texture of the tilesprites proportionally to the camera scroll
@@ -444,7 +408,7 @@ class Test extends Phaser.Scene {
 
     restartLevel(){
         console.log('restart level');
-        this.scene.start('Test');
+        this.scene.start('Forest');
     }
 
     finishRace(){
@@ -471,17 +435,4 @@ class Test extends Phaser.Scene {
         raceTime = elapsed;
         console.log('delta time = ' + elapsed);
     }
-}
-
-function updateText ()
-{
-    text.setText([
-        'Arrow keys to move. Press "Up" to jump.',
-        'You can wall jump!',
-        'Click to toggle rendering Matter debug.'
-        // 'Debug:',
-        // '\tBottom blocked: ' + playerController.blocked.bottom,
-        // '\tLeft blocked: ' + playerController.blocked.left,
-        // '\tRight blocked: ' + playerController.blocked.right
-    ]);
 }

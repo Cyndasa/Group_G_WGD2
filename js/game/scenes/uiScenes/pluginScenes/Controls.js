@@ -1,4 +1,6 @@
 class Controls extends Phaser.Scene {
+    // Could also use this for setting character controls from two options - see below
+
     constructor() {
         super('Controls');
     }
@@ -41,6 +43,24 @@ class Controls extends Phaser.Scene {
             'Spacebar - Use Power Ups',
             'Esc - Escape'
         ]);
+
+        /* Different key bindings for player options - 0 is default*/
+/*        playerControls[0] = this.input.keyboard.addKeys({
+            'up': Phaser.Input.Keyboard.KeyCodes.UP,
+            'down': Phaser.Input.Keyboard.KeyCodes.DOWN,
+            'left': Phaser.Input.Keyboard.KeyCodes.LEFT,
+            'right': Phaser.Input.Keyboard.KeyCodes.RIGHT,
+            'sprint': Phaser.Input.Keyboard.KeyCodes.P,
+            'ability': Phaser.Input.Keyboard.KeyCodes.L
+        });
+        playerControls[1] = this.input.keyboard.addKeys({
+            'up': Phaser.Input.Keyboard.KeyCodes.W,
+            'down': Phaser.Input.Keyboard.KeyCodes.S,
+            'left': Phaser.Input.Keyboard.KeyCodes.A,
+            'right': Phaser.Input.Keyboard.KeyCodes.D,
+            'sprint': Phaser.Input.Keyboard.KeyCodes.G,
+            'ability': Phaser.Input.Keyboard.KeyCodes.H
+        });*/
 
         /* Create menu buttons */
         /* Return button */

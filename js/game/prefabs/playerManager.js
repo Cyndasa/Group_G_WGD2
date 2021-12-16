@@ -9,10 +9,40 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite{
     // Use Power Up
     //
 
+    cursors;
+    selectedCharacter;
+    selectedControls;
+
 
     /* Constructor for placing player character into a scene */
-    constructor(scene, x, y) {
-        super(scene, x, y );
+    constructor(scene, x, y, character, controlScheme) {
+        super(scene, x, y, 'player');
+
+        scene.add.existing(this);
+        this.selectedCharacter = character;
+        this.cursors = scene.playerControls[controlScheme];
+
+
+
+
+
+
+
+        switch(character){
+            case 'headsFox':
+
+
+                break;
+            case 'other':
+
+                break;
+            default:
+
+
+
+        }
+
+
 
 
     };
@@ -48,5 +78,7 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite{
     /* Calculate final score for player */
     finalScoreCalculation(){
     };
+
+
 
 }

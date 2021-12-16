@@ -25,7 +25,7 @@ class levelSelect extends Phaser.Scene{
         /* Create menu buttons */
 
         /* Forest select */
-        let forestSelect = this.add.image(125, 280, 'forestLevelSelect').setScale(0.5);
+        let forestSelect = this.add.image(150, 325, 'forestLevelSelect').setScale(0.5);
         let forestSelectText = this.add.text(forestSelect.x -35, forestSelect.y + 35, 'Forest', {
             font: '20px',
             color: 'white',
@@ -34,7 +34,7 @@ class levelSelect extends Phaser.Scene{
         forestSelect.setInteractive();
 
         forestSelect.on("pointerup",()=>{
-            this.scene.start('Test');
+            this.scene.start('Forest');
         });
 
         forestSelect.on('pointerover', ()=>{
@@ -46,7 +46,7 @@ class levelSelect extends Phaser.Scene{
         });
 
         /* City select */
-        let citySelect = this.add.image(350, 280, 'cityLevelSelect').setScale(0.25);
+        let citySelect = this.add.image(400, 325, 'cityLevelSelect').setScale(0.2475);
         let citySelectText = this.add.text(citySelect.x - 25, citySelect.y + 35, 'City', {
             font: '20px',
             color: 'white',
@@ -64,6 +64,28 @@ class levelSelect extends Phaser.Scene{
 
         citySelect.on('pointerout', ()=>{
             citySelect.setTint('0x404040');
+        });
+
+        /* Mountain Dusk - Coming Soon */
+        let mountainSelect = this.add.image(650, 325, 'mountainLevelSelect').setScale(0.75);
+        let mountainSelectText = this.add.text(mountainSelect.x - 70, mountainSelect.y + 35, 'Coming Soon', {
+            font: '20px',
+            color: 'white',
+        });
+        mountainSelect.setTint('0x404040');
+        mountainSelect.setInteractive();
+
+        mountainSelect.on("pointerup",()=>{
+            //this.scene.start('Mountain');
+            // Write Message saying level not currently available
+        });
+
+        mountainSelect.on('pointerover', ()=>{
+            mountainSelect.clearTint();
+        });
+
+        mountainSelect.on('pointerout', ()=>{
+            mountainSelect.setTint('0x404040');
         });
 
 

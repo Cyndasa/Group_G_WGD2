@@ -53,10 +53,14 @@ class characterSelect extends Phaser.Scene{
         // If implemented display stats (run speed, sprint speed, health etc) beside flavour text
         // If local play is implemented will need to ensure player 2 can select/display character
 
+        /* Heads the Fox - Default Character  */
+
 
         /* Create menu buttons depending on previous scene */
 
         if(isSinglePlayer === true){
+
+            /* Select Button */
 
             /* Level select button */
             const levelSelectButton = this.add.image(250, 540, 'playButton');
@@ -81,6 +85,10 @@ class characterSelect extends Phaser.Scene{
         }
         else if(isSinglePlayer === false && isOnlinePlay === false){
 
+            /* Player 1 Select Button */
+
+            /* Player 2 Select Button */
+
             /* Begin game button */
             const playGameButton = this.add.image(250, 540, 'playButton');
             playGameButton.setInteractive();
@@ -103,6 +111,9 @@ class characterSelect extends Phaser.Scene{
 
         }
         else if(isSinglePlayer === false && isOnlinePlay === true){
+
+            /* Select Button */
+
             /* Begin game button */
             const playGameButton = this.add.image(250, 540, 'playButton');
             playGameButton.setInteractive();

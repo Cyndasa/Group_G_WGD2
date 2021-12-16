@@ -51,13 +51,17 @@ class startUp extends Phaser.Scene{
         /* Forest */
         this.load.image('forestBG', 'gameAssets/imageAssets/levelImages/forestSet/bg-1.png');
         this.load.image('forestMG', 'gameAssets/imageAssets/levelImages/forestSet/bg-2.png');
-        // Tilemap
+        // Tile Map files
+        this.load.tilemapTiledJSON('forestMap', '../gameAssets/imageAssets/Forrest/environment/layers/Forest-Map.json');
+        this.load.image('forestTiles', '../gameAssets/imageAssets/Forrest/environment/layers/tileset.png');
+
 
         /* City */
         this.load.image('cityBG', 'gameAssets/imageAssets/City/Environmet/background/back.png');
         this.load.image('cityMG', 'gameAssets/imageAssets/City/Environmet/background/middle.png');
         this.load.image('cityFG', 'gameAssets/imageAssets/City/Environmet/background/front.png')
         // Tilemap
+
 
         /* Mountains dusk */
         this.load.image('mountainBG', 'gameAssets/imageAssets/levelImages/mountainSet/parallax-mountain-bg.png');
@@ -77,10 +81,6 @@ class startUp extends Phaser.Scene{
         this.load.image('singlePlayer', 'gameAssets/imageAssets/uiImages/Buttons/Single/Single-Unclicked.png');
         this.load.image('onlinePlay', 'gameAssets/imageAssets/uiImages/Buttons/Online/Online-Unclicked.png');
         this.load.image('controlButton', 'gameAssets/imageAssets/uiImages/Buttons/Controls/Controls-Unclicked.png');
-
-        /* Fonts */
-        this.load.bitmapFont('arcade', 'gameAssets/imageAssets/fonts/arcade.png', 'gameAssets/imageAssets/fonts/arcade.xml');
-
         // Start
         // Profile
         // Return
@@ -88,15 +88,21 @@ class startUp extends Phaser.Scene{
         // Multiplayer
         // Confirm
         // Continue
+        // Select
+
+
+        /* Fonts */
+        this.load.bitmapFont('arcade', 'gameAssets/imageAssets/fonts/arcade.png', 'gameAssets/imageAssets/fonts/arcade.xml');
 
 
         /* Level select images */
         this.load.image('forestLevelSelect', 'gameAssets/imageAssets/uiImages/Buttons/forestLevelImage.png');
         this.load.image('cityLevelSelect', 'gameAssets/imageAssets/City/Environmet/background/cyberpunk-city-2-back-preview.png');
-        // Frame to accompany above images (?)
+        this.load.image('mountainLevelSelect', 'gameAssets/imageAssets/uiImages/Buttons/mountainLevelSelect.png')
+        // Frame to go on top of above images
 
         /* Character assets */
-        this.load.spritesheet('player', 'gameAssets/imageAssets/characterSprites/foxSprite/Player-Movement.png',{ frameWidth: 33, frameHeight: 32 });
+        this.load.spritesheet('headsFox', 'gameAssets/imageAssets/characterSprites/foxSprite/Player-Movement.png',{ frameWidth: 33, frameHeight: 32 });
 
         /* Music assets */
 
@@ -117,9 +123,40 @@ class startUp extends Phaser.Scene{
 
         /* Create any necessary assets */
 
+
         /* Character sprite animations */
 
         /* Fox Character */
+        /* Create player animations */
+
+        this.anims.create({
+            key: 'left',
+            frames: this.anims.generateFrameNumbers('headsFox', { start: 0, end: 5 }),
+            /*frameRate: 16,*/
+            frameRate: 12,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'right',
+            frames: this.anims.generateFrameNumbers('headsFox', { start: 6, end: 11 }),
+            /*frameRate: 16,*/
+            frameRate: 12,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'idle',
+            frames: this.anims.generateFrameNumbers('headsFox', { start: 12, end: 15 }),
+            /*frameRate: 16,*/
+            frameRate: 12,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'jump',
+            frames: this.anims.generateFrameNumbers('headsFox', { start: 16, end: 17 }),
+            /*frameRate: 16,*/
+            frameRate: 16,
+            repeat: -1
+        });
 
 
         /* Start next scene */
