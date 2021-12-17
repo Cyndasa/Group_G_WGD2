@@ -1,6 +1,5 @@
 class PlayerManager extends Phaser.Physics.Matter.Sprite {
-
-    // Not sure if this should maybe be Phaser.Class and the matter sprite a part of it
+    // Class for creating a player in game level.
 
     // Create variables
     selectedChar;

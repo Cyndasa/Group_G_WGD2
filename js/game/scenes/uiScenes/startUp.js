@@ -125,6 +125,10 @@ class startUp extends Phaser.Scene{
         this.load.image('CharSelect', '');
         this.load.spritesheet('', '', {frameWidth: 32, frameHeight: 32});*/
 
+        /* Props */
+        this.load.spritesheet('finishTorch', 'gameAssets/imageAssets/props/fireTorch.png', {frameWidth: 32, frameHeight: 32});
+
+        /* Power-ups */
 
 
         /* Music assets */
@@ -184,7 +188,7 @@ class startUp extends Phaser.Scene{
         });
         this.anims.create({
             key: 'headsJump',
-            frames: this.anims.generateFrameNumbers('aztec1', { start: 16, end: 17 }),
+            frames: this.anims.generateFrameNumbers('headsFox', { start: 16, end: 17 }),
             frameRate: 24,
             repeat: -1
         });
@@ -206,6 +210,15 @@ class startUp extends Phaser.Scene{
             key: 'aztec1Jump',
             frames: this.anims.generateFrameNumbers('aztecOne', { start: 13, end: 14 }),
             frameRate: 24,
+            repeat: -1
+        });
+
+
+        /* Props */
+        this.anims.create({
+            key: 'finishMarker',
+            frames: this.anims.generateFrameNumbers('finishTorch', {start: 0, end: 5}),
+            frameRate: 12,
             repeat: -1
         });
 

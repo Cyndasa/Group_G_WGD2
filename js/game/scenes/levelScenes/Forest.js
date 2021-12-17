@@ -89,6 +89,7 @@ class Forest extends Phaser.Scene {
 
         /* Create Player(s) */
         this.player = new PlayerManager(this, spawnPoint.x,spawnPoint.y, playerCharacter, 1);
+        let playerOne = this.player; // Used for defining player elsewhere in create()
 /*
         if(isSinglePlayer === false && isOnlinePlay === false){
             this.player2 = new PlayerManager(this, spawnPoint.x, spawnPoint.y, playerCharacter2, 1);
@@ -196,6 +197,10 @@ class Forest extends Phaser.Scene {
         // making the camera follow the player
         cam.startFollow(playerController.matterSprite);
 
+        /* For constructed player */
+        //smoothMoveCameraTowards(playerOne);
+        //cam.startFollow(playerOne);
+
 
         // Use matter events to detect whether the player is touching a surface to the left, right or
         // bottom.
@@ -207,9 +212,43 @@ class Forest extends Phaser.Scene {
             playerController.numTouching.bottom = 0;
         });
 
+        // For constructed player
+        this.matter.world.on('beforeupdate', function(event){
+            playerOne.numTouching.left = 0;
+            playerOne.numTouching.left = 0;
+            playerOne.numTouching.right = 0;
+            playerOne.numTouching.bottom = 0;
+        })
+
+        // For constructed player
+        this.matter.world.on('collisionactive', function (event){
+            let playerBody = playerOne.myBody;
+            let playerLeft = playerOne.sensors.left;
+            let playerRight = playerOne.sensors.right;
+            let playerBottom = playerOne.sensors.bottom;
+
+            for (let i=0; i < event.pairs.length; i++){
+
+                let bodyA = event.pairs[i].bodyA;
+                let bodyB = event.pairs[i].bodyB;
+
+                if(bodyA === playerBody || bodyB === playerBody){
+
+                }
+                else if ( bodyA === playerBottom || bodyB === playerBottom){
+                    playerOne.numTouching.bottom += 1;
+                }
+                else if ((bodyA === playerLeft && bodyB.isStatic) || (bodyB === playerLeft && bodyA.isStatic)){
+                    playerOne.numTouching.left += 1;
+                }
+                else if ((bodyA === playerRight && bodyB.isStatic) || (bodyB === playerRight && bodyA.isStatic)){
+                    playerOne.numTouching.right += 1;
+                }
+            }
+        })
+
         // Loop over the active colliding pairs and count the surfaces the player is touching.
-        this.matter.world.on('collisionactive', function (event)
-        {
+        this.matter.world.on('collisionactive', function (event) {
             var playerBody = playerController.body;
             var left = playerController.sensors.left;
             var right = playerController.sensors.right;
@@ -241,6 +280,14 @@ class Forest extends Phaser.Scene {
                 }
             }
         });
+
+        // For constructed player
+        this.matter.world.on('afterupdate', function(event){
+            playerOne.blocked.right = playerOne.numTouching.right > 0;
+            playerOne.blocked.left = playerOne.numTouching.left > 0;
+            playerOne.blocked.left = playerOne.numTouching.bottom > 0;
+
+        })
 
         // Update over, so now we can determine if any direction is blocked
         this.matter.world.on('afterupdate', function (event) {
