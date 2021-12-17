@@ -108,6 +108,12 @@ class Forest extends Phaser.Scene {
                 this.charKeyRun = 'headsRun';
                 this.charKeyJump = 'headsJump';
                 break;
+            case 'AztecOne':
+                this.thisChar = this.matter.add.sprite(0, 0, 'aztecOne', 4);
+                this.charKeyIdle = 'aztec1Idle';
+                this.charKeyRun = 'aztec1Run';
+                this.charKeyJump = 'aztec1Jump';
+                break;
             default:
                 this.thisChar = this.matter.add.sprite(0, 0, 'headsFox', 4).setTint('0x00F4FF');
                 this.charKeyIdle = 'headsIdle';

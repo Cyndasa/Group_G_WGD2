@@ -108,9 +108,9 @@ class startUp extends Phaser.Scene{
         this.load.spritesheet('headsFox', 'gameAssets/imageAssets/characterSprites/foxSprite/Player-Movement.png',{ frameWidth: 33, frameHeight: 32 });
 
         /* Team Aztec */
+       this.load.image('aztec1CharSelect', 'gameAssets/imageAssets/uiImages/charSelect/aztec1CharSel.png');
+       this.load.spritesheet('aztecOne', 'gameAssets/imageAssets/characterSprites/teamAztec/aztec1_sheet.png',{frameWidth: 32, frameHeight: 32});
 /*        this.load.image('CharSelect', '');
-        this.load.spritesheet('', '', {frameWidth: 32, frameHeight: 32});
-        this.load.image('CharSelect', '');
         this.load.spritesheet('', '', {frameWidth: 32, frameHeight: 32});
         this.load.image('CharSelect', '');
         this.load.spritesheet('', '', {frameWidth: 32, frameHeight: 32});
@@ -184,8 +184,27 @@ class startUp extends Phaser.Scene{
         });
         this.anims.create({
             key: 'headsJump',
-            frames: this.anims.generateFrameNumbers('headsFox', { start: 16, end: 17 }),
-            /*frameRate: 16,*/
+            frames: this.anims.generateFrameNumbers('aztec1', { start: 16, end: 17 }),
+            frameRate: 24,
+            repeat: -1
+        });
+
+        /* Aztec 1 */
+        this.anims.create({
+            key: 'aztec1Idle',
+            frames: this.anims.generateFrameNumbers('aztecOne', { start: 0, end: 5 }),
+            frameRate: 12,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'aztec1Run',
+            frames: this.anims.generateFrameNumbers('aztecOne', { start: 6, end: 13 }),
+            frameRate: 12,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'aztec1Jump',
+            frames: this.anims.generateFrameNumbers('aztecOne', { start: 13, end: 14 }),
             frameRate: 24,
             repeat: -1
         });

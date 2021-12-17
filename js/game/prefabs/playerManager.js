@@ -35,17 +35,17 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite {
                 this.charKeyJump = 'headsJump';
 
                 break;
-            case 'otherChar':
+            case 'AztecOne':
                 // Stats
                 this.runSpeed = 4;
                 this.sprintSpeed = 5;
                 this.jumpHeight = 4;
                 this.staminaDuration = 2;
                 // Display/Animation
-                this.char = 'headsFox';
-                this.charKeyIdle = 'headsIdle';
-                this.charKeyRun = 'headsRun';
-                this.charKeyJump = 'headsJump';
+                this.char = 'aztecOne';
+                this.charKeyIdle = 'aztec1Idle';
+                this.charKeyRun = 'aztec1Run';
+                this.charKeyJump = 'aztec1Jump';
 
                 break;
             default:
@@ -137,6 +137,11 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite {
                 this.anims.play(this.charKeyRun, true);
                 this.recoverStamina(); // Recover player stamina while not sprinting
             }
+        }
+
+        /* Set idle animation */
+        else{
+            this.anims.play(this.charKeyIdle, true);
         }
 
         /* Player Jump */

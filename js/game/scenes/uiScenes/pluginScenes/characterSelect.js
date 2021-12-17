@@ -92,6 +92,37 @@ class characterSelect extends Phaser.Scene{
             }
         });
 
+        /* Aztec 1 select */
+        let aztec1Select = this.add.image(200, 250, 'aztec1CharSelect').setScale(0.3);
+        aztec1Select.setTint('0x404040');
+        aztec1Select.setInteractive();
+
+        aztec1Select.on("pointerup",()=>{
+            if(this.isSelected === true){
+                this.isSelected = false;
+                playerCharacter = null;
+                console.log('player has currently selected ' + playerCharacter);
+            }
+            else{
+                this.isSelected = true;
+                aztec1Select.clearTint();
+                playerCharacter = 'AztecOne';
+                console.log('player has currently selected ' + playerCharacter);
+                // set character to display in section
+            }
+        });
+
+        aztec1Select.on('pointerover', ()=>{
+            if(this.isSelected === false){
+                aztec1Select.clearTint();
+            }
+        });
+
+        aztec1Select.on('pointerout', ()=>{
+            if(this.isSelected === false){
+                aztec1Select.setTint('0x404040');
+            }
+        });
 
         /* Section that displays the idle animation of selected character */
 
