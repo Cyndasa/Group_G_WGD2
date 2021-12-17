@@ -89,7 +89,7 @@ class Forest extends Phaser.Scene {
 
 
         /* Create Player(s) */
-        //this.player = new PlayerManager(this, 0,0, playerCharacter, 0);
+        this.player = new PlayerManager(this, 0,0);
 /*
         if(isSinglePlayer === false && isOnlinePlay === false){
             this.player = new PlayerManager(this, 0,0, playerCharacter2, 1);

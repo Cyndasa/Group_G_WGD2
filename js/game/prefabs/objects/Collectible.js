@@ -1,4 +1,4 @@
-class Collectible extends Phaser.Physics.Arcade.Sprite{
+class Collectible extends Phaser.Physics.Matter.Sprite{
 
 /* Collectible Prefab */
 
@@ -6,11 +6,8 @@ class Collectible extends Phaser.Physics.Arcade.Sprite{
 
     /* Constructor for placing object in scene */
     constructor(scene, x, y,) {
-        super(scene, x, y, "collectible");
-
+        super(scene.matter.world, x, y, "collectible");
         scene.add.existing(this);
-        scene.physics.world.enableBody(this);
-        this.body.setCollideWorldBounds(true);
 
     }
 
