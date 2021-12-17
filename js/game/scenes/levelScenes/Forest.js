@@ -2,7 +2,6 @@ class Forest extends Phaser.Scene {
 
     constructor() {
         super('Forest');
-
     };
 
     init(){
@@ -89,16 +88,16 @@ class Forest extends Phaser.Scene {
 
 
         /* Create Player(s) */
-        this.player = new PlayerManager(this, 0,0, playerCharacter, 1);
+        this.player = new PlayerManager(this, spawnPoint.x,spawnPoint.y, playerCharacter, 1);
 /*
         if(isSinglePlayer === false && isOnlinePlay === false){
-            this.player = new PlayerManager(this, 0,0, playerCharacter2, 1);
+            this.player2 = new PlayerManager(this, spawnPoint.x, spawnPoint.y, playerCharacter2, 1);
         }
 */
 /*
 
         if(isSinglePlayer === false && isOnlinePlay === true){
-            // Create list/array of 4 players who have joined game
+            // Create list/array of between 2 - 4 players who have joined game
         }
 */
 
@@ -312,6 +311,7 @@ class Forest extends Phaser.Scene {
 
         // Allow player to move in scene
         this.player.playerMovement();
+        this.player.useAbility();
 
         /* Updates to have player name follow player */
         this.playerName.x = matterSprite.x - 20;
@@ -355,16 +355,12 @@ class Forest extends Phaser.Scene {
         /* Speed up run/sprint */
         if(cursors.sprint.isDown){
             // modify player run speed for x seconds
-            console.log('Player is sprinting');
+            // console.log('Player is sprinting');
         }
-
 
         /* Use power-up ability */
         if(cursors.ability.isDown){
-            // if player has power up, can use & activate power up
-            console.log('Player used power-up');
             this.getRaceTime();
-            //this.restartLevel(); // Temp debug line
         }
 
         /* Fail condition / Timed out connection */

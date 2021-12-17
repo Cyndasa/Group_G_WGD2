@@ -108,20 +108,44 @@ class startUp extends Phaser.Scene{
         this.load.spritesheet('headsFox', 'gameAssets/imageAssets/characterSprites/foxSprite/Player-Movement.png',{ frameWidth: 33, frameHeight: 32 });
 
         /* Team Aztec */
-
+/*        this.load.image('CharSelect', '');
+        this.load.spritesheet('', '', {frameWidth: 32, frameHeight: 32});
+        this.load.image('CharSelect', '');
+        this.load.spritesheet('', '', {frameWidth: 32, frameHeight: 32});
+        this.load.image('CharSelect', '');
+        this.load.spritesheet('', '', {frameWidth: 32, frameHeight: 32});
+        this.load.image('CharSelect', '');
+        this.load.spritesheet('', '', {frameWidth: 32, frameHeight: 32});*/
 
         /* Team Monster */
+/*        this.load.image('CharSelect', '');
+        this.load.spritesheet('', '', {frameWidth: 32, frameHeight: 32});
+        this.load.image('CharSelect', '');
+        this.load.spritesheet('', '', {frameWidth: 32, frameHeight: 32});
+        this.load.image('CharSelect', '');
+        this.load.spritesheet('', '', {frameWidth: 32, frameHeight: 32});*/
+
 
 
         /* Music assets */
 
         /* BGM assets */
+
+        // Menu Music
         this.load.audio('theme', [
             'gameAssets/audioAssets/bgm/Menu_Music.ogg',
             'gameAssets/audioAssets/bgm/Menu_Music.mp3'
         ]);
 
+        // Forest Level BGM
+        // City Level BGM
+        // Results BGM(?)
+
         /* SFX assets */
+        // Button Click
+        // Collect Power Up
+        // Use Power Up (could be different for each power up)
+
 
         /* Other assets */
         this.load.image('titleHeader', 'gameAssets/imageAssets/uiImages/Title/Title.png');
@@ -137,13 +161,13 @@ class startUp extends Phaser.Scene{
         /* Character sprite animations */
 
         /* Heads the Fox */
-        this.anims.create({
+/*        this.anims.create({
             key: 'left',
             frames: this.anims.generateFrameNumbers('headsFox', { start: 0, end: 5 }),
-            /*frameRate: 16,*/
+            /!*frameRate: 16,*!/
             frameRate: 12,
             repeat: -1
-        });
+        });*/
         this.anims.create({
             key: 'headsRun',
             frames: this.anims.generateFrameNumbers('headsFox', { start: 6, end: 11 }),
@@ -165,6 +189,8 @@ class startUp extends Phaser.Scene{
             frameRate: 24,
             repeat: -1
         });
+
+
 
         /* Start next scene */
         this.scene.start('MainMenu');

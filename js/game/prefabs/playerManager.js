@@ -10,6 +10,8 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite {
     jumpHeight;
     staminaDuration;
     hasPowerUp = false;
+    matterSprite;
+    isDefault = false;
 
 
     constructor(scene, x, y, character, playerControls) {
@@ -18,40 +20,63 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite {
         this.selectedChar = character;
         this.cursors = scene.playerControls[playerControls];
 
+        /* Use switch statement that uses player's selection to create character and set stats. */
         switch(character){
             case 'HeadsTheFox':
+                // Stats
                 this.runSpeed = 3;
                 this.sprintSpeed = 6;
                 this.jumpHeight = 6;
                 this.staminaDuration = 8;
+                // Display/Animation
+                this.char = 'headsFox';
                 this.charKeyIdle = 'headsIdle';
                 this.charKeyRun = 'headsRun';
                 this.charKeyJump = 'headsJump';
 
                 break;
             case 'otherChar':
+                // Stats
                 this.runSpeed = 4;
-                this.sprintSpeed = 6;
+                this.sprintSpeed = 5;
                 this.jumpHeight = 4;
                 this.staminaDuration = 2;
-
-                break;
-            default:
-                this.runSpeed = 3;
-                this.sprintSpeed = 5;
-                this.jumpHeight = 6;
-                this.staminaDuration = 8;
+                // Display/Animation
+                this.char = 'headsFox';
                 this.charKeyIdle = 'headsIdle';
                 this.charKeyRun = 'headsRun';
                 this.charKeyJump = 'headsJump';
 
+                break;
+            default:
+                // Stats
+                this.runSpeed = 3;
+                this.sprintSpeed = 6;
+                this.jumpHeight = 6;
+                this.staminaDuration = 8;
+                // Display/Animation
+                this.char = 'headsFox';
+                this.charKeyIdle = 'headsIdle';
+                this.charKeyRun = 'headsRun';
+                this.charKeyJump = 'headsJump';
+                // Other
+                this.isDefault = true;
+        }
+
+        /* If player has not selected a character/ or has been fault resulting in switch being default, create tinted character */
+        if (this.isDefault === true){
+            this.setTexture(this.char).setTint('0x00F4FF');
+        }
+        else{
+            this.setTexture(this.char);
         }
 
         console.log('Player ' + playerCharacter + ' is here!');
 
-    }
+        this.anims.play(this.charKeyIdle, true); // Play idle animation on load
 
-    create(){
+        /* Create player compound body */
+
 
     }
 
@@ -123,6 +148,14 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite {
 
     useAbility(){
         // If player has ability use it
+        if (this.cursors.ability.isDown && this.hasPowerUp === true){
+            console.log('Player used power-up');
+            // remove power up
+            // this.hasPowerUp = false
+        }
+        else if(this.cursors.ability.isDown && this.hasPowerUp === false){
+            console.log('You dont have a power-up to use');
+        }
     }
 
     reduceStamina(){
