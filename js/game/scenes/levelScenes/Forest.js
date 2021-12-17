@@ -34,8 +34,8 @@ class Forest extends Phaser.Scene {
             'down': Phaser.Input.Keyboard.KeyCodes.DOWN,
             'left': Phaser.Input.Keyboard.KeyCodes.LEFT,
             'right': Phaser.Input.Keyboard.KeyCodes.RIGHT,
-            'sprint': Phaser.Input.Keyboard.KeyCodes.P,
-            'ability': Phaser.Input.Keyboard.KeyCodes.L,
+            'sprint': Phaser.Input.Keyboard.KeyCodes.P, // Maybe change to K
+            'ability': Phaser.Input.Keyboard.KeyCodes.L, // Maybe change to L
             'space': Phaser.Input.Keyboard.KeyCodes.SPACE,
         });
         // Alt key bindings
@@ -44,8 +44,8 @@ class Forest extends Phaser.Scene {
             'down': Phaser.Input.Keyboard.KeyCodes.S,
             'left': Phaser.Input.Keyboard.KeyCodes.A,
             'right': Phaser.Input.Keyboard.KeyCodes.D,
-            'sprint': Phaser.Input.Keyboard.KeyCodes.G,
-            'ability': Phaser.Input.Keyboard.KeyCodes.H,
+            'sprint': Phaser.Input.Keyboard.KeyCodes.G, // Maybe change to R
+            'ability': Phaser.Input.Keyboard.KeyCodes.H, // Maybe change to T
             'space': Phaser.Input.Keyboard.KeyCodes.SPACE,
         });
 
@@ -215,7 +215,6 @@ class Forest extends Phaser.Scene {
         // For constructed player
         this.matter.world.on('beforeupdate', function(event){
             playerOne.numTouching.left = 0;
-            playerOne.numTouching.left = 0;
             playerOne.numTouching.right = 0;
             playerOne.numTouching.bottom = 0;
         })
@@ -283,9 +282,9 @@ class Forest extends Phaser.Scene {
 
         // For constructed player
         this.matter.world.on('afterupdate', function(event){
-            playerOne.blocked.right = playerOne.numTouching.right > 0;
-            playerOne.blocked.left = playerOne.numTouching.left > 0;
-            playerOne.blocked.left = playerOne.numTouching.bottom > 0;
+            playerOne.blocked.right = playerOne.numTouching.right > 0 ? true : false;
+            playerOne.blocked.left = playerOne.numTouching.left > 0 ? true : false;
+            playerOne.blocked.bottom = playerOne.numTouching.bottom > 0 ? true : false;
 
         })
 
@@ -363,7 +362,8 @@ class Forest extends Phaser.Scene {
         var matterSprite = playerController.matterSprite;
 
         // Allow player to move in scene
-        this.player.playerMovement();
+        this.player.playerMovement(time);
+        //this.player.playerJump();
         this.player.useAbility();
 
         /* Updates to have player name follow player */

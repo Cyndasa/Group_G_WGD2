@@ -7,6 +7,8 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite {
     runSpeed;
     sprintSpeed;
     jumpHeight;
+    canJump;
+    lastJumpedAt = 0;
     staminaDuration;
     hasPowerUp = false;
     matterSprite;
@@ -133,7 +135,7 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite {
 
     };
 
-    playerMovement(){
+    playerMovement(time){
 
         /* Move Left */
         if(this.cursors.left.isDown){
@@ -194,10 +196,34 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite {
         }
 
         /* Player Jump */
-        if (this.cursors.up.isDown){
-            this.setVelocityY(-this.jumpHeight);
-            this.anims.play(this.charKeyJump, true);
+        this.canJump = (time - this.lastJumpedAt) > 250;
+        if (this.cursors.up.isDown && this.canJump) {
+            console.log('the player jumps');
+
+            if (this.blocked.bottom === true) {
+                this.setVelocityY(-this.jumpHeight);
+                this.anims.play(this.charKeyJump, true);
+                this.lastJumpedAt = time;
+            }
+
+            else if (this.blocked.bottom === false && this.blocked.left === true) {
+                this.setVelocityY(-this.jumpHeight);
+                this.setVelocityX(this.runSpeed);
+                this.lastJumpedAt = time
+            }
+
+            else if (this.blocked.bottom === false && this.blocked.right === true) {
+                this.setVelocityY(-this.jumpHeight);
+                this.setVelocityX(-this.runSpeed);
+                this.lastJumpedAt = time
+            }
         }
+
+    };
+
+    playerJump(time){
+
+
     };
 
     useAbility(){
