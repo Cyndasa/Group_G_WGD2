@@ -29,8 +29,8 @@ class Forest extends Phaser.Scene {
 
         /* Different key bindings for player options / local play */
         // Default key bindings
-        playerControls = [];
-        playerControls[0] = this.input.keyboard.addKeys({
+        this.playerControls = [];
+        this.playerControls[0] = this.input.keyboard.addKeys({
             'up': Phaser.Input.Keyboard.KeyCodes.UP,
             'down': Phaser.Input.Keyboard.KeyCodes.DOWN,
             'left': Phaser.Input.Keyboard.KeyCodes.LEFT,
@@ -40,7 +40,7 @@ class Forest extends Phaser.Scene {
             'space': Phaser.Input.Keyboard.KeyCodes.SPACE,
         });
         // Alt key bindings
-        playerControls[1] = this.input.keyboard.addKeys({
+        this.playerControls[1] = this.input.keyboard.addKeys({
             'up': Phaser.Input.Keyboard.KeyCodes.W,
             'down': Phaser.Input.Keyboard.KeyCodes.S,
             'left': Phaser.Input.Keyboard.KeyCodes.A,
@@ -84,12 +84,12 @@ class Forest extends Phaser.Scene {
         this.matter.world.drawDebug = false;
 
         //cursors = this.input.keyboard.createCursorKeys();
-        cursors = playerControls[0]; // Set controls to players chosen set
+        cursors = this.playerControls[0]; // Set controls to players chosen set
         smoothedControls = new SmoothedHorionztalControl(1);
 
 
         /* Create Player(s) */
-        this.player = new PlayerManager(this, 0,0);
+        this.player = new PlayerManager(this, 0,0, playerCharacter, 1);
 /*
         if(isSinglePlayer === false && isOnlinePlay === false){
             this.player = new PlayerManager(this, 0,0, playerCharacter2, 1);
@@ -105,9 +105,17 @@ class Forest extends Phaser.Scene {
         switch(playerCharacter){
             case 'HeadsTheFox':
                 this.thisChar = this.matter.add.sprite(0, 0, 'headsFox', 4);
+                this.charKeyIdle = 'idle';
+                this.charKeyMoveRight = 'right';
+                this.charKeyMoveLeft = 'left';
+                this.charKeyJump = 'jump';
                 break;
             default:
                 this.thisChar = this.matter.add.sprite(0, 0, 'headsFox', 4).setTint('0x00F4FF');
+                this.charKeyIdle = 'idle';
+                this.charKeyMoveRight = 'right';
+                this.charKeyMoveLeft = 'left';
+                this.charKeyJump = 'jump';
         }
 
         // The player is a collection of bodies and sensors;
@@ -175,6 +183,10 @@ class Forest extends Phaser.Scene {
 
 
         /* Set up scene camera */
+        // Where local play is concerned
+        // We either want it to extend out to always include both players (keep the same height expand the width?)
+        // Or
+        // Always follows player in the lead and it will drag/push player behind
         cam = this.cameras.main;
         cam.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
         smoothMoveCameraTowards(playerController.matterSprite);
@@ -300,6 +312,9 @@ class Forest extends Phaser.Scene {
     {
         var matterSprite = playerController.matterSprite;
 
+        // Allow player to move in scene
+        this.player.playerMovement();
+
         /* Updates to have player name follow player */
         this.playerName.x = matterSprite.x - 20;
         this.playerName.y = matterSprite.y - 25;
@@ -374,7 +389,7 @@ class Forest extends Phaser.Scene {
         if (cursors.left.isDown && !playerController.blocked.left)
         {
             smoothedControls.moveLeft(delta);
-            matterSprite.anims.play('left', true);
+            matterSprite.anims.play(this.charKeyMoveLeft, true);
 
             // Lerp the velocity towards the max run using the smoothed controls. This simulates a
             // player controlled acceleration.
@@ -387,7 +402,7 @@ class Forest extends Phaser.Scene {
         else if (cursors.right.isDown && !playerController.blocked.right)
         {
             smoothedControls.moveRight(delta);
-            matterSprite.anims.play('right', true);
+            matterSprite.anims.play(this.charKeyMoveRight, true);
 
             // Lerp the velocity towards the max run using the smoothed controls. This simulates a
             // player controlled acceleration.
@@ -400,7 +415,7 @@ class Forest extends Phaser.Scene {
         else
         {
             smoothedControls.reset();
-            matterSprite.anims.play('idle', true);
+            matterSprite.anims.play(this.charKeyIdle, true);
         }
 
         // Jumping & wall jumping
@@ -410,7 +425,7 @@ class Forest extends Phaser.Scene {
         var canJump = (time - playerController.lastJumpedAt) > 250;
         if (cursors.up.isDown & canJump)
         {
-            matterSprite.anims.play('jump', true);
+            matterSprite.anims.play(this.charKeyJump, true);
             if (playerController.blocked.bottom)
             {
                 matterSprite.setVelocityY(-playerController.speed.jump);

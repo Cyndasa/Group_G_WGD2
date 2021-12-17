@@ -1,5 +1,7 @@
 class Collectible extends Phaser.Physics.Matter.Sprite{
 
+    //Similar to playerManager comment
+
 /* Collectible Prefab */
 
     /* Declare Variables */
