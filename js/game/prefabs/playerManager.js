@@ -12,6 +12,28 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite {
     hasPowerUp = false;
     matterSprite;
     isDefault = false;
+    blocked = {
+        left: false,
+        right: false,
+        bottom: false
+    };
+    numTouching = {
+        left: 0,
+        right: 0,
+        bottom: 0,
+    };
+    sensors = {
+        left: null,
+        right: null,
+        bottom: null
+    };
+    myMatter = Phaser.Physics.Matter.Matter;
+    myWidth = this.width;
+    myHeight = this.height;
+    sx = this.myWidth/2;
+    sy = this.myHeight/2;
+    myBody;
+    myCompoundBody;
 
 
     constructor(scene, x, y, character, playerControls) {
@@ -76,6 +98,34 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite {
         this.anims.play(this.charKeyIdle, true); // Play idle animation on load
 
         /* Create player compound body */
+
+        this.myBody = this.myMatter.Bodies.rectangle(this.sx, this.sy, this.myWidth * 0.75, this.myHeight, {
+            chamfer: {
+                radius: 10}}
+        );
+        this.sensors.bottom = this.myMatter.Bodies.rectangle(this.sx, this.myHeight, this.sy, 5, {
+            isSensor: true
+        });
+        this.sensors.left = this.myMatter.Bodies.rectangle(this.sx - this.myWidth * 0.45, this.sy, 5, this.myHeight * 0.25, {
+            isSensor: true
+        });
+        this.sensors.right = this.myMatter.Bodies.rectangle(this.sx + this.myWidth * 0.45, this.sy, 5, this.myHeight * 0.25, {
+            isSensor: true
+        });
+
+        this.myCompoundBody = this.myMatter.Body.create({
+            parts: [
+                this.myBody, this.sensors.bottom, this.sensors.left, this.sensors.right
+            ],
+            friction: 0.01,
+            restitution: 0.05
+        });
+
+        this.setExistingBody(this.myCompoundBody);
+        this.setFixedRotation();
+        this.setPosition(x, y);
+
+
 
 
     }
