@@ -96,16 +96,22 @@ class startUp extends Phaser.Scene{
 
 
         /* Level select images */
-        this.load.image('forestLevelSelect', 'gameAssets/imageAssets/uiImages/Buttons/forestLevelImage.png');
+        this.load.image('forestLevelSelect', 'gameAssets/imageAssets/uiImages/levelSelect/forestLevelImage.png');
         this.load.image('cityLevelSelect', 'gameAssets/imageAssets/City/Environmet/background/cyberpunk-city-2-back-preview.png');
-        this.load.image('mountainLevelSelect', 'gameAssets/imageAssets/uiImages/Buttons/mountainLevelSelect.png');
+        this.load.image('mountainLevelSelect', 'gameAssets/imageAssets/uiImages/levelSelect/mountainLevelSelect.png');
         // Frame to go on top of above images
 
         /* Character assets */
 
         /* Heads the Fox */
-        this.load.image('headsTheFoxCharSelect', 'gameAssets/imageAssets/uiImages/Buttons/heads-the-fox-charSelect.png');
+        this.load.image('headsTheFoxCharSelect', 'gameAssets/imageAssets/uiImages/charSelect/headsTheFoxCharSel.png');
         this.load.spritesheet('headsFox', 'gameAssets/imageAssets/characterSprites/foxSprite/Player-Movement.png',{ frameWidth: 33, frameHeight: 32 });
+
+        /* Team Aztec */
+
+
+        /* Team Monster */
+
 
         /* Music assets */
 
@@ -125,31 +131,12 @@ class startUp extends Phaser.Scene{
     create(){
 
         /* Create any necessary assets */
-        /* Different key bindings for player options / local play */
-        this.playerControls = [];
-        this.playerControls[0] = this.input.keyboard.addKeys({
-            'up': Phaser.Input.Keyboard.KeyCodes.UP,
-            'down': Phaser.Input.Keyboard.KeyCodes.DOWN,
-            'left': Phaser.Input.Keyboard.KeyCodes.LEFT,
-            'right': Phaser.Input.Keyboard.KeyCodes.RIGHT,
-            'sprint': Phaser.Input.Keyboard.KeyCodes.P,
-            'ability': Phaser.Input.Keyboard.KeyCodes.L
-        });
-        this.playerControls[1] = this.input.keyboard.addKeys({
-            'up': Phaser.Input.Keyboard.KeyCodes.W,
-            'down': Phaser.Input.Keyboard.KeyCodes.S,
-            'left': Phaser.Input.Keyboard.KeyCodes.A,
-            'right': Phaser.Input.Keyboard.KeyCodes.D,
-            'sprint': Phaser.Input.Keyboard.KeyCodes.G,
-            'ability': Phaser.Input.Keyboard.KeyCodes.H
-        });
+
 
 
         /* Character sprite animations */
 
-        /* Fox Character */
-        /* Create player animations */
-
+        /* Heads the Fox */
         this.anims.create({
             key: 'left',
             frames: this.anims.generateFrameNumbers('headsFox', { start: 0, end: 5 }),
@@ -175,10 +162,9 @@ class startUp extends Phaser.Scene{
             key: 'jump',
             frames: this.anims.generateFrameNumbers('headsFox', { start: 16, end: 17 }),
             /*frameRate: 16,*/
-            frameRate: 16,
+            frameRate: 24,
             repeat: -1
         });
-
 
         /* Start next scene */
         this.scene.start('MainMenu');

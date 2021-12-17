@@ -23,7 +23,7 @@ var config = {
         },
     },
     inputManager: Phaser.Input.InputManager,
-/*    scene: [Forest]*/  // Used to test specific scene. Swap with other.
+    //scene: [mainScene]  // Used to test specific scene. Swap with other.
     scene: [startScreen, startUp, mainMenu, mainMenuButtons, playerProfile, playModeSelect, gameSettings,Controls, multiplayerModeSelect,
         characterSelect, levelSelect, multiplayerLevelSelect, Forest, City, resultsScreen], // Comment in/out with above for testing specific scene vs testing game as whole.
 
@@ -63,7 +63,6 @@ let playerUsername2 = 'Guest';
 let playerCharacter2;
 let playerScore2;
 let raceTime2;
-
 
 let activePlayers = [];
 

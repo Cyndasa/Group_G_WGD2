@@ -23,21 +23,39 @@ class mainScene extends Phaser.Scene {
         this.load.image("collectible", "gameAssets/imageAssets/Forrest/sprites/misc/star/star-1.png")
 
         // load the PNG file
-        this.load.image('tiles', '../gameAssets/imageAssets/Forrest/environment/layers/tileset.png')
-        this.load.image ('level', '../gameAssets/imageAssets/Forrest/environment/layers/Forest-Map.png')
+        this.load.image('tiles', 'gameAssets/imageAssets/Forrest/environment/layers/tileset.png');
+        //this.load.image ('level', 'gameAssets/imageAssets/Forrest/environment/layers/Forest-Map.png');
         // load the JSON file
-        this.load.tilemapTiledJSON('map', '../gameAssets/imageAssets/Forrest/environment/layers/Forest-Map.json')
+        this.load.tilemapTiledJSON('map', 'gameAssets/imageAssets/Forrest/environment/layers/Forest-Map.json');
     };
 
     create() {
 
         // 👌 sanity check by displaying the entire tileset image
 
+        // create an tiled sprite with the size of our game screen
+        this.bg_1 = this.add.tileSprite(0, 0, game.config.width * 3.0, game.config.height, "bg_1").setScale(2.5);
+        // Set its pivot to the top left corner
+        this.bg_1.setOrigin(0, 0.4);
+        // fixe it so it won't move when the camera moves.
+        // Instead we are moving its texture on the update
+        this.bg_1.setScrollFactor(0);
 
-        const map = this.make.tilemap({key: "map", tileWidth: 16, tileHeight: 16 });
+        // Add a second background layer. Repeat as in bg_1
+        this.bg_2 = this.add.tileSprite(0, 0, game.config.width * 3.0, game.config.height, "bg_2").setScale(2.5);
+        this.bg_2.setOrigin(0, 0.4);
+        this.bg_2.setScrollFactor(0);
+
+        //--------- tiledmaps ------------
+        var map = this.make.tilemap({ key: 'map', tileWidth:16, tileHeight: 16 });
+        var tileset = map.addTilesetImage("PlatformForrest" , "tiles");
+        this.worldlayer = map.createLayer('Ground', tileset, 0, 85);
+
+
+/*        const map = this.make.tilemap({key: "map", tileWidth: 16, tileHeight: 16 });
 
         const tileset = map.addTilesetImage("PlatformForrest" , "tiles")
-        this.worldlayer = map.createLayer("Ground",tileset, 0,0 );
+        this.worldlayer = map.createLayer("Ground",tileset, 0,0 );*/
 
         this.worldlayer.setCollisionByProperty({ Collides: true });
         this.worldlayer.setDepth(10);
@@ -48,8 +66,8 @@ class mainScene extends Phaser.Scene {
 
 
         // ---------------background ----------------
-        // create an tiled sprite with the size of our game screen
-        this.bg_1 = this.add.tileSprite(0, 0, game.config.width, game.config.height, "bg_1")/*.setScale(2.5)*/;
+/*        // create an tiled sprite with the size of our game screen
+        this.bg_1 = this.add.tileSprite(0, 0, game.config.width, game.config.height, "bg_1").setScale(2.5);
         // Set its pivot to the top left corner
         this.bg_1.setOrigin(0, 0);
         // fixe it so it won't move when the camera moves.
@@ -57,9 +75,9 @@ class mainScene extends Phaser.Scene {
         this.bg_1.setScrollFactor(0);
 
         // Add a second background layer. Repeat as in bg_1
-        this.bg_2 = this.add.tileSprite(0, 0, game.config.width, game.config.height, "bg_2")/*.setScale(2.5)*/;
+        this.bg_2 = this.add.tileSprite(0, 0, game.config.width, game.config.height, "bg_2").setScale(2.5);
         this.bg_2.setOrigin(0, 0);
-        this.bg_2.setScrollFactor(0);
+        this.bg_2.setScrollFactor(0);*/
 /*
         // add the ground layer which is only 48 pixels tall
         this.ground = this.add.tileSprite(0, 0, game.config.width * 3, 32, "ground");
@@ -74,28 +92,27 @@ class mainScene extends Phaser.Scene {
 
         //-------------------Player ---------------------
         // add player
-        this.player = this.add.sprite(spawnPoint.x,spawnPoint.y, game.config.width * 1.5, 0, "player")/*.setScale(2.5)*/;
+        this.player = this.add.sprite(spawnPoint.x,spawnPoint.y - 200, game.config.width * 1.5, 0, "player")/*.setScale(2.5)*/;
         this.physics.world.enableBody(this.player);
-/*
-// enabling this causes issue with game world
-        this.player.body.setCollideWorldBounds(true);
-*/
+        //this.player.body.setCollideWorldBounds(true);
         // create an animation for the player
         this.physics.add.collider(this.player, this.worldlayer);
 
         this.anims.create({
             key: "idle",
             frames: this.anims.generateFrameNumbers("player", {start: 0, end: 3}),
-            frameRate: 16,
+            frameRate: 12,
             repeat: -1
         });
 
         this.anims.create({
             key: "Movement",
             frames: this.anims.generateFrameNumbers("player", {start: 7, end: 11}),
-            frameRate: 16,
+            frameRate: 12,
             repeat: -1
         });
+
+        this.player.anims.play('idle');
 
 
         // allow key inputs to control the player
@@ -159,21 +176,24 @@ class mainScene extends Phaser.Scene {
         // move the player when the arrow keys are pressed
         if (this.cursors.left.isDown && this.player.x > 0) {
             this.player.x -= 3;
-            this.player.scaleX = -1;
+            this.player.flipX = true;
 /*            this.player.anims.stop('idle', true);
             this.player.anims.play('Movement', true);*/
             this.updateAnimation();
 
         } else if (this.cursors.right.isDown && this.player.x < game.config.width * 3) {
             this.player.x += 3;
-            this.player.scaleX = 1;
+            this.player.flipX = false;
 /*            this.player.anims.stop('idle', true);
             this.player.anims.play('Movement', true);*/
             this.updateAnimation();
         }
+        this.updateAnimation();
 
         if (this.cursors.right.isUp && this.cursors.left.isUp) {
+            this.player.anims.stop('Movement', true);
             this.player.anims.play('idle', true);
+            this.player.flipX = false;
         }
 
         /* Player jump */
@@ -191,11 +211,12 @@ class mainScene extends Phaser.Scene {
     };
 
     updateAnimation(){
-        if(this.player.scaleX === -1 || this.player.scaleX === 1){
+        if(this.player.flipX === true || this.player.flipX === false){
             this.player.anims.play('Movement', true);
         }
         else {
             this.player.anims.stop('Movement', true);
+            this.player.anims.play('idle', true);
         }
 
     }

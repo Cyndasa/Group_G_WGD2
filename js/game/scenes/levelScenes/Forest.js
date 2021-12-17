@@ -29,13 +29,15 @@ class Forest extends Phaser.Scene {
 
         /* Different key bindings for player options / local play */
         // Default key bindings
+        playerControls = [];
         playerControls[0] = this.input.keyboard.addKeys({
             'up': Phaser.Input.Keyboard.KeyCodes.UP,
             'down': Phaser.Input.Keyboard.KeyCodes.DOWN,
             'left': Phaser.Input.Keyboard.KeyCodes.LEFT,
             'right': Phaser.Input.Keyboard.KeyCodes.RIGHT,
             'sprint': Phaser.Input.Keyboard.KeyCodes.P,
-            'ability': Phaser.Input.Keyboard.KeyCodes.L
+            'ability': Phaser.Input.Keyboard.KeyCodes.L,
+            'space': Phaser.Input.Keyboard.KeyCodes.SPACE,
         });
         // Alt key bindings
         playerControls[1] = this.input.keyboard.addKeys({
@@ -44,7 +46,8 @@ class Forest extends Phaser.Scene {
             'left': Phaser.Input.Keyboard.KeyCodes.A,
             'right': Phaser.Input.Keyboard.KeyCodes.D,
             'sprint': Phaser.Input.Keyboard.KeyCodes.G,
-            'ability': Phaser.Input.Keyboard.KeyCodes.H
+            'ability': Phaser.Input.Keyboard.KeyCodes.H,
+            'space': Phaser.Input.Keyboard.KeyCodes.SPACE,
         });
 
         // --------------- background ----------------
@@ -84,14 +87,20 @@ class Forest extends Phaser.Scene {
         cursors = playerControls[0]; // Set controls to players chosen set
         smoothedControls = new SmoothedHorionztalControl(1);
 
-        // The player is a collection of bodies and sensors;
+
+        /* Create Player(s) */
+        //this.player = new PlayerManager(this, 0,0, playerCharacter, 0);
 /*
-        if(playerCharacter === 'HeadsTheFox'){
-            this.thisChar = this.matter.add.sprite(0, 0, 'headsFox', 4);
+        if(isSinglePlayer === false && isOnlinePlay === false){
+            this.player = new PlayerManager(this, 0,0, playerCharacter2, 1);
         }
-        if (playerCharacter === 'default'){
-            this.thisChar = this.matter.add.sprite(0, 0, 'headsFox', 4).setTint('0x00F4FF')
-        }*/
+*/
+/*
+
+        if(isSinglePlayer === false && isOnlinePlay === true){
+            // Create list/array of 4 players who have joined game
+        }
+*/
 
         switch(playerCharacter){
             case 'HeadsTheFox':
@@ -101,6 +110,7 @@ class Forest extends Phaser.Scene {
                 this.thisChar = this.matter.add.sprite(0, 0, 'headsFox', 4).setTint('0x00F4FF');
         }
 
+        // The player is a collection of bodies and sensors;
         playerController = {
             matterSprite: this.thisChar,
             blocked: {
@@ -283,12 +293,6 @@ class Forest extends Phaser.Scene {
             this.finishRace();
         });
 
-        // Create player(s)
-        //this.player2 = new PlayerManager(this, 0, 0, playerCharacter, 1);
-/*         If local multiplayer has been chosen
-        if (isSinglePlayer === false && isOnlinePlay === false){
-            this.player2 = new playerManager(this, )
-        }*/
     }
 
 
@@ -310,7 +314,7 @@ class Forest extends Phaser.Scene {
         let seconds = Math.floor(elapsed / 1000);
         let hSeconds = elapsed % 60;
 
-        /* Reset seconds value to 0 when equal to or greater than 60 */
+        /* Reset seconds value to 0 when equal to or greater than 60 - DOESN'T CURRENTLY WORK AS EXPECTED */
         if (seconds >= maxSeconds){
             seconds -= 60;
         }
@@ -354,6 +358,10 @@ class Forest extends Phaser.Scene {
         if(this.scoreValue<= 0){
             console.log('Game Over, your connection timed out or you took too long');
             this.scene.start('MainMenu');
+        }
+
+        if(cursors.space.isDown){
+            this.restartLevel();
         }
 
 
@@ -402,7 +410,7 @@ class Forest extends Phaser.Scene {
         var canJump = (time - playerController.lastJumpedAt) > 250;
         if (cursors.up.isDown & canJump)
         {
-            //matterSprite.anims.play('jump', true);
+            matterSprite.anims.play('jump', true);
             if (playerController.blocked.bottom)
             {
                 matterSprite.setVelocityY(-playerController.speed.jump);

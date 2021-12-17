@@ -61,7 +61,7 @@ class characterSelect extends Phaser.Scene{
         /* Create Character Select buttons */
 
         /* Heads the Fox select */
-        let headsSelect = this.add.image(100, 250, 'headsTheFoxCharSelect').setScale(0.25);
+        let headsSelect = this.add.image(100, 250, 'headsTheFoxCharSelect').setScale(0.3);
         headsSelect.setTint('0x404040');
         headsSelect.setInteractive();
 
