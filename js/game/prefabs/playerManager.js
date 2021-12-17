@@ -24,6 +24,9 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite {
                 this.sprintSpeed = 6;
                 this.jumpHeight = 6;
                 this.staminaDuration = 8;
+                this.charKeyIdle = 'headsIdle';
+                this.charKeyRun = 'headsRun';
+                this.charKeyJump = 'headsJump';
 
                 break;
             case 'otherChar':
@@ -38,6 +41,9 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite {
                 this.sprintSpeed = 5;
                 this.jumpHeight = 6;
                 this.staminaDuration = 8;
+                this.charKeyIdle = 'headsIdle';
+                this.charKeyRun = 'headsRun';
+                this.charKeyJump = 'headsJump';
 
         }
 
@@ -57,39 +63,53 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite {
 
         /* Move Left */
         if(this.cursors.left.isDown){
+
+            this.flipX = true; // Make character face left
+
             /* Sprint while player has stamina */
             if(this.cursors.sprint.isDown && this.staminaDuration > 0){
-                console.log('Sprinting left');
+                //console.log('Sprinting left');
                 this.setVelocityX(-this.sprintSpeed);
+                this.anims.play(this.charKeyRun, true);
                 this.reduceStamina(); // Reduce stamina while sprinting
             }
             /* If player has no stamina, can't sprint */
             else if(this.cursors.sprint.isDown && this.staminaDuration <= 0){
-                console.log('You have no stamina you cant sprint');
+                //console.log('You have no stamina you cant sprint');
                 this.setVelocityX(-this.runSpeed);
+                this.anims.play(this.charKeyRun, true);
+
             }
             else{
-                console.log('Running left');
+                //console.log('Running left');
                 this.setVelocityX(-this.runSpeed);
+                this.anims.play(this.charKeyRun, true);
                 this.recoverStamina(); // Recover player stamina while not sprinting
             }
         }
         /* Move Right */
         else if(this.cursors.right.isDown){
+
+            this.flipX = false; // Make character face right
+
             /* Sprint while player has stamina */
             if(this.cursors.sprint.isDown && this.staminaDuration > 0){
-                console.log('Sprinting right');
+                //console.log('Sprinting right');
                 this.setVelocityX(this.sprintSpeed);
+                this.anims.play(this.charKeyRun, true);
                 this.reduceStamina(); // Reduce stamina while sprinting
             }
             /* If player has no stamina, can't sprint */
             else if(this.cursors.sprint.isDown && this.staminaDuration <= 0){
-                console.log('You have no stamina you cant sprint');
+                //console.log('You have no stamina you cant sprint');
                 this.setVelocityX(this.runSpeed);
+                this.anims.play(this.charKeyRun, true);
+
             }
             else{
-                console.log('Running right');
+                //console.log('Running right');
                 this.setVelocityX(this.runSpeed);
+                this.anims.play(this.charKeyRun, true);
                 this.recoverStamina(); // Recover player stamina while not sprinting
             }
         }
@@ -97,6 +117,7 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite {
         /* Player Jump */
         if (this.cursors.up.isDown){
             this.setVelocityY(-this.jumpHeight);
+            this.anims.play(this.charKeyJump, true);
         }
     };
 

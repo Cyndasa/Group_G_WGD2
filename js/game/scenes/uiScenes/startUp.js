@@ -145,21 +145,21 @@ class startUp extends Phaser.Scene{
             repeat: -1
         });
         this.anims.create({
-            key: 'right',
+            key: 'headsRun',
             frames: this.anims.generateFrameNumbers('headsFox', { start: 6, end: 11 }),
             /*frameRate: 16,*/
             frameRate: 12,
             repeat: -1
         });
         this.anims.create({
-            key: 'idle',
+            key: 'headsIdle',
             frames: this.anims.generateFrameNumbers('headsFox', { start: 12, end: 15 }),
             /*frameRate: 16,*/
             frameRate: 12,
             repeat: -1
         });
         this.anims.create({
-            key: 'jump',
+            key: 'headsJump',
             frames: this.anims.generateFrameNumbers('headsFox', { start: 16, end: 17 }),
             /*frameRate: 16,*/
             frameRate: 24,

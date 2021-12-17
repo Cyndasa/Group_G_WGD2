@@ -105,17 +105,15 @@ class Forest extends Phaser.Scene {
         switch(playerCharacter){
             case 'HeadsTheFox':
                 this.thisChar = this.matter.add.sprite(0, 0, 'headsFox', 4);
-                this.charKeyIdle = 'idle';
-                this.charKeyMoveRight = 'right';
-                this.charKeyMoveLeft = 'left';
-                this.charKeyJump = 'jump';
+                this.charKeyIdle = 'headsIdle';
+                this.charKeyRun = 'headsRun';
+                this.charKeyJump = 'headsJump';
                 break;
             default:
                 this.thisChar = this.matter.add.sprite(0, 0, 'headsFox', 4).setTint('0x00F4FF');
-                this.charKeyIdle = 'idle';
-                this.charKeyMoveRight = 'right';
-                this.charKeyMoveLeft = 'left';
-                this.charKeyJump = 'jump';
+                this.charKeyIdle = 'headsIdle';
+                this.charKeyRun = 'headsRun';
+                this.charKeyJump = 'headsJump';
         }
 
         // The player is a collection of bodies and sensors;
@@ -389,7 +387,8 @@ class Forest extends Phaser.Scene {
         if (cursors.left.isDown && !playerController.blocked.left)
         {
             smoothedControls.moveLeft(delta);
-            matterSprite.anims.play(this.charKeyMoveLeft, true);
+            matterSprite.flipX = true;
+            matterSprite.anims.play(this.charKeyRun, true);
 
             // Lerp the velocity towards the max run using the smoothed controls. This simulates a
             // player controlled acceleration.
@@ -402,7 +401,8 @@ class Forest extends Phaser.Scene {
         else if (cursors.right.isDown && !playerController.blocked.right)
         {
             smoothedControls.moveRight(delta);
-            matterSprite.anims.play(this.charKeyMoveRight, true);
+            matterSprite.flipX = false;
+            matterSprite.anims.play(this.charKeyRun, true);
 
             // Lerp the velocity towards the max run using the smoothed controls. This simulates a
             // player controlled acceleration.
