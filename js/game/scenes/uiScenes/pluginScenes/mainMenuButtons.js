@@ -19,7 +19,7 @@ class mainMenuButtons extends Phaser.Scene{
 
         /* Temporary text to mark scene - can be commented out for submission if desired */
         const titleText = this.add.bitmapText(400, 165, 'arcade', '', 14);
-        titleText.setOrigin(0.5);
+        titleText.setOrigin(0.5, 1);
         titleText.setCenterAlign();
         titleText.setTint('0xFFFFFF');
         titleText.setText(['Main Menu']);
@@ -110,6 +110,28 @@ class mainMenuButtons extends Phaser.Scene{
         });
 
         /* Small Credits button off to side */
+        const creditsButton = this.add.image(50, 575, 'exitButton');
+        creditsButton.setInteractive();
+        creditsButton.setScale(0.75, 0.5);
+        creditsButton.setScrollFactor(0);
+
+        /* Apply tint to image when hovered over/ off */
+        creditsButton.on('pointerover', ()=>{
+            creditsButton.setTint('0xFF00F5');
+        });
+        creditsButton.on('pointerout', ()=>{
+            creditsButton.clearTint();
+        });
+
+        /* Change scene */
+        creditsButton.on('pointerup', ()=>{
+            this.sound.stopAll();
+            // Possibly include clearing cache/saving user details
+            this.scene.stop('MainMenu');
+            this.scene.stop('MainMenuButtons');
+            this.scene.start('CreditsScene');
+        });
+
 
         console.log(playerUsername); // DEBUG, CAN REMOVE FOR SUBMISSION
 

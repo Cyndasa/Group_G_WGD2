@@ -93,6 +93,7 @@ class startUp extends Phaser.Scene{
         this.load.image('p1Button', 'gameAssets/imageAssets/uiImages/Buttons/Select/P1-Unclicked.png');
         this.load.image('p2Button', 'gameAssets/imageAssets/uiImages/Buttons/Select/P2-Unclicked.png');
         this.load.image('startButton', 'gameAssets/imageAssets/uiImages/Buttons/Start/Start-Unclicked.png');
+        // Credits Button
 
 
         /* Fonts */
