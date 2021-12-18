@@ -78,6 +78,7 @@ class resultsScreen extends Phaser.Scene{
 
         if(cursors.space.isDown){
             this.scene.start('MainMenu');
+            this.scene.stop('ResultsScreen');
         }
 
     }

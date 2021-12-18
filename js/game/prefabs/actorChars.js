@@ -9,8 +9,8 @@ class actorChars extends Phaser.Physics.Matter.Sprite{
     constructor(scene, x, y) {
         super(scene.matter.world, x, y);
         scene.add.existing(this);
-        this.followDistance = Phaser.Math.Between(10,25);
-        this.followSpeed = Phaser.Math.Between(1,4);
+        this.followDistance = Phaser.Math.Between(5,25);
+        this.followSpeed = Phaser.Math.Between(1,6);
     }
 
     create(){

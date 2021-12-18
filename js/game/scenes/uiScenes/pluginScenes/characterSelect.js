@@ -1,20 +1,22 @@
 class characterSelect extends Phaser.Scene{
 
     isSelected = false;
+    playerOneSelecting = true;
+    playerTwoSelecting = false;
+    currentCharacter = false;
 
     constructor() {
         super('CharacterSelect');
-
-    }
+    };
 
     init(){
+    };
 
-    }
     preload(){
 
-    }
-    create(){
+    };
 
+    create(){
 
         /* Add title image */
         const titleHeader = this.add.image(400, 75, 'titleHeader');
@@ -61,7 +63,7 @@ class characterSelect extends Phaser.Scene{
         /* Create Character Select buttons */
 
         /* Heads the Fox select */
-        let headsSelect = this.add.image(100, 250, 'headsTheFoxCharSelect').setScale(0.3);
+        let headsSelect = this.add.image(75, 250, 'headsTheFoxCharSelect').setScale(0.275);
         headsSelect.setTint('0x404040');
         headsSelect.setInteractive();
 
@@ -93,7 +95,7 @@ class characterSelect extends Phaser.Scene{
         });
 
         /* Aztec 1 select */
-        let aztec1Select = this.add.image(200, 250, 'aztec1CharSelect').setScale(0.3);
+        let aztec1Select = this.add.image(175, 250, 'aztec1CharSelect').setScale(0.275);
         aztec1Select.setTint('0x404040');
         aztec1Select.setInteractive();
 
@@ -123,6 +125,39 @@ class characterSelect extends Phaser.Scene{
                 aztec1Select.setTint('0x404040');
             }
         });
+
+        /* The Dude select */
+        let theDudeSelect = this.add.image(275, 250, 'theDudeCharSelect').setScale(0.275);
+        theDudeSelect.setTint('0x404040');
+        theDudeSelect.setInteractive();
+
+        theDudeSelect.on("pointerup",()=>{
+            if(this.isSelected === true){
+                this.isSelected = false;
+                playerCharacter = null;
+                console.log('player has currently selected ' + playerCharacter);
+            }
+            else{
+                this.isSelected = true;
+                theDudeSelect.clearTint();
+                playerCharacter = 'TheDude';
+                console.log('player has currently selected ' + playerCharacter);
+                // set character to display in section
+            }
+        });
+
+        theDudeSelect.on('pointerover', ()=>{
+            if(this.isSelected === false){
+                theDudeSelect.clearTint();
+            }
+        });
+
+        theDudeSelect.on('pointerout', ()=>{
+            if(this.isSelected === false){
+                theDudeSelect.setTint('0x404040');
+            }
+        });
+
 
         /* Section that displays the idle animation of selected character */
 
@@ -165,9 +200,16 @@ class characterSelect extends Phaser.Scene{
 
             /* Player 1 Select Button */
             const playerOneSelectButton = this.add.image(475, 430, 'p1Button');
+            playerOneSelectButton.setInteractive();
+            playerOneSelectButton.setScale(1.5);
+            playerOneSelectButton.setScrollFactor(0);
 
             /* Player 2 Select Button */
             const playerTwoButton = this.add.image(625, 430, 'p2Button');
+            playerTwoButton.setInteractive();
+            playerTwoButton.setScale(1.5);
+            playerTwoButton.setScrollFactor(0);
+
 
             /* Level Select button */
             const playGameButton = this.add.image(250, 540, 'continueButton');
@@ -236,9 +278,10 @@ class characterSelect extends Phaser.Scene{
             this.scene.stop('CharacterSelect');
         });
 
-    }
+    };
 
     update(){
 
-    }
+    };
+
 }

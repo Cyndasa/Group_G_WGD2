@@ -105,6 +105,7 @@ class mainMenuButtons extends Phaser.Scene{
             this.sound.stopAll();
             // Possibly include clearing cache/saving user details
             this.scene.stop('MainMenu');
+            this.scene.stop('MainMenuButtons');
             this.scene.start('StartScreen');
         });
 

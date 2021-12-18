@@ -13,7 +13,15 @@ class pauseMenu extends Phaser.Scene{
 
         /* UI Components */
         this.add.rectangle(400, 300, 800, 600, 0x000000, 0.4); // Create an overlay mask
-        this.add.text(300, 150, 'Paused', {font: '50px', align: 'center'});
+        //this.add.text(300, 150, 'Paused', {font: '50px', align: 'center'});
+
+        const pausedText = this.add.bitmapText(400, 125, 'arcade', '', 40);
+        pausedText.setOrigin(0.5);
+        pausedText.setCenterAlign();
+        pausedText.setTint('0xFFFFFF');
+        pausedText.setText([
+            '-- Paused --',
+        ]);
 
 
         /* Create buttons */
@@ -42,6 +50,7 @@ class pauseMenu extends Phaser.Scene{
         });
         restartButton.on('pointerup', ()=>{
             this.scene.start(curGameScene);
+            this.scene.stop('PauseMenu'); // close this scene
         });
 
 
@@ -72,7 +81,7 @@ class pauseMenu extends Phaser.Scene{
 
     unPause(){
         this.scene.resume(curGameScene); // Resume game scene
-        this.scene.stop(); // close this scene
+        this.scene.stop('PauseMenu'); // close this scene
 
     };
 

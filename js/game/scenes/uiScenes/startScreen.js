@@ -51,8 +51,8 @@ class startScreen extends Phaser.Scene {
 
         /* Change scene when clicked */
         startButton.on("pointerup",()=>{
-            // Change to Main Menu
             this.scene.start('StartUp');
+            this.scene.stop('StartScreen');
         });
 
     };

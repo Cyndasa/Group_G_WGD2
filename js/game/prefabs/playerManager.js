@@ -71,11 +71,24 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite {
                 this.charKeyJump = 'aztec1Jump';
 
                 break;
+            case 'TheDude':
+                // Stats
+                this.runSpeed = 2;
+                this.sprintSpeed = 7;
+                this.jumpHeight = 8;
+                this.staminaDuration = 5;
+                // Display/Animation
+                this.char = 'theDude';
+                this.charKeyIdle = 'theDudeIdle';
+                this.charKeyRun = 'theDudeRun';
+                this.charKeyJump = 'theDudeJump';
+
+                break;
             default:
                 // Stats
                 this.runSpeed = 3;
                 this.sprintSpeed = 6;
-                this.jumpHeight = 6;
+                this.jumpHeight = 7;
                 this.staminaDuration = 8;
                 // Display/Animation
                 this.char = 'headsFox';
