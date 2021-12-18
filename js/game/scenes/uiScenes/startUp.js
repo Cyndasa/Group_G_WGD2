@@ -90,6 +90,11 @@ class startUp extends Phaser.Scene{
         // Confirm
         // Continue
         // Select
+        // P1 Select
+        // P2 Select
+        // Resume
+        // Restart
+        // Quit (although exit will probably work)
 
 
         /* Fonts */

@@ -96,12 +96,56 @@ class Forest extends Phaser.Scene {
         if(isSinglePlayer === false && isOnlinePlay === false){
             this.player2 = new PlayerManager(this, spawnPoint.x, spawnPoint.y, playerCharacter2, 1);
             let playerTwo = this.player2; // Used for defining player elsewhere in create()
+
+            this.matter.world.on('beforeupdate', function(event){
+                playerTwo.numTouching.left = 0;
+                playerTwo.numTouching.right = 0;
+                playerTwo.numTouching.bottom = 0;
+            })
+
+            // Loop over the active colliding pairs and count the surfaces the player is touching.
+            this.matter.world.on('collisionactive', function (event){
+                let playerBody2 = playerTwo.myBody;
+                let playerLeft2 = playerTwo.sensors.left;
+                let playerRight2 = playerTwo.sensors.right;
+                let playerBottom2 = playerTwo.sensors.bottom;
+
+                for (let i=0; i < event.pairs.length; i++){
+
+                    let bodyA = event.pairs[i].bodyA;
+                    let bodyB = event.pairs[i].bodyB;
+
+                    if(bodyA === playerBody2 || bodyB === playerBody2){
+
+                    }
+                    // Standing on any surface counts (e.g. jumping off of a non-static crate).
+                    else if ( bodyA === playerBottom2 || bodyB === playerBottom2){
+                        playerTwo.numTouching.bottom += 1;
+                    }
+                        // Only static objects count since we don't want to be blocked by an object that we
+                    // can push around.
+                    else if ((bodyA === playerLeft2 && bodyB.isStatic) || (bodyB === playerLeft2 && bodyA.isStatic)){
+                        playerTwo.numTouching.left += 1;
+                    }
+                    else if ((bodyA === playerRight2 && bodyB.isStatic) || (bodyB === playerRight2 && bodyA.isStatic)){
+                        playerTwo.numTouching.right += 1;
+                    }
+                }
+            })
+
+            // Update over, so now we can determine if any direction is blocked
+            this.matter.world.on('afterupdate', function(event){
+                playerTwo.blocked.right = playerTwo.numTouching.right > 0 ? true : false;
+                playerTwo.blocked.left = playerTwo.numTouching.left > 0 ? true : false;
+                playerTwo.blocked.bottom = playerTwo.numTouching.bottom > 0 ? true : false;
+            })
+
         }
 
         // Online Multiplayer
-        if(isSinglePlayer === false && isOnlinePlay === true){
+/*        if(isSinglePlayer === false && isOnlinePlay === true){
             // Create list/array of between 2 - 4 players who have joined game
-        }
+        }*/
 
         /* Set up camera  */
         cam = this.cameras.main;
@@ -382,6 +426,12 @@ class Forest extends Phaser.Scene {
         // Allow player to move in scene
         this.player.playerMovement(time);
         this.player.useAbility();
+
+        // Check for is local play is active
+        if(isSinglePlayer === false && isOnlinePlay === false){
+            this.player2.playerMovement(time);
+            this.player2.useAbility();
+        }
 
         /* Updates to have player name follow player */
         this.playerName.x = this.player.x - 20;
