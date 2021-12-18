@@ -1,35 +1,3 @@
-var SmoothedHorionztalControl = new Phaser.Class({
-
-    initialize:
-        function SmoothedHorionztalControl (speed)
-        {
-            this.msSpeed = speed;
-            this.value = 0;
-        },
-
-    moveLeft: function (delta)
-    {
-        if (this.value > 0) { this.reset(); }
-        this.value -= this.msSpeed * delta;
-        if (this.value < -1) { this.value = -1; }
-        playerController.time.rightDown += delta;
-    },
-
-    moveRight: function (delta)
-    {
-        if (this.value < 0) { this.reset(); }
-        this.value += this.msSpeed * delta;
-        if (this.value > 1) { this.value = 1; }
-    },
-
-    reset: function ()
-    {
-        this.value = 0;
-    }
-
-
-});
-
 class City extends Phaser.Scene {
 
     constructor() {
@@ -54,6 +22,42 @@ class City extends Phaser.Scene {
 
     create ()
     {
+
+        this.cityBGM = this.sound.add('cityLevelBGM');
+        const musicConfig = {
+            mute: 0,
+            volume: 0.6,
+            seek: 0,
+            loop: false, //DEBUG. Change back to true for final build
+            delay: 0
+        }
+        this.cityBGM.play(musicConfig);
+
+
+
+        /* Different key bindings for player options / local play */
+        // Default key bindings
+        this.playerControls = [];
+        this.playerControls[0] = this.input.keyboard.addKeys({
+            'up': Phaser.Input.Keyboard.KeyCodes.UP,
+            'down': Phaser.Input.Keyboard.KeyCodes.DOWN,
+            'left': Phaser.Input.Keyboard.KeyCodes.LEFT,
+            'right': Phaser.Input.Keyboard.KeyCodes.RIGHT,
+            'sprint': Phaser.Input.Keyboard.KeyCodes.K,
+            'ability': Phaser.Input.Keyboard.KeyCodes.L,
+            'space': Phaser.Input.Keyboard.KeyCodes.SPACE,
+        });
+        // Alt key bindings
+        this.playerControls[1] = this.input.keyboard.addKeys({
+            'up': Phaser.Input.Keyboard.KeyCodes.W,
+            'down': Phaser.Input.Keyboard.KeyCodes.S,
+            'left': Phaser.Input.Keyboard.KeyCodes.A,
+            'right': Phaser.Input.Keyboard.KeyCodes.D,
+            'sprint': Phaser.Input.Keyboard.KeyCodes.R,
+            'ability': Phaser.Input.Keyboard.KeyCodes.T,
+            'space': Phaser.Input.Keyboard.KeyCodes.SPACE,
+        });
+
         // ---------------background ----------------
         // create an tiled sprite with the size of our game screen
         this.bg_1 = this.add.tileSprite(0, 0, game.config.width * 3.0, game.config.height, "cityBG").setScale(3.8);
@@ -89,196 +93,214 @@ class City extends Phaser.Scene {
         this.matter.world.createDebugGraphic();
         this.matter.world.drawDebug = false;
 
-        cursors = this.input.keyboard.createCursorKeys();
-        smoothedControls = new SmoothedHorionztalControl(1);
+        cursors = this.playerControls[0]; // Set controls to players chosen set
 
-        // The player is a collection of bodies and sensorsl;
+        /* Finish Line */
+        let lineShape = this.add.line(2000, 300, 2010, 0, 2030, 600);
+        let finishLine = this.matter.add.gameObject(lineShape, {lineStyle: {width: 20, color: '0x00FF05', alpha: 0.3}});
+        finishLine.setStatic(true);
+        finishLine.setSensor(true);
 
-        playerController = {
-            matterSprite: this.matter.add.sprite(0, 0, 'player', 4),
-            blocked: {
-                left: false,
-                right: false,
-                bottom: false
-            },
-            numTouching: {
-                left: 0,
-                right: 0,
-                bottom: 0
-            },
-            sensors: {
-                bottom: null,
-                left: null,
-                right: null
-            },
-            time: {
-                leftDown: 0,
-                rightDown: 0
-            },
-            lastJumpedAt: 0,
-            speed: {
-                /*run: 6,*/
-                run: 3,
-                jump: 7
-            }
-        };
+        // Create Marker for Finish Line
+        let finishMarker  = this.matter.add.sprite(1980, 525, 'finishTorch')
+        finishMarker.anims.play('finishMarker', true);
+        finishMarker.setStatic(true);
+        finishMarker.setSensor(true);
 
-        var M = Phaser.Physics.Matter.Matter;
-        var w = playerController.matterSprite.width;
-        var h = playerController.matterSprite.height;
+        /* Create Player Character(s) */
 
-        // The player's body is going to be a compound body:
-        //  - playerBody is the solid body that will physically interact with the world. It has a
-        //    chamfer (rounded edges) to avoid the problem of ghost vertices: http://www.iforce2d.net/b2dtut/ghost-vertices
-        //  - Left/right/bottom sensors that will not interact physically but will allow us to check if
-        //    the player is standing on solid ground or pushed up against a solid object.
+        // Single player
+        this.player = new PlayerManager(this, spawnPoint.x,spawnPoint.y, playerCharacter, 0);
+        let playerOne = this.player; // Used for defining player elsewhere in create()
 
-        // Move the sensor to player center
-        var sx = w / 2;
-        var sy = h / 2;
+        // Local Multiplayer
+        if(isSinglePlayer === false && isOnlinePlay === false){
+            this.player2 = new PlayerManager(this, spawnPoint.x, spawnPoint.y, playerCharacter2, 1);
+            let playerTwo = this.player2; // Used for defining player elsewhere in create()
 
-        // The player's body is going to be a compound body.
-        var playerBody = M.Bodies.rectangle(sx, sy, w * 0.75, h, { chamfer: { radius: 10 } });
-        playerController.sensors.bottom = M.Bodies.rectangle(sx, h, sx, 5, { isSensor: true });
-        playerController.sensors.left = M.Bodies.rectangle(sx - w * 0.45, sy, 5, h * 0.25, { isSensor: true });
-        playerController.sensors.right = M.Bodies.rectangle(sx + w * 0.45, sy, 5, h * 0.25, { isSensor: true });
-        var compoundBody = M.Body.create({
-            parts: [
-                playerBody, playerController.sensors.bottom, playerController.sensors.left,
-                playerController.sensors.right
-            ],
-            friction: 0.01,
-            restitution: 0.05 // Prevent body from sticking against a wall
-        });
+            this.matter.world.on('beforeupdate', function(event){
+                playerTwo.numTouching.left = 0;
+                playerTwo.numTouching.right = 0;
+                playerTwo.numTouching.bottom = 0;
+            });
 
-        playerController.matterSprite
-            .setExistingBody(compoundBody)
-            .setFixedRotation() // Sets max inertia to prevent rotation
-            .setPosition(spawnPoint.x,spawnPoint.y);
+            // Loop over the active colliding pairs and count the surfaces the player is touching.
+            this.matter.world.on('collisionactive', function (event){
+                let playerBody2 = playerTwo.myBody;
+                let playerLeft2 = playerTwo.sensors.left;
+                let playerRight2 = playerTwo.sensors.right;
+                let playerBottom2 = playerTwo.sensors.bottom;
 
-        /* Set up scene camera */
+                for (let i=0; i < event.pairs.length; i++){
+
+                    let bodyA = event.pairs[i].bodyA;
+                    let bodyB = event.pairs[i].bodyB;
+
+                    if(bodyA === playerBody2 || bodyB === playerBody2){
+
+                    }
+                    // Standing on any surface counts (e.g. jumping off of a non-static crate).
+                    else if ( bodyA === playerBottom2 || bodyB === playerBottom2){
+                        playerTwo.numTouching.bottom += 1;
+                    }
+                        // Only static objects count since we don't want to be blocked by an object that we
+                    // can push around.
+                    else if ((bodyA === playerLeft2 && bodyB.isStatic) || (bodyB === playerLeft2 && bodyA.isStatic)){
+                        playerTwo.numTouching.left += 1;
+                    }
+                    else if ((bodyA === playerRight2 && bodyB.isStatic) || (bodyB === playerRight2 && bodyA.isStatic)){
+                        playerTwo.numTouching.right += 1;
+                    }
+                }
+            });
+
+            // Update over, so now we can determine if any direction is blocked
+            this.matter.world.on('afterupdate', function(event){
+                playerTwo.blocked.right = playerTwo.numTouching.right > 0 ? true : false;
+                playerTwo.blocked.left = playerTwo.numTouching.left > 0 ? true : false;
+                playerTwo.blocked.bottom = playerTwo.numTouching.bottom > 0 ? true : false;
+            });
+
+            /* UI Components */
+
+            /* Start Score Value */
+            const scoreValue2 = 50000;
+
+            /* Timer UI */
+            const timeText2 = this.add.text(425 , 10, 'Time: 00:00:00',{
+                font: '30px',
+                align: 'center',
+                color: 'black',
+                backgroundColor: 'white',
+            });
+            timeText2.scrollFactorX = 0;
+            timeText2.scrollFactorY = 0;
+            this.timeText2 = timeText2;
+
+            /* Score UI */
+
+            const scoreText2 = this.add.text(425, 50, "Score: " + scoreValue2, {
+                font: "30px",
+                align: "center",
+                color: "black",
+                backgroundColor: 'white',
+            });
+            scoreText2.scrollFactorX = 0;
+            scoreText2.scrollFactorY = 0;
+            this.scoreText2 = scoreText2;
+
+            /* Temp placeholder for player identifier */
+            this.playerName2 = playerUsername2;
+            this.playerName2 = this.add.text(
+                playerOne.x - 20,
+                playerOne.y - 25,
+                'NAME-HERE',{
+                    font: '15px',
+                    align: 'centre',
+                    color: 'black',
+                });
+
+            finishLine.setOnCollideWith(playerTwo.myBody, pair =>{
+                this.finishRace();
+            });
+
+
+
+        }
+
+        // Online Multiplayer
+        /*
+
+                if(isSinglePlayer === false && isOnlinePlay === true){
+                    // Create list/array of between 2 - 4 players who have joined game
+                }
+        */
+
+        /* Set up camera  */
         cam = this.cameras.main;
         cam.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-        smoothMoveCameraTowards(playerController.matterSprite);
-        // making the camera follow the player
-        cam.startFollow(playerController.matterSprite);
 
-        /* Create player animations */
+        // We either want it to extend out to always include both players (keep the same height expand the width?)
+        // Or
+        // Always follows player in the lead and it will drag/push player behind
 
-        this.anims.create({
-            key: 'left',
-            frames: this.anims.generateFrameNumbers('headsFox', { start: 0, end: 5 }),
-            /*frameRate: 16,*/
-            frameRate: 12,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'headsRun',
-            frames: this.anims.generateFrameNumbers('headsFox', { start: 6, end: 11 }),
-            /*frameRate: 16,*/
-            frameRate: 12,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'headsIdle',
-            frames: this.anims.generateFrameNumbers('headsFox', { start: 12, end: 15 }),
-            /*frameRate: 16,*/
-            frameRate: 12,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'headsJump',
-            frames: this.anims.generateFrameNumbers('headsFox', { start: 16, end: 17 }),
-            /*frameRate: 16,*/
-            frameRate: 12,
-            repeat: -1
-        });
+        // Set camera to follow player
+        cam.startFollow(playerOne);
+        smoothMoveCameraTowards(playerOne);
 
-        // Use matter events to detect whether the player is touching a surface to the left, right or
-        // bottom.
+        /* Player World Collisions */
 
+        // Use matter events to detect whether the player is touching a surface to the left, right or bottom.
         // Before matter's update, reset the player's count of what surfaces it is touching.
-        this.matter.world.on('beforeupdate', function (event) {
-            playerController.numTouching.left = 0;
-            playerController.numTouching.right = 0;
-            playerController.numTouching.bottom = 0;
+        this.matter.world.on('beforeupdate', function(event){
+            playerOne.numTouching.left = 0;
+            playerOne.numTouching.right = 0;
+            playerOne.numTouching.bottom = 0;
         });
 
         // Loop over the active colliding pairs and count the surfaces the player is touching.
-        this.matter.world.on('collisionactive', function (event)
-        {
-            var playerBody = playerController.body;
-            var left = playerController.sensors.left;
-            var right = playerController.sensors.right;
-            var bottom = playerController.sensors.bottom;
+        this.matter.world.on('collisionactive', function (event){
+            let playerBody = playerOne.myBody;
+            let playerLeft = playerOne.sensors.left;
+            let playerRight = playerOne.sensors.right;
+            let playerBottom = playerOne.sensors.bottom;
 
-            for (var i = 0; i < event.pairs.length; i++)
-            {
-                var bodyA = event.pairs[i].bodyA;
-                var bodyB = event.pairs[i].bodyB;
+            for (let i=0; i < event.pairs.length; i++){
 
-                if (bodyA === playerBody || bodyB === playerBody)
-                {
-                    continue;
+                let bodyA = event.pairs[i].bodyA;
+                let bodyB = event.pairs[i].bodyB;
+
+                if(bodyA === playerBody || bodyB === playerBody){
+
                 }
-                else if (bodyA === bottom || bodyB === bottom)
-                {
-                    // Standing on any surface counts (e.g. jumping off of a non-static crate).
-                    playerController.numTouching.bottom += 1;
+                // Standing on any surface counts (e.g. jumping off of a non-static crate).
+                else if ( bodyA === playerBottom || bodyB === playerBottom){
+                    playerOne.numTouching.bottom += 1;
                 }
-                else if ((bodyA === left && bodyB.isStatic) || (bodyB === left && bodyA.isStatic))
-                {
                     // Only static objects count since we don't want to be blocked by an object that we
-                    // can push around.
-                    playerController.numTouching.left += 1;
+                // can push around.
+                else if ((bodyA === playerLeft && bodyB.isStatic) || (bodyB === playerLeft && bodyA.isStatic)){
+                    playerOne.numTouching.left += 1;
                 }
-                else if ((bodyA === right && bodyB.isStatic) || (bodyB === right && bodyA.isStatic))
-                {
-                    playerController.numTouching.right += 1;
+                else if ((bodyA === playerRight && bodyB.isStatic) || (bodyB === playerRight && bodyA.isStatic)){
+                    playerOne.numTouching.right += 1;
                 }
             }
         });
 
         // Update over, so now we can determine if any direction is blocked
-        this.matter.world.on('afterupdate', function (event) {
-            playerController.blocked.right = playerController.numTouching.right > 0 ? true : false;
-            playerController.blocked.left = playerController.numTouching.left > 0 ? true : false;
-            playerController.blocked.bottom = playerController.numTouching.bottom > 0 ? true : false;
+        this.matter.world.on('afterupdate', function(event){
+            playerOne.blocked.right = playerOne.numTouching.right > 0 ? true : false;
+            playerOne.blocked.left = playerOne.numTouching.left > 0 ? true : false;
+            playerOne.blocked.bottom = playerOne.numTouching.bottom > 0 ? true : false;
         });
 
+        // Show/Hide Physics Debug - Comment out for submission
         this.input.on('pointerdown', function () {
             this.matter.world.drawDebug = !this.matter.world.drawDebug;
             this.matter.world.debugGraphic.visible = this.matter.world.drawDebug;
         }, this);
 
-        text = this.add.text(16, 16, '', {
-            fontSize: '20px',
-            padding: { x: 20, y: 10 },
-            backgroundColor: '#ffffff',
-            fill: '#000000'
+        /* Set Collision for Player and Finish Line */
+        finishLine.setOnCollideWith(playerOne.myBody, pair =>{
+            this.finishRace();
         });
-        text.setScrollFactor(0);
-        updateText();
 
 
         /* UI Components */
 
-        /* Placeholder Values */
-        const scoreValue = 0;
-        this.scoreValue = scoreValue;
+        /* Start Score Value */
+        const scoreValue = 50000;
 
-        const raceTime = 0;
-        this.raceTime = raceTime;
-
-        /* Doesn't work as intended but does display somewhat as intended */
-        timedEvent = new Phaser.Time.TimerEvent({delay: 6000 , duration: 60000, loop: true });
-        this.time.addEvent(timedEvent);
+        /* Time Trigger */
+        this.start = this.getTime();
 
         /* Timer UI */
-        const timeText = this.add.text(625 , 10, "Time: " + raceTime, {
-            font: "25px",
-            align: "center",
-            color: "red",
+        const timeText = this.add.text(25 , 10, 'Time: 00:00:00',{
+            font: '30px',
+            align: 'center',
+            color: 'white',
+            backgroundColor: 'black',
         });
         timeText.scrollFactorX = 0;
         timeText.scrollFactorY = 0;
@@ -286,135 +308,130 @@ class City extends Phaser.Scene {
 
         /* Score UI */
 
-        const scoreText = this.add.text(625, 50, "Score: " + scoreValue, {
-            font: "25px",
+        const scoreText = this.add.text(25, 50, "Score: " + scoreValue, {
+            font: "30px",
             align: "center",
             color: "white",
+            backgroundColor: 'black',
         });
         scoreText.scrollFactorX = 0;
         scoreText.scrollFactorY = 0;
         this.scoreText = scoreText;
 
         /* Temp placeholder for player identifier */
-        let playerName = playerUsername;
-        this.playerName = playerName;
+        this.playerName = playerUsername;
         this.playerName = this.add.text(
-            playerController.matterSprite.x - 20,
-            playerController.matterSprite.y - 25,
-            'Player',{
+            playerOne.x - 20,
+            playerOne.y - 25,
+            'NAME-HERE',{
                 font: '15px',
                 align: 'centre',
                 color: 'white',
             });
 
-        /* Set alt controls */
-
-        /*
-                this.input.keyboard.on('keydown_D', , );
-                this.input.keyboard.on('keydown_A', , );
-                this.input.keyboard.on('keydown_W', , );
-
-         */
 
     }
 
     update (time, delta)
     {
-        var matterSprite = playerController.matterSprite;
+
+        // Allow player to move in scene
+        this.player.playerMovement(time);
+        this.player.useAbility();
 
         /* Updates to have player name follow player */
-        this.playerName.x = matterSprite.x - 20;
-        this.playerName.y = matterSprite.y - 25;
+        this.playerName.x = this.player.x - 20;
+        this.playerName.y = this.player.y - 25;
 
-        let timeElapsed = timedEvent.getProgress();
+        /* Set up elapsed time */
+        let elapsed = this.getTime()-this.start;
+        raceTime = elapsed;
+
+        /* Create race time components */
+        let minutes = Math.floor(elapsed / 60000);
+        let seconds = Math.floor(elapsed / 1000);
+        const maxSeconds = 60;
+        let hSeconds = elapsed % 60;
+
+        /* Make race time components accessible */
+        this.minutes = minutes;
+        this.seconds = seconds;
+        this.hSeconds = hSeconds;
+        this.elapsed = elapsed;
+
+        /* Reset seconds value to 0 when equal to or greater than 60 - DOESN'T CURRENTLY WORK AS EXPECTED, only works once */
+        if (seconds >= maxSeconds){
+            seconds -= 60;
+        }
+
+        /* Display 0 in front of seconds value if less than 10 */
+        if (seconds < 10){
+            seconds = '0' + seconds;
+        }
+
+        // Calculate score as it's subtracted by elapsed time
+        this.scoreValue = 50000 - (Math.floor(elapsed/5));
 
         /* Update UI Components */
         this.scoreText.setText("Score: " + this.scoreValue);
-        this.timeText.setText("Time: " + timeElapsed.toString().substr(0,4));
+        this.timeText.setText('Time: 0' + minutes + ':' + seconds + ':' + hSeconds);
+        this.playerName.setText(playerUsername);
 
+        // Check for is local play is active, if true apply above for player 2
+        if(isSinglePlayer === false && isOnlinePlay === false){
+            this.player2.playerMovement(time);
+            this.player2.useAbility();
 
-        /* Speed up run/sprint
-        *
-        * if leftShift is down
-        * times playerController.speed.run by 2
-        * make framerate of run anim = 16/24
-        *
-        * */
+            /* Updates to have player name follow player */
+            this.playerName2.x = this.player2.x - 20;
+            this.playerName2.y = this.player2.y - 25;
 
-        /* Quick debug trigger to restart level if issue. Can be switch for more applicable uses later. */
+            /* Set up elapsed time */
+            let elapsed2 = this.getTime()-this.start;
+            raceTime2 = elapsed2;
+
+            /* Create race time components */
+            let minutes2 = Math.floor(elapsed2 / 60000);
+            let seconds2 = Math.floor(elapsed2 / 1000);
+            const maxSeconds2 = 60;
+            let hSeconds2 = elapsed2 % 60;
+
+            /* Make race time components accessible */
+            this.minutes2 = minutes2;
+            this.seconds2 = seconds2;
+            this.hSeconds2 = hSeconds2;
+            this.elapsed2 = elapsed2;
+
+            /* Reset seconds value to 0 when equal to or greater than 60 - DOESN'T CURRENTLY WORK AS EXPECTED, only works once */
+            if (seconds2 >= maxSeconds2){
+                seconds2 -= 60;
+            }
+
+            /* Display 0 in front of seconds value if less than 10 */
+            if (seconds2 < 10){
+                seconds2 = '0' + seconds2;
+            }
+
+            // Calculate score as it's subtracted by elapsed time
+            this.scoreValue2 = 50000 - (Math.floor(elapsed2/5));
+
+            /* Update UI Components */
+            this.scoreText2.setText("Score: " + this.scoreValue2);
+            this.timeText2.setText('Time: 0' + minutes2 + ':' + seconds2 + ':' + hSeconds2);
+            this.playerName2.setText(playerUsername2);
+        }
+
+        /* Fail condition / Timed out connection */
+        if(this.scoreValue<= 0){
+            console.log('Game Over, your connection timed out or you took too long');
+            this.scene.start('MainMenu');
+        }
+
+        /* Pause Function */
         if(cursors.space.isDown){
-            this.restartLevel();
+            //this.restartLevel();
+            this.pauseGame();
         }
-
-        // Horizontal movement
-
-        var oldVelocityX;
-        var targetVelocityX;
-        var newVelocityX;
-
-        if (cursors.left.isDown && !playerController.blocked.left)
-        {
-            smoothedControls.moveLeft(delta);
-            matterSprite.anims.play('left', true);
-
-            // Lerp the velocity towards the max run using the smoothed controls. This simulates a
-            // player controlled acceleration.
-            oldVelocityX = matterSprite.body.velocity.x;
-            targetVelocityX = -playerController.speed.run;
-            newVelocityX = Phaser.Math.Linear(oldVelocityX, targetVelocityX, -smoothedControls.value);
-
-            matterSprite.setVelocityX(newVelocityX);
-        }
-        else if (cursors.right.isDown && !playerController.blocked.right)
-        {
-            smoothedControls.moveRight(delta);
-            matterSprite.anims.play('headsRun', true);
-
-            // Lerp the velocity towards the max run using the smoothed controls. This simulates a
-            // player controlled acceleration.
-            oldVelocityX = matterSprite.body.velocity.x;
-            targetVelocityX = playerController.speed.run;
-            newVelocityX = Phaser.Math.Linear(oldVelocityX, targetVelocityX, smoothedControls.value);
-
-            matterSprite.setVelocityX(newVelocityX);
-        }
-        else
-        {
-            smoothedControls.reset();
-            matterSprite.anims.play('headsIdle', true);
-        }
-
-        // Jumping & wall jumping
-
-        // Add a slight delay between jumps since the sensors will still collide for a few frames after
-        // a jump is initiated
-        var canJump = (time - playerController.lastJumpedAt) > 250;
-        if (cursors.up.isDown & canJump)
-        {
-            if (playerController.blocked.bottom)
-            {
-                matterSprite.setVelocityY(-playerController.speed.jump);
-                playerController.lastJumpedAt = time;
-            }
-            else if (playerController.blocked.left)
-            {
-                // Jump up and away from the wall
-                matterSprite.setVelocityY(-playerController.speed.jump);
-                matterSprite.setVelocityX(playerController.speed.run);
-                playerController.lastJumpedAt = time;
-            }
-            else if (playerController.blocked.right)
-            {
-                // Jump up and away from the wall
-                matterSprite.setVelocityY(-playerController.speed.jump);
-                matterSprite.setVelocityX(-playerController.speed.run);
-                playerController.lastJumpedAt = time;
-            }
-            //matterSprite.anims.play('right', true);
-        }
-
-        smoothMoveCameraTowards(matterSprite, 1);
-        updateText();
 
         //-----------Scrolling Background-------------
         // scroll the texture of the tilesprites proportionally to the camera scroll
@@ -422,30 +439,92 @@ class City extends Phaser.Scene {
         this.bg_2.tilePositionX = cam.scrollX * .2;
         this.bg_3.tilePositionX = cam.scrollX * .25;
 
+    };
+
+    pauseGame(){
+        curGameScene = 'City';
+        this.scene.pause();
+        this.scene.launch('PauseMenu');
     }
 
-    restartLevel(){
-        console.log('restart level');
-        this.scene.start('City');
-    }
+    // Used for quick debug restart
+    /*    restartLevel(){
+            console.log('restart level');
+            this.scene.start('Forest');
+        };*/
 
-}
+    finishRace(){
+        this.sound.stopByKey('cityLevelBGM'); // Stop BGM
 
-function smoothMoveCameraTowards (target, smoothFactor)
-{
-    if (smoothFactor === undefined) { smoothFactor = 0; }
-    cam.scrollX = smoothFactor * cam.scrollX + (1 - smoothFactor) * (target.x - cam.width * 0.5);
-    cam.scrollY = smoothFactor * cam.scrollY + (1 - smoothFactor) * (target.y - cam.height * 0.5);
-}
 
-function updateText () {
-    text.setText([
-        'Arrow keys to move. Press "Up" to jump.',
-        'You can wall jump!',
-        'Click to toggle rendering Matter debug.'
-        // 'Debug:',
-        // '\tBottom blocked: ' + playerController.blocked.bottom,
-        // '\tLeft blocked: ' + playerController.blocked.left,
-        // '\tRight blocked: ' + playerController.blocked.right
-    ]);
+        console.log('Race Finished');
+        console.log('Lap Time: ' + this.minutes + ':' + this.seconds + ':' + this.hSeconds);
+        console.log('Delta Race Time: ' + this.elapsed);
+        console.log('Score: ' + this.scoreValue);
+
+        playerScore = this.scoreValue;
+        raceTimeMinutes = this.minutes;
+        raceTimeSeconds = this.seconds;
+        raceTimeHSeconds = this.hSeconds;
+        deltaRaceTime = this.elapsed;
+
+        playerFinished = true;
+
+        if(isSinglePlayer === false && isOnlinePlay === false){
+
+            console.log('P2 - Lap Time: ' + this.minutes2 + ':' + this.seconds2 + ':' + this.hSeconds2);
+            console.log('P2 - Delta Race Time: ' + this.elapsed2);
+            console.log('P2 - Score: ' + this.scoreValue2);
+
+            playerScore2 = this.scoreValue2;
+            raceTimeMinutes2 = this.minutes2;
+            raceTimeSeconds2 = this.seconds2;
+            raceTimeHSeconds2 = this.hSeconds2;
+            deltaRaceTime2 = this.elapsed2;
+
+            player2Finished = true;
+
+            if(playerFinished === true && player2Finished === true){
+                // Add Delay to call
+                this.scene.start('ResultsScreen');
+            }
+            else if(playerFinished === true && player2Finished === false){
+                // Stop player one's time counter/decrease
+                // Remove player 1's ability to control character
+                // Wait until player 2 has finished/timed out
+                return;
+            }
+            else if(playerFinished === false && player2Finished === true){
+                // Stop player two's time counter/decrease
+                // Remove player 2's ability to control character
+                // Wait until player 1 has finished/timed out
+                return;
+            }
+        }
+        else{
+            // Add some sort of delay to this call
+            // Stop time counter/decease
+            this.scene.start('ResultsScreen');
+        }
+
+    };
+
+    getTime() {
+        let d = new Date();
+        return d.getTime();
+    };
+
+    getRaceTime(){
+        let elapsed = this.getTime()-this.start;
+        raceTime = elapsed;
+
+        if(isSinglePlayer === false && isOnlinePlay === true){
+            let elapsed2 = this.getTime()-this.start;
+            raceTime2 = elapsed2;
+        }
+
+        console.log('delta time = ' + elapsed);
+    };
+
+
 }

@@ -36,6 +36,7 @@ class levelSelect extends Phaser.Scene{
         forestSelect.on("pointerup",()=>{
             this.scene.stop('MainMenu');
             this.scene.stop('LevelSelect');
+            this.sound.stopByKey('menuTheme');
             this.scene.start('Forest');
         });
 
@@ -59,6 +60,7 @@ class levelSelect extends Phaser.Scene{
         citySelect.on("pointerup",()=>{
             this.scene.stop('MainMenu');
             this.scene.stop('LevelSelect');
+            this.sound.stopByKey('menuTheme');
             this.scene.start('City');
         });
 

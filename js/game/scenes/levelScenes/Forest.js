@@ -24,6 +24,18 @@ class Forest extends Phaser.Scene {
     create ()
     {
 
+        this.forestBGM = this.sound.add('forestLevelBGM');
+        const musicConfig = {
+            mute: 0,
+            volume: 0.6,
+            seek: 0,
+            loop: false, //DEBUG. Change back to true for final build
+            delay: 0
+        }
+        this.forestBGM.play(musicConfig);
+
+
+
         /* Different key bindings for player options / local play */
         // Default key bindings
         this.playerControls = [];
@@ -454,6 +466,8 @@ class Forest extends Phaser.Scene {
     };*/
 
     finishRace(){
+        this.sound.stopByKey('forestLevelBGM'); // Stop BGM
+
         console.log('Race Finished');
         console.log('Lap Time: ' + this.minutes + ':' + this.seconds + ':' + this.hSeconds);
         console.log('Delta Race Time: ' + this.elapsed);

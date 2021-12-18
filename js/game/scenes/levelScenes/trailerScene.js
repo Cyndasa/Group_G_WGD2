@@ -49,6 +49,8 @@ class trailerScene extends Phaser.Scene {
         map.setCollisionByProperty({ collides: true });
         this.matter.world.convertTilemapLayer(layer);
         const spawnPoint = map.findObject("Objects", obj=> obj.name === "Spawn Point");
+
+
         /*  Key Bindings */
         /* Different key bindings for player options / local play */
         // Default key bindings
@@ -76,9 +78,9 @@ class trailerScene extends Phaser.Scene {
         cursors = this.playerControls[0];
 
         /* Player */
-        this.player = new PlayerManager(this, 0,0, 'HeadsTheFox', 0);
+        this.player = new PlayerManager(this, 100,0, 'HeadsTheFox', 0);
         let playerOne = this.player;
-        this.player2 = new PlayerManager(this, 0,0, 'AztecOne', 1);
+        this.player2 = new PlayerManager(this, 300,0, 'AztecOne', 1);
         let playerTwo = this.player2;
 
         /* Player 1 Collisions */
@@ -127,11 +129,6 @@ class trailerScene extends Phaser.Scene {
             playerOne.blocked.bottom = playerOne.numTouching.bottom > 0 ? true : false;
         });
 
-        // Show/Hide Physics Debug - Comment out for submission
-        this.input.on('pointerdown', function () {
-            this.matter.world.drawDebug = !this.matter.world.drawDebug;
-            this.matter.world.debugGraphic.visible = this.matter.world.drawDebug;
-        }, this);
 
         /* Player 2 Collisions */
         this.matter.world.on('beforeupdate', function(event){
@@ -179,14 +176,16 @@ class trailerScene extends Phaser.Scene {
 
         /* Other 'characters' */
         this.actors = this.add.group({});
-        this.actors.add(this.actorOne = new actorChars(this, 0,0));
-        this.actors.add(this.actorTwo = new actorChars(this, 0,0));
-        this.actors.add(this.actorThree = new actorChars(this, 0,0));
-        this.actors.add(this.actorFour = new actorChars(this, 0,0));
-        this.actors.add(this.actorFive = new actorChars(this, 0,0));
-        this.actors.add(this.actorSix = new actorChars(this, 0,0));
-        this.actors.add(this.actorSeven = new actorChars(this, 0,0));
+        this.actors.add(this.actorOne = new actorChars(this, 10,0));
+        this.actors.add(this.actorTwo = new actorChars(this, 20,0));
+        this.actors.add(this.actorThree = new actorChars(this, 30,0));
+        this.actors.add(this.actorFour = new actorChars(this, 40,0));
+        this.actors.add(this.actorFive = new actorChars(this, 50,0));
+        this.actors.add(this.actorSix = new actorChars(this, 60,0));
+        this.actors.add(this.actorSeven = new actorChars(this, 70,0));
 
+
+        this.actors.target = this.player;
 
 
 

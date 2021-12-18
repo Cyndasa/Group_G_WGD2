@@ -163,7 +163,9 @@ class startUp extends Phaser.Scene{
         // City Level BGM
         this.load.audio('cityLevelBGM', 'gameAssets/audioAssets/bgm/voxel-revolution-by-kevin-macleod-from-filmmusic-io.mp3');
 
-        // Results BGM(?)
+        // Results & Credits BGM
+        this.load.audio('resultsAndCreditsBGM', 'gameAssets/audioAssets/bgm/canon-in-d-for-8-bit-synths-by-kevin-macleod-from-filmmusic-io.mp3');
+
 
         /* SFX assets */
         // Button Click

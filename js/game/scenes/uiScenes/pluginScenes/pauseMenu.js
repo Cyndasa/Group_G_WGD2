@@ -64,6 +64,16 @@ class pauseMenu extends Phaser.Scene{
             quitButton.clearTint();
         });
         quitButton.on('pointerup', ()=>{
+
+            if(curGameScene === 'forest'){
+                this.sound.stopByKey('forestLevelBGM'); // Stop BGM
+
+            }
+            else if(curGameScene === 'City'){
+                this.sound.stopByKey('cityLevelBGM'); // Stop BGM
+
+            }
+
             this.scene.stop(curGameScene); // Close game scene
             this.scene.start('MainMenu'); // Open main menu
             this.scene.stop(); // Close this scene

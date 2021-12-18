@@ -10,15 +10,11 @@ Kawai Kitsune by Kevin MacLeod
 Link: https://incompetech.filmmusic.io/song/4990-kawai-kitsune
 License: https://filmmusic.io/standard-license
 
+Show Your Moves by Kevin MacLeod
+Link: https://incompetech.filmmusic.io/song/4350-show-your-moves
+License: https://filmmusic.io/standard-license
+
 [Menu Music]
 
 
 // POSSIBLE USE
-
-Half Mystery by Kevin MacLeod
-Link: https://incompetech.filmmusic.io/song/5026-half-mystery
-License: https://filmmusic.io/standard-license
-
-Odyssey by Kevin MacLeod
-Link: https://incompetech.filmmusic.io/song/4995-odyssey
-License: https://filmmusic.io/standard-license

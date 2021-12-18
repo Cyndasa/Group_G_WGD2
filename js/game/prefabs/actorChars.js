@@ -141,6 +141,8 @@ class actorChars extends Phaser.Physics.Matter.Sprite{
         this.setFixedRotation(); // Sets max inertia to prevent rotation
         this.setPosition(x, y);
 
+        this.target = scene.player;
+
 
     };
 
@@ -149,6 +151,8 @@ class actorChars extends Phaser.Physics.Matter.Sprite{
     };
 
     update(){
+
+        this.chasePlayer();
 
     };
 

@@ -13,6 +13,16 @@ class resultsScreen extends Phaser.Scene{
 
     create(){
 
+        this.rncBGM = this.sound.add('resultsAndCreditsBGM');
+        const musicConfig = {
+            mute: 0,
+            volume: 0.6,
+            seek: 0,
+            loop: false, //DEBUG. Change back to true for final build
+            delay: 0
+        }
+        this.rncBGM.play(musicConfig);
+
         // Reset finished booleans to false
         //playerFinished = false;
         //player2Finished = false;
@@ -45,6 +55,7 @@ class resultsScreen extends Phaser.Scene{
             'Player: ' + playerUsername,
             'Race Time: ' + raceTimeMinutes + ':' + raceTimeSeconds + ':' + raceTimeHSeconds,
             'Delta Time: ' + deltaRaceTime,
+            'Score: ' + playerScore,
             'Position: ',
         ]);
 
@@ -63,6 +74,7 @@ class resultsScreen extends Phaser.Scene{
                 'Player: ' + playerUsername2,
                 'Race Time: ' + raceTimeMinutes2 + ':' + raceTimeSeconds2 + ':' + raceTimeHSeconds2,
                 'Delta Time: ' + deltaRaceTime2,
+                'Score: ' + playerScore2,
                 'Position: ',
             ]);
 
@@ -77,6 +89,8 @@ class resultsScreen extends Phaser.Scene{
     update(){
 
         if(cursors.space.isDown){
+            this.sound.stopByKey('resultsAndCreditsBGM'); // Stop BGM
+
             this.scene.start('MainMenu');
             this.scene.stop('ResultsScreen');
         }

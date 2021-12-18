@@ -13,6 +13,16 @@ class creditsScene extends Phaser.Scene{
 
     create(){
 
+        this.rncBGM = this.sound.add('resultsAndCreditsBGM');
+        const musicConfig = {
+            mute: 0,
+            volume: 0.6,
+            seek: 0,
+            loop: false, //DEBUG. Change back to true for final build
+            delay: 0
+        }
+        this.rncBGM.play(musicConfig);
+
         //Insert a vertical parallax if possible
         this.add.rectangle(400,300,800,600, 0x000000, 0.6); // Depending on colour of vert background create this as a mask
 
@@ -129,6 +139,7 @@ class creditsScene extends Phaser.Scene{
     update(){
 
         if(cursors.space.isDown){
+            this.sound.stopByKey('resultsAndCreditsBGM'); // Stop BGM
             this.scene.start('MainMenu');
             this.scene.stop('CreditsScene');
         }
