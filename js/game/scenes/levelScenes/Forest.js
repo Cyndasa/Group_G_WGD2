@@ -88,20 +88,84 @@ class Forest extends Phaser.Scene {
 
 
         /* Create Player(s) */
-        this.player = new PlayerManager(this, spawnPoint.x,spawnPoint.y, playerCharacter, 1);
+        // Single player
+        this.player = new PlayerManager(this, spawnPoint.x,spawnPoint.y, playerCharacter, 0);
         let playerOne = this.player; // Used for defining player elsewhere in create()
-/*
+
+        // Local Multiplayer
         if(isSinglePlayer === false && isOnlinePlay === false){
             this.player2 = new PlayerManager(this, spawnPoint.x, spawnPoint.y, playerCharacter2, 1);
+            let playerTwo = this.player2; // Used for defining player elsewhere in create()
         }
-*/
-/*
 
+        // Online Multiplayer
         if(isSinglePlayer === false && isOnlinePlay === true){
             // Create list/array of between 2 - 4 players who have joined game
         }
-*/
 
+        /* Set up camera  */
+        cam = this.cameras.main;
+        cam.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+
+        // Set camera to follow player
+        cam.startFollow(playerOne);
+        smoothMoveCameraTowards(playerOne);
+
+        // We either want it to extend out to always include both players (keep the same height expand the width?)
+        // Or
+        // Always follows player in the lead and it will drag/push player behind
+
+        /* Player World Collisions */
+
+        // Use matter events to detect whether the player is touching a surface to the left, right or
+        // bottom.
+
+        // Before matter's update, reset the player's count of what surfaces it is touching.
+        this.matter.world.on('beforeupdate', function(event){
+            playerOne.numTouching.left = 0;
+            playerOne.numTouching.right = 0;
+            playerOne.numTouching.bottom = 0;
+        })
+
+        // Loop over the active colliding pairs and count the surfaces the player is touching.
+        this.matter.world.on('collisionactive', function (event){
+            let playerBody = playerOne.myBody;
+            let playerLeft = playerOne.sensors.left;
+            let playerRight = playerOne.sensors.right;
+            let playerBottom = playerOne.sensors.bottom;
+
+            for (let i=0; i < event.pairs.length; i++){
+
+                let bodyA = event.pairs[i].bodyA;
+                let bodyB = event.pairs[i].bodyB;
+
+                if(bodyA === playerBody || bodyB === playerBody){
+
+                }
+                // Standing on any surface counts (e.g. jumping off of a non-static crate).
+                else if ( bodyA === playerBottom || bodyB === playerBottom){
+                    playerOne.numTouching.bottom += 1;
+                }
+                // Only static objects count since we don't want to be blocked by an object that we
+                // can push around.
+                else if ((bodyA === playerLeft && bodyB.isStatic) || (bodyB === playerLeft && bodyA.isStatic)){
+                    playerOne.numTouching.left += 1;
+                }
+                else if ((bodyA === playerRight && bodyB.isStatic) || (bodyB === playerRight && bodyA.isStatic)){
+                    playerOne.numTouching.right += 1;
+                }
+            }
+        })
+
+        // Update over, so now we can determine if any direction is blocked
+        this.matter.world.on('afterupdate', function(event){
+            playerOne.blocked.right = playerOne.numTouching.right > 0 ? true : false;
+            playerOne.blocked.left = playerOne.numTouching.left > 0 ? true : false;
+            playerOne.blocked.bottom = playerOne.numTouching.bottom > 0 ? true : false;
+        })
+
+        /* Original Player Character */
+/*
         switch(playerCharacter){
             case 'HeadsTheFox':
                 this.thisChar = this.matter.add.sprite(0, 0, 'headsFox', 4);
@@ -146,7 +210,7 @@ class Forest extends Phaser.Scene {
             },
             lastJumpedAt: 0,
             speed: {
-                /*run: 6,*/
+                //run: 6,
                 run: 3,
                 jump: 7
             }
@@ -186,20 +250,16 @@ class Forest extends Phaser.Scene {
             .setPosition(spawnPoint.x,spawnPoint.y);
 
 
-        /* Set up scene camera */
+        //Set up scene camera
+        cam = this.cameras.main;
+        cam.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
         // Where local play is concerned
         // We either want it to extend out to always include both players (keep the same height expand the width?)
         // Or
         // Always follows player in the lead and it will drag/push player behind
-        cam = this.cameras.main;
-        cam.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
         smoothMoveCameraTowards(playerController.matterSprite);
         // making the camera follow the player
         cam.startFollow(playerController.matterSprite);
-
-        /* For constructed player */
-        //smoothMoveCameraTowards(playerOne);
-        //cam.startFollow(playerOne);
 
 
         // Use matter events to detect whether the player is touching a surface to the left, right or
@@ -211,40 +271,6 @@ class Forest extends Phaser.Scene {
             playerController.numTouching.right = 0;
             playerController.numTouching.bottom = 0;
         });
-
-        // For constructed player
-        this.matter.world.on('beforeupdate', function(event){
-            playerOne.numTouching.left = 0;
-            playerOne.numTouching.right = 0;
-            playerOne.numTouching.bottom = 0;
-        })
-
-        // For constructed player
-        this.matter.world.on('collisionactive', function (event){
-            let playerBody = playerOne.myBody;
-            let playerLeft = playerOne.sensors.left;
-            let playerRight = playerOne.sensors.right;
-            let playerBottom = playerOne.sensors.bottom;
-
-            for (let i=0; i < event.pairs.length; i++){
-
-                let bodyA = event.pairs[i].bodyA;
-                let bodyB = event.pairs[i].bodyB;
-
-                if(bodyA === playerBody || bodyB === playerBody){
-
-                }
-                else if ( bodyA === playerBottom || bodyB === playerBottom){
-                    playerOne.numTouching.bottom += 1;
-                }
-                else if ((bodyA === playerLeft && bodyB.isStatic) || (bodyB === playerLeft && bodyA.isStatic)){
-                    playerOne.numTouching.left += 1;
-                }
-                else if ((bodyA === playerRight && bodyB.isStatic) || (bodyB === playerRight && bodyA.isStatic)){
-                    playerOne.numTouching.right += 1;
-                }
-            }
-        })
 
         // Loop over the active colliding pairs and count the surfaces the player is touching.
         this.matter.world.on('collisionactive', function (event) {
@@ -280,20 +306,13 @@ class Forest extends Phaser.Scene {
             }
         });
 
-        // For constructed player
-        this.matter.world.on('afterupdate', function(event){
-            playerOne.blocked.right = playerOne.numTouching.right > 0 ? true : false;
-            playerOne.blocked.left = playerOne.numTouching.left > 0 ? true : false;
-            playerOne.blocked.bottom = playerOne.numTouching.bottom > 0 ? true : false;
-
-        })
-
         // Update over, so now we can determine if any direction is blocked
         this.matter.world.on('afterupdate', function (event) {
             playerController.blocked.right = playerController.numTouching.right > 0 ? true : false;
             playerController.blocked.left = playerController.numTouching.left > 0 ? true : false;
             playerController.blocked.bottom = playerController.numTouching.bottom > 0 ? true : false;
         });
+        */
 
         // Show/Hide Physics Debug - Comment out fully for submission
         this.input.on('pointerdown', function () {
@@ -335,8 +354,8 @@ class Forest extends Phaser.Scene {
         /* Temp placeholder for player identifier */
         this.playerName = playerUsername;
         this.playerName = this.add.text(
-            playerController.matterSprite.x - 20,
-            playerController.matterSprite.y - 25,
+            playerOne.x - 20,
+            playerOne.y - 25,
             'NAME-HERE',{
                 font: '15px',
                 align: 'centre',
@@ -350,7 +369,7 @@ class Forest extends Phaser.Scene {
         finishLine.setSensor(true);
 
         /* Set Collision for Player and Finish Line */
-        finishLine.setOnCollideWith(playerBody, pair =>{
+        finishLine.setOnCollideWith(playerOne.myBody, pair =>{
             this.finishRace();
         });
 
@@ -359,15 +378,14 @@ class Forest extends Phaser.Scene {
 
     update (time, delta)
     {
-        var matterSprite = playerController.matterSprite;
 
         // Allow player to move in scene
         this.player.playerMovement(time);
         this.player.useAbility();
 
         /* Updates to have player name follow player */
-        this.playerName.x = matterSprite.x - 20;
-        this.playerName.y = matterSprite.y - 25;
+        this.playerName.x = this.player.x - 20;
+        this.playerName.y = this.player.y - 25;
 
         /* Set up elapsed time */
         let elapsed = this.getTime()-this.start;
@@ -404,29 +422,21 @@ class Forest extends Phaser.Scene {
         this.timeText.setText('Time: 0' + minutes + ':' + seconds + ':' + hSeconds);
         this.playerName.setText(playerUsername);
 
-        /* Speed up run/sprint */
-        if(cursors.sprint.isDown){
-            // modify player run speed for x seconds
-            // console.log('Player is sprinting');
-        }
-
-        /* Use power-up ability */
-        if(cursors.ability.isDown){
-            this.getRaceTime();
-        }
-
         /* Fail condition / Timed out connection */
         if(this.scoreValue<= 0){
             console.log('Game Over, your connection timed out or you took too long');
             this.scene.start('MainMenu');
         }
 
+        /* Pause Function */
         if(cursors.space.isDown){
             //this.restartLevel();
             this.pauseGame();
         }
 
-
+        /* Original Player Movement */
+        //var matterSprite = playerController.matterSprite;
+/*
         // Horizontal movement
 
         var oldVelocityX;
@@ -494,10 +504,12 @@ class Forest extends Phaser.Scene {
                 matterSprite.setVelocityX(-playerController.speed.run);
                 playerController.lastJumpedAt = time;
             }
-            /*matterSprite.anims.play('right', true);*/
+            //matterSprite.anims.play('right', true);
         }
 
         smoothMoveCameraTowards(matterSprite, 1);
+
+        */
 
         //-----------Scrolling Background-------------
         // scroll the texture of the tilesprites proportionally to the camera scroll

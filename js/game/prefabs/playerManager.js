@@ -31,8 +31,8 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite {
     myMatter = Phaser.Physics.Matter.Matter;
     myWidth = this.width;
     myHeight = this.height;
-    sx = this.myWidth/2;
-    sy = this.myHeight/2;
+    sx = this.myWidth/2; // Move sensor to player center
+    sy = this.myHeight/2; // Move sensor to player center
     myBody;
     myCompoundBody;
 
@@ -49,7 +49,7 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite {
                 // Stats
                 this.runSpeed = 3;
                 this.sprintSpeed = 6;
-                this.jumpHeight = 6;
+                this.jumpHeight = 7;
                 this.staminaDuration = 8;
                 // Display/Animation
                 this.char = 'headsFox';
@@ -62,7 +62,7 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite {
                 // Stats
                 this.runSpeed = 4;
                 this.sprintSpeed = 5;
-                this.jumpHeight = 4;
+                this.jumpHeight = 6;
                 this.staminaDuration = 2;
                 // Display/Animation
                 this.char = 'aztecOne';
@@ -99,6 +99,11 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite {
         this.anims.play(this.charKeyIdle, true); // Play idle animation on load
 
         /* Create player compound body */
+        //  - playerBody is the solid body that will physically interact with the world. It has a
+        //    chamfer (rounded edges) to avoid the problem of ghost vertices: http://www.iforce2d.net/b2dtut/ghost-vertices
+        //  - Left/right/bottom sensors that will not interact physically but will allow us to check if
+        //    the player is standing on solid ground or pushed up against a solid object.
+
         this.myBody = this.myMatter.Bodies.rectangle(this.sx, this.sy, this.myWidth * 0.75, this.myHeight, {
             chamfer: {
                 radius: 10}}
@@ -118,17 +123,15 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite {
                 this.myBody, this.sensors.bottom, this.sensors.left, this.sensors.right
             ],
             friction: 0.01,
-            restitution: 0.05
+            restitution: 0.05 // Prevent body from sticking against walls
         });
 
         this.setExistingBody(this.myCompoundBody);
-        this.setFixedRotation();
+        this.setFixedRotation(); // Sets max inertia to prevent rotation
         this.setPosition(x, y);
 
 
-
-
-    }
+    };
 
     update(){
 
@@ -148,6 +151,7 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite {
                 this.anims.play(this.charKeyRun, true);
                 this.reduceStamina(); // Reduce stamina while sprinting
             }
+
             /* If player has no stamina, can't sprint */
             else if(this.cursors.sprint.isDown && this.staminaDuration <= 0){
                 //console.log('You have no stamina you cant sprint');
@@ -155,6 +159,8 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite {
                 this.anims.play(this.charKeyRun, true);
 
             }
+
+            /* If player isn't attempting to sprint, recover stamina while moving */
             else{
                 //console.log('Running left');
                 this.setVelocityX(-this.runSpeed);
@@ -233,7 +239,7 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite {
         else if(this.cursors.ability.isDown && this.hasPowerUp === false){
             console.log('You dont have a power-up to use');
         }
-    }
+    };
 
     reduceStamina(){
         // Reduce player stamina until it reaches zero
