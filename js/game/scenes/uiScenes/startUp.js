@@ -133,7 +133,7 @@ class startUp extends Phaser.Scene{
         this.load.spritesheet('finishTorch', 'gameAssets/imageAssets/props/fireTorch.png', {frameWidth: 16, frameHeight: 32});
 
         /* Power-ups */
-
+        this.load.spritesheet('powerUpsSheet', 'gameAssets/imageAssets/props/power_up_sheet.png',{frameWidth: 16, frameHeight: 16 });
 
         /* Music assets */
 
@@ -346,11 +346,21 @@ class startUp extends Phaser.Scene{
         });
 
 
-        /* Props */
+        /* Props & Other */
+
+        // Finish Marker
         this.anims.create({
             key: 'finishMarker',
             frames: this.anims.generateFrameNumbers('finishTorch', {start: 0, end: 5}),
             frameRate: 12,
+            repeat: -1
+        });
+
+        // Power Ups
+        this.anims.create({
+            key: 'powerUps',
+            frames: this.anims.generateFrameNumbers('powerUpsSheet', {start: 0, end: 3}),
+            frameRate: 16,
             repeat: -1
         });
 

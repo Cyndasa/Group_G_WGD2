@@ -83,6 +83,7 @@ class Forest extends Phaser.Scene {
         cursors = this.playerControls[0]; // Set controls to players chosen set
         // smoothedControls = new SmoothedHorionztalControl(1);
 
+        /* Create Props and Other Objects */
 
         /* Finish Line */
         let lineShape = this.add.line(2590, 300, 2570, 0, 2650, 600);
@@ -90,11 +91,20 @@ class Forest extends Phaser.Scene {
         finishLine.setStatic(true);
         finishLine.setSensor(true);
 
-        // Create animated sprite marker for finish line
+        // Create Marker for Finish Line
         let finishMarker  = this.matter.add.sprite(2535, 458, 'finishTorch')
         finishMarker.anims.play('finishMarker', true);
         finishMarker.setStatic(true);
         finishMarker.setSensor(true);
+
+        /* Collectibles - Basis for Power-Ups */
+        this.collectible = this.add.group({});
+
+        this.collectible.add(this.colItem1 = new Collectible(this, 350, 385));
+        this.collectible.add(this.colItem2 = new Collectible(this, 600, 480));
+        this.collectible.add(this.colItem3 = new Collectible(this, 1450, 555));
+        this.collectible.add(this.colItem4 = new Collectible(this, 2000, 300));
+
 
         /* Create Player Character(s) */
 
