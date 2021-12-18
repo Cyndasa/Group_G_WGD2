@@ -26,29 +26,30 @@ class characterSelect extends Phaser.Scene{
         /* Temporary text to mark scene - COMMENT OUT OR REMOVE FOR SUBMISSION */
         if(isSinglePlayer === true){
 
-            this.add.text(250, 150, '----Character Select (Single Player)----',{
-                font: '20px',
-                color: 'white',
-                backgroundColor: 'darkblue',
-            });
+            const titleSPText = this.add.bitmapText(400, 165, 'arcade', '', 14);
+            titleSPText.setOrigin(0.5);
+            titleSPText.setCenterAlign();
+            titleSPText.setTint('0xFFFFFF');
+            titleSPText.setText(['Character Select (Single Player)']);
 
         }
         else if (isSinglePlayer === false && isOnlinePlay === false){
 
-            this.add.text(10, 180, '----Character Select (Local Multiplayer)----',{
-                font: '20px',
-                color: 'white',
-                backgroundColor: 'darkblue',
-            });
+            const titleLPText = this.add.bitmapText(400, 165, 'arcade', '', 14);
+            titleLPText.setOrigin(0.5);
+            titleLPText.setCenterAlign();
+            titleLPText.setTint('0xFFFFFF');
+            titleLPText.setText(['Character Select (Local Multiplayer)']);
+
 
         }
         else if(isSinglePlayer === false && isOnlinePlay === true){
 
-            this.add.text(10, 180, '----Character Select (Online Multiplayer)----',{
-                font: '20px',
-                color: 'white',
-                backgroundColor: 'darkblue',
-            });
+            const titleLPText = this.add.bitmapText(400, 165, 'arcade', '', 14);
+            titleLPText.setOrigin(0.5);
+            titleLPText.setCenterAlign();
+            titleLPText.setTint('0xFFFFFF');
+            titleLPText.setText(['Character Select (Online Multiplayer)']);
 
         }
 
@@ -160,13 +161,15 @@ class characterSelect extends Phaser.Scene{
 
 
         /* Section that displays the idle animation of selected character */
+        this.add.rectangle(525, 280, 160, 128, 0xFF00F5, 0.4); // Temp Marker for sprite display section
+
 
         /* Section that displays the stats of selected character */
+        this.add.rectangle(675, 280, 114, 128, 0xF967FF, 0.4); // Temp Marker for stats display section
+
 
         /* Section that displays the flavour text of selected character */
-
-        /* Confirm selection button ?
-        * Add if statement for displaying local multiplayer option so player 2 can confirm selection */
+        this.add.rectangle(560, 385, 350, 75, 0x000000, 0.4); // Temp Marker for flavour text section
 
 
         /* Create menu buttons depending on previous scene */
@@ -199,16 +202,42 @@ class characterSelect extends Phaser.Scene{
         else if(isSinglePlayer === false && isOnlinePlay === false){
 
             /* Player 1 Select Button */
-            const playerOneSelectButton = this.add.image(475, 430, 'p1Button');
+            const playerOneSelectButton = this.add.image(480, 455, 'p1Button');
+            playerOneSelectButton.setScale(1.25, 0.85);
             playerOneSelectButton.setInteractive();
-            playerOneSelectButton.setScale(1.5);
             playerOneSelectButton.setScrollFactor(0);
 
+            /* Apply tint to image when hovered over/ off */
+            playerOneSelectButton.on('pointerover', ()=>{
+                playerOneSelectButton.setTint('0xFF00F5');
+            });
+            playerOneSelectButton.on('pointerout', ()=>{
+                playerOneSelectButton.clearTint();
+            });
+
+            /* Player One Chooses character  */
+            playerOneSelectButton.on('pointerup', ()=>{
+
+            });
+
             /* Player 2 Select Button */
-            const playerTwoButton = this.add.image(625, 430, 'p2Button');
-            playerTwoButton.setInteractive();
-            playerTwoButton.setScale(1.5);
-            playerTwoButton.setScrollFactor(0);
+            const playerTwoSelectButton = this.add.image(620, 455, 'p2Button');
+            playerTwoSelectButton.setScale(1.25, 0.85);
+            playerTwoSelectButton.setInteractive();
+            playerTwoSelectButton.setScrollFactor(0);
+
+            /* Apply tint to image when hovered over/ off */
+            playerTwoSelectButton.on('pointerover', ()=>{
+                playerTwoSelectButton.setTint('0xFF00F5');
+            });
+            playerTwoSelectButton.on('pointerout', ()=>{
+                playerTwoSelectButton.clearTint();
+            });
+
+            /* Player Two Chooses character  */
+            playerTwoSelectButton.on('pointerup', ()=>{
+
+            });
 
 
             /* Level Select button */

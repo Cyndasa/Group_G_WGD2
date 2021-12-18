@@ -19,11 +19,11 @@ class playModeSelect extends Phaser.Scene{
         titleHeader.setScrollFactor(0); // Set scroll factor to zero to prevent movement
 
         /* Temporary text to mark scene - COMMENT OUT OR REMOVE FOR SUBMISSION */
-        this.add.text(250, 150, '----Select Play Mode----',{
-            font: '20px',
-            color: 'white',
-            backgroundColor: 'darkblue',
-        })
+        const titleText = this.add.bitmapText(400, 165, 'arcade', '', 14);
+        titleText.setOrigin(0.5);
+        titleText.setCenterAlign();
+        titleText.setTint('0xFFFFFF');
+        titleText.setText(['Select Play Mode']);
 
         /* Create menu buttons */
 
