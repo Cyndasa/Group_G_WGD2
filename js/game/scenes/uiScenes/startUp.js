@@ -82,6 +82,20 @@ class startUp extends Phaser.Scene{
         this.load.image('onlinePlay', 'gameAssets/imageAssets/uiImages/Buttons/Online/Online-Unclicked.png');
         this.load.image('controlButton', 'gameAssets/imageAssets/uiImages/Buttons/Controls/Controls-Unclicked.png')
         this.load.image('localButton', 'gameAssets/imageAssets/uiImages/Buttons/Local/Local-Unclicked.png');
+        this.load.image('confirmButton', 'gameAssets/imageAssets/uiImages/Buttons/Confirm/Confirm-Unclicked.png');
+        this.load.image('continueButton', 'gameAssets/imageAssets/uiImages/Buttons/Continue/Continue-Unclicked.png');
+        this.load.image('exitButton', 'gameAssets/imageAssets/uiImages/Buttons/Exit/Exit-Unclicked.png');
+        this.load.image('multiButton', 'gameAssets/imageAssets/uiImages/Buttons/Multi/Multi-Unclicked.png');
+        this.load.image('playButton', 'gameAssets/imageAssets/uiImages/Buttons/Play/Play-Unclicked.png');
+        this.load.image('profileButton', 'gameAssets/imageAssets/uiImages/Buttons/Profile/Profile-Unclicked.png');
+        this.load.image('restartButton', 'gameAssets/imageAssets/uiImages/Buttons/Restart/Restart-Unclicked.png');
+        this.load.image('resumeButton', 'gameAssets/imageAssets/uiImages/Buttons/Resume/Resume-Unclicked.png');
+        this.load.image('returnButton', 'gameAssets/imageAssets/uiImages/Buttons/Return/Return-Unclicked.png');
+        this.load.image('selectButton', 'gameAssets/imageAssets/uiImages/Buttons/Select/Select-Unclicked.png');
+        this.load.image('p1Button', 'gameAssets/imageAssets/uiImages/Buttons/Select/P1-Unclicked.png');
+        this.load.image('p2Button', 'gameAssets/imageAssets/uiImages/Buttons/Select/P2-Unclicked.png');
+        this.load.image('startButton', 'gameAssets/imageAssets/uiImages/Buttons/Start/Start-Unclicked.png');
+
         // Start
         // Profile
         // Return
