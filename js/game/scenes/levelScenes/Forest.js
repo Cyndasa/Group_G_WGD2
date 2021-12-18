@@ -6,7 +6,7 @@ class Forest extends Phaser.Scene {
 
     init(){
 
-    }
+    };
 
     preload ()
     {
@@ -21,7 +21,7 @@ class Forest extends Phaser.Scene {
         // load spritesheet
         this.load.spritesheet('headsFox', 'gameAssets/imageAssets/characterSprites/foxSprite/Player-Movement.png',{ frameWidth: 33, frameHeight: 32 });
    */
-    }
+    };
 
     create ()
     {
@@ -34,8 +34,8 @@ class Forest extends Phaser.Scene {
             'down': Phaser.Input.Keyboard.KeyCodes.DOWN,
             'left': Phaser.Input.Keyboard.KeyCodes.LEFT,
             'right': Phaser.Input.Keyboard.KeyCodes.RIGHT,
-            'sprint': Phaser.Input.Keyboard.KeyCodes.P, // Maybe change to K
-            'ability': Phaser.Input.Keyboard.KeyCodes.L, // Maybe change to L
+            'sprint': Phaser.Input.Keyboard.KeyCodes.K,
+            'ability': Phaser.Input.Keyboard.KeyCodes.L,
             'space': Phaser.Input.Keyboard.KeyCodes.SPACE,
         });
         // Alt key bindings
@@ -44,8 +44,8 @@ class Forest extends Phaser.Scene {
             'down': Phaser.Input.Keyboard.KeyCodes.S,
             'left': Phaser.Input.Keyboard.KeyCodes.A,
             'right': Phaser.Input.Keyboard.KeyCodes.D,
-            'sprint': Phaser.Input.Keyboard.KeyCodes.G, // Maybe change to R
-            'ability': Phaser.Input.Keyboard.KeyCodes.H, // Maybe change to T
+            'sprint': Phaser.Input.Keyboard.KeyCodes.R,
+            'ability': Phaser.Input.Keyboard.KeyCodes.T,
             'space': Phaser.Input.Keyboard.KeyCodes.SPACE,
         });
 
@@ -354,7 +354,7 @@ class Forest extends Phaser.Scene {
             this.finishRace();
         });
 
-    }
+    };
 
 
     update (time, delta)
@@ -363,7 +363,6 @@ class Forest extends Phaser.Scene {
 
         // Allow player to move in scene
         this.player.playerMovement(time);
-        //this.player.playerJump();
         this.player.useAbility();
 
         /* Updates to have player name follow player */
@@ -423,7 +422,8 @@ class Forest extends Phaser.Scene {
         }
 
         if(cursors.space.isDown){
-            this.restartLevel();
+            //this.restartLevel();
+            this.pauseGame();
         }
 
 
@@ -504,12 +504,18 @@ class Forest extends Phaser.Scene {
         this.bg_1.tilePositionX = cam.scrollX * .1;
         this.bg_2.tilePositionX = cam.scrollX * .3;
 
-        }
+        };
+
+    pauseGame(){
+        curGameScene = 'Forest';
+        this.scene.pause();
+        this.scene.launch('PauseMenu');
+    }
 
     restartLevel(){
         console.log('restart level');
         this.scene.start('Forest');
-    }
+    };
 
     finishRace(){
         console.log('Race Finished');
@@ -522,17 +528,16 @@ class Forest extends Phaser.Scene {
         deltaRaceTime = this.elapsed;
 
         this.scene.start('ResultsScreen');
-
-    }
+    };
 
     getTime() {
         let d = new Date();
         return d.getTime();
-    }
+    };
 
     getRaceTime(){
         let elapsed = this.getTime()-this.start;
         raceTime = elapsed;
         console.log('delta time = ' + elapsed);
-    }
+    };
 }

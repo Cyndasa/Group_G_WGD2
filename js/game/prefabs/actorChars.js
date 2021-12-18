@@ -1,6 +1,7 @@
 class actorChars extends Phaser.Physics.Matter.Sprite{
 
     /* Create a Matter Sprite that will follow the player at a random speed within a random distance */
+    // This class will serve as the basis for creating NPC rivals for single player races
 
     followDistance;
     followSpeed;

@@ -1,5 +1,5 @@
 class PlayerManager extends Phaser.Physics.Matter.Sprite {
-    // Class for creating a player in game level.
+    // Class for creating a player character in game level.
 
     // Create variables
     selectedChar;
@@ -94,12 +94,11 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite {
             this.setTexture(this.char);
         }
 
-        console.log('Player ' + playerCharacter + ' is here!');
+        //console.log('Player ' + playerCharacter + ' is here!');
 
         this.anims.play(this.charKeyIdle, true); // Play idle animation on load
 
         /* Create player compound body */
-
         this.myBody = this.myMatter.Bodies.rectangle(this.sx, this.sy, this.myWidth * 0.75, this.myHeight, {
             chamfer: {
                 radius: 10}}
@@ -196,33 +195,31 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite {
         }
 
         /* Player Jump */
-        this.canJump = (time - this.lastJumpedAt) > 250;
+        this.canJump = (time - this.lastJumpedAt) > 300;
         if (this.cursors.up.isDown && this.canJump) {
-            console.log('the player jumps');
 
             if (this.blocked.bottom === true) {
                 this.setVelocityY(-this.jumpHeight);
-                this.anims.play(this.charKeyJump, true);
                 this.lastJumpedAt = time;
+                this.anims.play(this.charKeyJump, true);
             }
 
-            else if (this.blocked.bottom === false && this.blocked.left === true) {
+            else if (this.blocked.left === true) {
                 this.setVelocityY(-this.jumpHeight);
                 this.setVelocityX(this.runSpeed);
                 this.lastJumpedAt = time
+                this.anims.play(this.charKeyJump, true);
+                this.flipX = false;
             }
 
-            else if (this.blocked.bottom === false && this.blocked.right === true) {
+            else if (this.blocked.right === true) {
                 this.setVelocityY(-this.jumpHeight);
                 this.setVelocityX(-this.runSpeed);
                 this.lastJumpedAt = time
+                this.anims.play(this.charKeyJump, true);
+                this.flipX = true;
             }
         }
-
-    };
-
-    playerJump(time){
-
 
     };
 
