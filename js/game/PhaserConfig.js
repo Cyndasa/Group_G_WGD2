@@ -25,7 +25,7 @@ var config = {
     inputManager: Phaser.Input.InputManager,
     //scene: [mainScene]  // Used to test specific scene. Swap with other.
     scene: [startScreen, startUp, mainMenu, mainMenuButtons, playerProfile, playModeSelect, gameSettings,Controls, multiplayerModeSelect,
-        characterSelect, levelSelect, multiplayerLevelSelect, Forest, City, resultsScreen, pauseMenu, creditsScene], // Comment in/out with above for testing specific scene vs testing game as whole.
+        characterSelect, levelSelect, multiplayerLevelSelect, Forest, City, resultsScreen, pauseMenu, creditsScene, trailerScene], // Comment in/out with above for testing specific scene vs testing game as whole.
 
 }
     /* Can declare universal variables here */
