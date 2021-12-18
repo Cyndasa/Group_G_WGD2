@@ -50,7 +50,7 @@ class playModeSelect extends Phaser.Scene{
         });
 
         /* Multiplayer button */
-        const multiPlayerButton = this.add.image(400, 440, 'onlinePlay');
+        const multiPlayerButton = this.add.image(400, 440, 'multiButton');
         multiPlayerButton.setInteractive();
         multiPlayerButton.setScale(1.5);
         multiPlayerButton.setScrollFactor(0);
