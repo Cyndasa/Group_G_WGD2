@@ -172,7 +172,15 @@ class trailerScene extends Phaser.Scene {
         });
 
         /* Other 'characters' */
-        // Create 10+ using group creation (if matter has it)
+        this.actors = this.add.group({});
+        this.actors.add(this.actorOne = new actorChars(this, 0,0));
+        this.actors.add(this.actorTwo = new actorChars(this, 0,0));
+        this.actors.add(this.actorThree = new actorChars(this, 0,0));
+        this.actors.add(this.actorFour = new actorChars(this, 0,0));
+        this.actors.add(this.actorFive = new actorChars(this, 0,0));
+        this.actors.add(this.actorSix = new actorChars(this, 0,0));
+        this.actors.add(this.actorSeven = new actorChars(this, 0,0));
+
 
 
 
