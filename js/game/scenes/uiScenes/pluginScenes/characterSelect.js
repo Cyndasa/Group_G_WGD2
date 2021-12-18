@@ -141,7 +141,7 @@ class characterSelect extends Phaser.Scene{
             /* Select Button */
 
             /* Level select button */
-            const levelSelectButton = this.add.image(250, 540, 'playButton');
+            const levelSelectButton = this.add.image(250, 540, 'continueButton');
             levelSelectButton.setInteractive();
             levelSelectButton.setScale(1.5);
             levelSelectButton.setScrollFactor(0);
@@ -164,11 +164,13 @@ class characterSelect extends Phaser.Scene{
         else if(isSinglePlayer === false && isOnlinePlay === false){
 
             /* Player 1 Select Button */
+            const playerOneSelectButton = this.add.image(475, 430, 'p1Button');
 
             /* Player 2 Select Button */
+            const playerTwoButton = this.add.image(625, 430, 'p2Button');
 
-            /* Begin game button */
-            const playGameButton = this.add.image(250, 540, 'playButton');
+            /* Level Select button */
+            const playGameButton = this.add.image(250, 540, 'continueButton');
             playGameButton.setInteractive();
             playGameButton.setScale(1.5);
             playGameButton.setScrollFactor(0);
@@ -215,7 +217,7 @@ class characterSelect extends Phaser.Scene{
         }
 
         /* Return button */
-        const returnButton = this.add.image(550, 540, 'exitButton');
+        const returnButton = this.add.image(550, 540, 'returnButton');
         returnButton.setInteractive();
         returnButton.setScale(1.5);
         returnButton.setScrollFactor(0);

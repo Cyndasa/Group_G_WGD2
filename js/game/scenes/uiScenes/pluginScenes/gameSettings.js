@@ -51,28 +51,28 @@ class gameSettings extends Phaser.Scene{
             }
         });
 
-        /* TBD button */
-        const tbdButton = this.add.image(400, 440, 'controlButton');
-        tbdButton.setInteractive();
-        tbdButton.setScale(1.5);
-        tbdButton.setScrollFactor(0);
+        /* Controls button */
+        const controlsButton = this.add.image(400, 440, 'controlButton');
+        controlsButton.setInteractive();
+        controlsButton.setScale(1.5);
+        controlsButton.setScrollFactor(0);
 
         /* Apply tint to image when hovered over/ off */
-        tbdButton.on('pointerover', ()=>{
-            tbdButton.setTint('0xFF00F5');
+        controlsButton.on('pointerover', ()=>{
+            controlsButton.setTint('0xFF00F5');
         });
-        tbdButton.on('pointerout', ()=>{
-            tbdButton.clearTint();
+        controlsButton.on('pointerout', ()=>{
+            controlsButton.clearTint();
         });
 
         /* functionality  */
-        tbdButton.on('pointerup', ()=>{
+        controlsButton.on('pointerup', ()=>{
             this.scene.launch('Controls');
             this.scene.stop('GameSettings');
         });
 
         /* Return button */
-        const returnButton = this.add.image(400, 540, 'exitButton');
+        const returnButton = this.add.image(400, 540, 'returnButton');
         returnButton.setInteractive();
         returnButton.setScale(1.5);
         returnButton.setScrollFactor(0);

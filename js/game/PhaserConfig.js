@@ -37,7 +37,6 @@ var cam;
 var smoothedControls;
 var smoothMoveCameraTowards;
 
-
 let previousScene;
 let curGameScene;
 let timedEvent;
@@ -51,19 +50,27 @@ let playerControls = [];
 let isSinglePlayer = true;
 let isOnlinePlay = false;
 
-//let playerManager;
-let playerUsername = 'Guest';
+// Player variables
+let playerUsername = 'Player';
 let playerCharacter;
 let playerScore;
-let raceTime = [];
+let raceTime;
+let raceTimeMinutes;
+let raceTimeSeconds;
+let raceTimeHSeconds;
 let deltaRaceTime;
+let playerFinished = 'false';
 
-// For Local Play
-let playerManager2;
+// Variables for Local Player 2
 let playerUsername2 = 'Guest';
 let playerCharacter2;
 let playerScore2;
 let raceTime2;
+let raceTimeMinutes2;
+let raceTimeSeconds2;
+let raceTimeHSeconds2;
+let deltaRaceTime2;
+let player2Finished = 'false';
 
 let activePlayers = [];
 

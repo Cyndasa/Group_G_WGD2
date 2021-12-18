@@ -13,6 +13,9 @@ class playerProfile extends Phaser.Scene{
 
     create(){
 
+        this.add.rectangle(400, 325, 800, 300, 0x000000, 0.4); // Create an semi-transparent box for controls
+
+
         /* Add title image */
         const titleHeader = this.add.image(400, 75, 'titleHeader');
         titleHeader.setScale(3); // Enlarge title header image
@@ -28,16 +31,25 @@ class playerProfile extends Phaser.Scene{
         /* Create menu buttons */
 
         /* Player username */
-        this.viewPlayerName = this.add.text (200, 225, '   Username: ' + playerUsername + '    ', {
+/*        this.viewPlayerName = this.add.text (200, 225, '   Username: ' + playerUsername + '    ', {
             font: '30px',
             color: 'white',
             backgroundColor: 'darkblue',
-        })
+        })*/
+
+        /* Player username */
+        const playerUsernameText = this.add.bitmapText(400, 200, 'arcade', '', 22);
+        playerUsernameText.setOrigin(0.5);
+        playerUsernameText.setCenterAlign();
+        playerUsernameText.setTint('0xFFFFFF');
+        playerUsernameText.setText([
+            'Username: ' + playerUsername,
+        ]);
+        this.playerUsernameText = playerUsernameText;
 
         /* Change username */
         /* Text input field */
         /* Small confirmation button next to */
-
 
 
         /* Character selection */
@@ -46,7 +58,7 @@ class playerProfile extends Phaser.Scene{
 
 
         /* Return button */
-        const returnButton = this.add.image(400, 540, 'exitButton');
+        const returnButton = this.add.image(400, 540, 'returnButton');
         returnButton.setInteractive();
         returnButton.setScale(1.5);
         returnButton.setScrollFactor(0);
@@ -73,13 +85,13 @@ class playerProfile extends Phaser.Scene{
 
     update(){
 
-        this.viewPlayerName.setText('   Username: ' + playerUsername + '    ');
+        this.playerUsernameText.setText(['Username: ' + playerUsername]);
 
     }
 
     /* Temporary function for testing player username change */
     onEvent(){
-        playerUsername = 'Player';
+        playerUsername = 'Heads The Fox';
     }
 
 }

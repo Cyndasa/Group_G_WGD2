@@ -19,7 +19,7 @@ class pauseMenu extends Phaser.Scene{
         /* Create buttons */
 
         // Resume button
-        let resumeButton = this.add.image(400, 250, '').setDepth(2);
+        let resumeButton = this.add.image(400, 250, 'resumeButton').setDepth(2);
         resumeButton.setInteractive();
         resumeButton.on('pointerover', ()=>{
             resumeButton.setTint('0xFF00F5');
@@ -32,7 +32,7 @@ class pauseMenu extends Phaser.Scene{
         });
 
         // Restart button
-        let restartButton = this.add.image(400, 350, '').setDepth(2);
+        let restartButton = this.add.image(400, 350, 'restartButton').setDepth(2);
         restartButton.setInteractive();
         restartButton.on('pointerover', ()=>{
             restartButton.setTint('0xFF00F5');
@@ -46,7 +46,7 @@ class pauseMenu extends Phaser.Scene{
 
 
         // Quit button
-        let quitButton = this.add.image(400, 450, '').setDepth(2);
+        let quitButton = this.add.image(400, 450, 'exitButton').setDepth(2);
         quitButton.setInteractive();
         quitButton.on('pointerover', ()=>{
             quitButton.setTint('0xFF00F5');

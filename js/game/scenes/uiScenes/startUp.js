@@ -22,7 +22,7 @@ class startUp extends Phaser.Scene{
             y: height / 2 - 50,
             text: 'Loading Level',
             style: {
-                font: '30px',
+                font: '24px',
                 fill: '#ffffff',
             },
         });
@@ -73,9 +73,7 @@ class startUp extends Phaser.Scene{
 
 
         /* UI buttons */
-        this.load.image('playButton', 'gameAssets/imageAssets/uiImages/Buttons/Play/Play-Unclicked.png');
         this.load.image('optionsButton', 'gameAssets/imageAssets/uiImages/Buttons/Options/Options-Unclicked.png');
-        this.load.image('exitButton', 'gameAssets/imageAssets/uiImages/Buttons/Exit/Exit-Unclicked.png');
         this.load.image('muteButton', 'gameAssets/imageAssets/uiImages/Buttons/MuteButtons/Mute.png');
         this.load.image('unMuteButton', 'gameAssets/imageAssets/uiImages/Buttons/MuteButtons/Unmute.png');
         this.load.image('singlePlayer', 'gameAssets/imageAssets/uiImages/Buttons/Single/Single-Unclicked.png');
@@ -95,20 +93,6 @@ class startUp extends Phaser.Scene{
         this.load.image('p1Button', 'gameAssets/imageAssets/uiImages/Buttons/Select/P1-Unclicked.png');
         this.load.image('p2Button', 'gameAssets/imageAssets/uiImages/Buttons/Select/P2-Unclicked.png');
         this.load.image('startButton', 'gameAssets/imageAssets/uiImages/Buttons/Start/Start-Unclicked.png');
-
-        // Start
-        // Profile
-        // Return
-        // Local
-        // Multiplayer
-        // Confirm
-        // Continue
-        // Select
-        // P1 Select
-        // P2 Select
-        // Resume
-        // Restart
-        // Quit (although exit will probably work)
 
 
         /* Fonts */
@@ -146,7 +130,7 @@ class startUp extends Phaser.Scene{
         this.load.spritesheet('', '', {frameWidth: 32, frameHeight: 32});*/
 
         /* Props */
-        this.load.spritesheet('finishTorch', 'gameAssets/imageAssets/props/fireTorch.png', {frameWidth: 32, frameHeight: 32});
+        this.load.spritesheet('finishTorch', 'gameAssets/imageAssets/props/fireTorch.png', {frameWidth: 16, frameHeight: 32});
 
         /* Power-ups */
 
@@ -209,7 +193,7 @@ class startUp extends Phaser.Scene{
         this.anims.create({
             key: 'headsJump',
             frames: this.anims.generateFrameNumbers('headsFox', { start: 16, end: 17 }),
-            frameRate: 24,
+            frameRate: 12,
             repeat: -1
         });
 

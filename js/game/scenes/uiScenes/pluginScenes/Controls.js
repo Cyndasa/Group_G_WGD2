@@ -26,26 +26,61 @@ class Controls extends Phaser.Scene {
             color: 'white',
             backgroundColor: 'darkblue',
         })
-        /*    Text for controls    */
 
-        const text = this.add.bitmapText(400, 300, 'arcade', '', 16 )
+        /*    Text for controls    */
+/*        const text = this.add.bitmapText(400, 300, 'arcade', '', 16 )
             .setOrigin(0.5)
             .setCenterAlign()
-
-
         text.setTint('0x438DD0');
-
-
         text.setText([
             'Up Arrow - Jump',
             'Right Arrow - Move Right',
             'Left Arrow - Move Left',
             'Spacebar - Use Power Ups',
             'Esc - Escape'
+        ]);*/
+
+        this.add.rectangle(400, 300, 800, 250, 0x000000, 0.4); // Create an semi-transparent box for controls
+
+
+        /* Control Set 1 */
+        const playerOneControls = this.add.bitmapText(200, 300, 'arcade', '', 16);
+        playerOneControls.setOrigin(0.5);
+        playerOneControls.setCenterAlign();
+        playerOneControls.setTint('0xFFFFFF');
+        //playerOneControls.setBackgroundColor('0x438DD0');
+        playerOneControls.setText([
+            'Player One',
+            ' ',
+            'Up Arrow - Jump',
+            'Left Arrow - Move Left',
+            'Right Arrow - Move Right',
+            'K Key - Sprint',
+            'L Key - Use Power-Up',
+            'Space Bar - Pause Game'
         ]);
 
-        /* Different key bindings for player options - 0 is default*/
-/*        playerControls[0] = this.input.keyboard.addKeys({
+        /* Control Set 2 */
+        const playerTwoControls = this.add.bitmapText(600, 300, 'arcade', '', 16);
+        playerTwoControls.setOrigin(0.5);
+        playerTwoControls.setCenterAlign();
+        playerTwoControls.setTint('0xFFFFFF');
+        //playerTwoControls.setBackgroundColor();
+        playerTwoControls.setText([
+            'Player Two',
+            ' ',
+            'W Key - Jump',
+            'A Key - Move Left',
+            'D Key - Move Right',
+            'R Key - Sprint',
+            'T Key - Use Power-Up',
+            'Space Bar - Pause Game'
+        ]);
+
+/*
+       // Different key bindings for player options - 0 is default
+       // Eventually make it possible for single players to select preferred control scheme
+       playerControls[0] = this.input.keyboard.addKeys({
             'up': Phaser.Input.Keyboard.KeyCodes.UP,
             'down': Phaser.Input.Keyboard.KeyCodes.DOWN,
             'left': Phaser.Input.Keyboard.KeyCodes.LEFT,
@@ -60,11 +95,12 @@ class Controls extends Phaser.Scene {
             'right': Phaser.Input.Keyboard.KeyCodes.D,
             'sprint': Phaser.Input.Keyboard.KeyCodes.G,
             'ability': Phaser.Input.Keyboard.KeyCodes.H
-        });*/
+        });
+*/
 
         /* Create menu buttons */
         /* Return button */
-        const returnButton = this.add.image(400, 540, 'exitButton');
+        const returnButton = this.add.image(400, 540, 'returnButton');
         returnButton.setInteractive();
         returnButton.setScale(1.5);
         returnButton.setScrollFactor(0);

@@ -1,0 +1,232 @@
+create(){
+        /* Original Player Character */
+
+        switch(playerCharacter){
+            case 'HeadsTheFox':
+                this.thisChar = this.matter.add.sprite(0, 0, 'headsFox', 4);
+                this.charKeyIdle = 'headsIdle';
+                this.charKeyRun = 'headsRun';
+                this.charKeyJump = 'headsJump';
+                break;
+            case 'AztecOne':
+                this.thisChar = this.matter.add.sprite(0, 0, 'aztecOne', 4);
+                this.charKeyIdle = 'aztec1Idle';
+                this.charKeyRun = 'aztec1Run';
+                this.charKeyJump = 'aztec1Jump';
+                break;
+            default:
+                this.thisChar = this.matter.add.sprite(0, 0, 'headsFox', 4).setTint('0x00F4FF');
+                this.charKeyIdle = 'headsIdle';
+                this.charKeyRun = 'headsRun';
+                this.charKeyJump = 'headsJump';
+        }
+
+        // The player is a collection of bodies and sensors;
+        playerController = {
+            matterSprite: this.thisChar,
+            blocked: {
+                left: false,
+                right: false,
+                bottom: false
+            },
+            numTouching: {
+                left: 0,
+                right: 0,
+                bottom: 0
+            },
+            sensors: {
+                bottom: null,
+                left: null,
+                right: null
+            },
+            time: {
+                leftDown: 0,
+                rightDown: 0
+            },
+            lastJumpedAt: 0,
+            speed: {
+                //run: 6,
+                run: 3,
+                jump: 7
+            }
+        };
+
+        var M = Phaser.Physics.Matter.Matter;
+        var w = playerController.matterSprite.width;
+        var h = playerController.matterSprite.height;
+
+        // The player's body is going to be a compound body:
+        //  - playerBody is the solid body that will physically interact with the world. It has a
+        //    chamfer (rounded edges) to avoid the problem of ghost vertices: http://www.iforce2d.net/b2dtut/ghost-vertices
+        //  - Left/right/bottom sensors that will not interact physically but will allow us to check if
+        //    the player is standing on solid ground or pushed up against a solid object.
+
+        // Move the sensor to player center
+        var sx = w / 2;
+        var sy = h / 2;
+
+        // The player's body is going to be a compound body.
+        var playerBody = M.Bodies.rectangle(sx, sy, w * 0.75, h, { chamfer: { radius: 10 } });
+        playerController.sensors.bottom = M.Bodies.rectangle(sx, h, sx, 5, { isSensor: true });
+        playerController.sensors.left = M.Bodies.rectangle(sx - w * 0.45, sy, 5, h * 0.25, { isSensor: true });
+        playerController.sensors.right = M.Bodies.rectangle(sx + w * 0.45, sy, 5, h * 0.25, { isSensor: true });
+        var compoundBody = M.Body.create({
+            parts: [
+                playerBody, playerController.sensors.bottom, playerController.sensors.left,
+                playerController.sensors.right
+            ],
+            friction: 0.01,
+            restitution: 0.05 // Prevent body from sticking against a wall
+        });
+
+        playerController.matterSprite
+            .setExistingBody(compoundBody)
+            .setFixedRotation() // Sets max inertia to prevent rotation
+            .setPosition(spawnPoint.x,spawnPoint.y);
+
+
+        //Set up scene camera
+        cam = this.cameras.main;
+        cam.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+        // Where local play is concerned
+        // We either want it to extend out to always include both players (keep the same height expand the width?)
+        // Or
+        // Always follows player in the lead and it will drag/push player behind
+        smoothMoveCameraTowards(playerController.matterSprite);
+        // making the camera follow the player
+        cam.startFollow(playerController.matterSprite);
+
+
+        // Use matter events to detect whether the player is touching a surface to the left, right or
+        // bottom.
+
+        // Before matter's update, reset the player's count of what surfaces it is touching.
+        this.matter.world.on('beforeupdate', function (event) {
+            playerController.numTouching.left = 0;
+            playerController.numTouching.right = 0;
+            playerController.numTouching.bottom = 0;
+        });
+
+        // Loop over the active colliding pairs and count the surfaces the player is touching.
+        this.matter.world.on('collisionactive', function (event) {
+            var playerBody = playerController.body;
+            var left = playerController.sensors.left;
+            var right = playerController.sensors.right;
+            var bottom = playerController.sensors.bottom;
+
+            for (var i = 0; i < event.pairs.length; i++)
+            {
+                var bodyA = event.pairs[i].bodyA;
+                var bodyB = event.pairs[i].bodyB;
+
+                if (bodyA === playerBody || bodyB === playerBody)
+                {
+                    continue;
+                }
+                else if (bodyA === bottom || bodyB === bottom)
+                {
+                    // Standing on any surface counts (e.g. jumping off of a non-static crate).
+                    playerController.numTouching.bottom += 1;
+                }
+                else if ((bodyA === left && bodyB.isStatic) || (bodyB === left && bodyA.isStatic))
+                {
+                    // Only static objects count since we don't want to be blocked by an object that we
+                    // can push around.
+                    playerController.numTouching.left += 1;
+                }
+                else if ((bodyA === right && bodyB.isStatic) || (bodyB === right && bodyA.isStatic))
+                {
+                    playerController.numTouching.right += 1;
+                }
+            }
+        });
+
+        // Update over, so now we can determine if any direction is blocked
+        this.matter.world.on('afterupdate', function (event) {
+            playerController.blocked.right = playerController.numTouching.right > 0 ? true : false;
+            playerController.blocked.left = playerController.numTouching.left > 0 ? true : false;
+            playerController.blocked.bottom = playerController.numTouching.bottom > 0 ? true : false;
+        });
+
+        smoothedControls = new SmoothedHorionztalControl(1);
+
+
+}
+
+update(){
+        /* Original Player Movement */
+        //var matterSprite = playerController.matterSprite;
+
+        // Horizontal movement
+
+        var oldVelocityX;
+        var targetVelocityX;
+        var newVelocityX;
+
+        if (cursors.left.isDown && !playerController.blocked.left)
+        {
+            smoothedControls.moveLeft(delta);
+            matterSprite.flipX = true;
+            matterSprite.anims.play(this.charKeyRun, true);
+
+            // Lerp the velocity towards the max run using the smoothed controls. This simulates a
+            // player controlled acceleration.
+            oldVelocityX = matterSprite.body.velocity.x;
+            targetVelocityX = -playerController.speed.run;
+            newVelocityX = Phaser.Math.Linear(oldVelocityX, targetVelocityX, -smoothedControls.value);
+
+            matterSprite.setVelocityX(newVelocityX);
+        }
+        else if (cursors.right.isDown && !playerController.blocked.right)
+        {
+            smoothedControls.moveRight(delta);
+            matterSprite.flipX = false;
+            matterSprite.anims.play(this.charKeyRun, true);
+
+            // Lerp the velocity towards the max run using the smoothed controls. This simulates a
+            // player controlled acceleration.
+            oldVelocityX = matterSprite.body.velocity.x;
+            targetVelocityX = playerController.speed.run;
+            newVelocityX = Phaser.Math.Linear(oldVelocityX, targetVelocityX, smoothedControls.value);
+
+            matterSprite.setVelocityX(newVelocityX);
+        }
+        else
+        {
+            smoothedControls.reset();
+            matterSprite.anims.play(this.charKeyIdle, true);
+        }
+
+        // Jumping & wall jumping
+
+        // Add a slight delay between jumps since the sensors will still collide for a few frames after
+        // a jump is initiated
+        var canJump = (time - playerController.lastJumpedAt) > 250;
+        if (cursors.up.isDown & canJump)
+        {
+            matterSprite.anims.play(this.charKeyJump, true);
+            if (playerController.blocked.bottom)
+            {
+                matterSprite.setVelocityY(-playerController.speed.jump);
+                playerController.lastJumpedAt = time;
+            }
+            else if (playerController.blocked.left)
+            {
+                // Jump up and away from the wall
+                matterSprite.setVelocityY(-playerController.speed.jump);
+                matterSprite.setVelocityX(playerController.speed.run);
+                playerController.lastJumpedAt = time;
+            }
+            else if (playerController.blocked.right)
+            {
+                // Jump up and away from the wall
+                matterSprite.setVelocityY(-playerController.speed.jump);
+                matterSprite.setVelocityX(-playerController.speed.run);
+                playerController.lastJumpedAt = time;
+            }
+            //matterSprite.anims.play('right', true);
+        }
+
+        smoothMoveCameraTowards(matterSprite, 1);
+
+}

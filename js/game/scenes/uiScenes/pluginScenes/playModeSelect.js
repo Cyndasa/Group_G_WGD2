@@ -44,13 +44,14 @@ class playModeSelect extends Phaser.Scene{
         /* Change scene */
         singlePlayerButton.on('pointerup', ()=>{
             isSinglePlayer = true;
+            isOnlinePlay = false;
             previousScene = 'PlayModeSelect'; // Set current scene name to previous scene variable
             this.scene.launch('CharacterSelect');
             this.scene.stop('PlayModeSelect');
         });
 
         /* Multiplayer button */
-        const multiPlayerButton = this.add.image(400, 440, 'onlinePlay');
+        const multiPlayerButton = this.add.image(400, 440, 'multiButton');
         multiPlayerButton.setInteractive();
         multiPlayerButton.setScale(1.5);
         multiPlayerButton.setScrollFactor(0);
@@ -71,7 +72,7 @@ class playModeSelect extends Phaser.Scene{
         });
 
         /* Return button */
-        const returnButton = this.add.image(400, 540, 'exitButton');
+        const returnButton = this.add.image(400, 540, 'returnButton');
         returnButton.setInteractive();
         returnButton.setScale(1.5);
         returnButton.setScrollFactor(0);
