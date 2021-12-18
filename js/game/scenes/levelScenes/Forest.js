@@ -203,7 +203,7 @@ class Forest extends Phaser.Scene {
                 this.finishRace();
             });
 
-            this.collectible.setOnCollideWith(playerTwo.myBody, playerTwo.collectPowerUp, null, this);
+
 
         }
 
@@ -285,9 +285,6 @@ class Forest extends Phaser.Scene {
             this.finishRace();
         });
 
-        playerOne.setOnCollideWith(this.collectible, pair =>{
-            playerOne.collectPowerUp()
-        }, null, this);
 
 
         /* UI Components */
