@@ -132,6 +132,19 @@ class mainMenuButtons extends Phaser.Scene{
             this.scene.start('CreditsScene');
         });
 
+        /* Konami Code Easter Egg */
+        // 38 - Up, 40 - Down, 37 - Left, 39 - Right
+        let easterEgg = this.input.keyboard.createCombo([38, 38, 38, 40, 40, 40, 37, 37, 37, 39, 39, 39], {resetOnMatch: true});
+        this.input.keyboard.on('keycombomatch', function (event) {
+
+            console.log('Konami Code has been entered!');
+            //this.scene.start('TrailerScene');
+            //this.scene.stop('MainMenu');
+            //this.scene.stop('MainMenuButtons');
+
+
+        });
+
 
         console.log(playerUsername); // DEBUG, CAN REMOVE FOR SUBMISSION
 
