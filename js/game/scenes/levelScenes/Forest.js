@@ -214,6 +214,23 @@ class Forest extends Phaser.Scene {
             this.matter.world.debugGraphic.visible = this.matter.world.drawDebug;
         }, this);
 
+        /* Finish Line */
+        let lineShape = this.add.line(2590, 300, 2570, 0, 2650, 600);
+        let finishLine = this.matter.add.gameObject(lineShape, {lineStyle: {width: 20, color: '0x00FF05', alpha: 0.3}});
+        finishLine.setStatic(true);
+        finishLine.setSensor(true);
+
+        // Create animated sprite marker for finish line
+        let finishMarker  = this.matter.add.sprite(2535, 458, 'finishTorch')
+        finishMarker.anims.play('finishMarker', true);
+        finishMarker.setStatic(true);
+        finishMarker.setSensor(true);
+
+        /* Set Collision for Player and Finish Line */
+        finishLine.setOnCollideWith(playerOne.myBody, pair =>{
+            this.finishRace();
+        });
+
         /* UI Components */
 
         /* Start Score Value */
@@ -256,22 +273,6 @@ class Forest extends Phaser.Scene {
                 color: 'white',
             });
 
-        /* Finish Line */
-        let lineShape = this.add.line(2590, 300, 2570, 0, 2650, 600);
-        let finishLine = this.matter.add.gameObject(lineShape, {lineStyle: {width: 20, color: '0x00FF05', alpha: 0.3}});
-        finishLine.setStatic(true);
-        finishLine.setSensor(true);
-
-        // Create animated sprite marker for finish line
-        let finishMarker  = this.matter.add.sprite(2535, 458, 'finishTorch')
-        finishMarker.anims.play('finishMarker', true);
-        finishMarker.setStatic(true);
-        finishMarker.setSensor(true);
-
-        /* Set Collision for Player and Finish Line */
-        finishLine.setOnCollideWith(playerOne.myBody, pair =>{
-            this.finishRace();
-        });
 
     };
 
@@ -376,7 +377,6 @@ class Forest extends Phaser.Scene {
 
         if(isSinglePlayer === false && isOnlinePlay === false){
 /*
-
             console.log('Race Finished');
             console.log('Lap Time: ' + this.minutes2 + ':' + this.seconds2 + ':' + this.hSeconds2);
             console.log('Delta Race Time: ' + this.elapsed2);

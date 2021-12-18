@@ -1,6 +1,4 @@
 class Controls extends Phaser.Scene {
-    // Could also use this for setting character controls from two options - see below
-
     constructor() {
         super('Controls');
     }
@@ -27,7 +25,7 @@ class Controls extends Phaser.Scene {
             backgroundColor: 'darkblue',
         })
 
-        /*    Text for controls    */
+        /*   Original Text for controls    */
 /*        const text = this.add.bitmapText(400, 300, 'arcade', '', 16 )
             .setOrigin(0.5)
             .setCenterAlign()
@@ -42,13 +40,11 @@ class Controls extends Phaser.Scene {
 
         this.add.rectangle(400, 300, 800, 250, 0x000000, 0.4); // Create an semi-transparent box for controls
 
-
         /* Control Set 1 */
         const playerOneControls = this.add.bitmapText(200, 300, 'arcade', '', 16);
         playerOneControls.setOrigin(0.5);
         playerOneControls.setCenterAlign();
         playerOneControls.setTint('0xFFFFFF');
-        //playerOneControls.setBackgroundColor('0x438DD0');
         playerOneControls.setText([
             'Player One',
             ' ',
@@ -65,7 +61,6 @@ class Controls extends Phaser.Scene {
         playerTwoControls.setOrigin(0.5);
         playerTwoControls.setCenterAlign();
         playerTwoControls.setTint('0xFFFFFF');
-        //playerTwoControls.setBackgroundColor();
         playerTwoControls.setText([
             'Player Two',
             ' ',
@@ -85,7 +80,7 @@ class Controls extends Phaser.Scene {
             'down': Phaser.Input.Keyboard.KeyCodes.DOWN,
             'left': Phaser.Input.Keyboard.KeyCodes.LEFT,
             'right': Phaser.Input.Keyboard.KeyCodes.RIGHT,
-            'sprint': Phaser.Input.Keyboard.KeyCodes.P,
+            'sprint': Phaser.Input.Keyboard.KeyCodes.K,
             'ability': Phaser.Input.Keyboard.KeyCodes.L
         });
         playerControls[1] = this.input.keyboard.addKeys({
@@ -93,8 +88,8 @@ class Controls extends Phaser.Scene {
             'down': Phaser.Input.Keyboard.KeyCodes.S,
             'left': Phaser.Input.Keyboard.KeyCodes.A,
             'right': Phaser.Input.Keyboard.KeyCodes.D,
-            'sprint': Phaser.Input.Keyboard.KeyCodes.G,
-            'ability': Phaser.Input.Keyboard.KeyCodes.H
+            'sprint': Phaser.Input.Keyboard.KeyCodes.R,
+            'ability': Phaser.Input.Keyboard.KeyCodes.T
         });
 */
 
