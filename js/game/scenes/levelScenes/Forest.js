@@ -83,6 +83,19 @@ class Forest extends Phaser.Scene {
         cursors = this.playerControls[0]; // Set controls to players chosen set
         // smoothedControls = new SmoothedHorionztalControl(1);
 
+
+        /* Finish Line */
+        let lineShape = this.add.line(2590, 300, 2570, 0, 2650, 600);
+        let finishLine = this.matter.add.gameObject(lineShape, {lineStyle: {width: 20, color: '0x00FF05', alpha: 0.3}});
+        finishLine.setStatic(true);
+        finishLine.setSensor(true);
+
+        // Create animated sprite marker for finish line
+        let finishMarker  = this.matter.add.sprite(2535, 458, 'finishTorch')
+        finishMarker.anims.play('finishMarker', true);
+        finishMarker.setStatic(true);
+        finishMarker.setSensor(true);
+
         /* Create Player Character(s) */
 
         // Single player
@@ -137,7 +150,48 @@ class Forest extends Phaser.Scene {
                 playerTwo.blocked.bottom = playerTwo.numTouching.bottom > 0 ? true : false;
             });
 
+            /* UI Components */
 
+            /* Start Score Value */
+            const scoreValue2 = 50000;
+
+            /* Timer UI */
+            const timeText2 = this.add.text(425 , 10, 'Time: 00:00:00',{
+                font: '30px',
+                align: 'center',
+                color: 'black',
+                backgroundColor: 'white',
+            });
+            timeText2.scrollFactorX = 0;
+            timeText2.scrollFactorY = 0;
+            this.timeText2 = timeText2;
+
+            /* Score UI */
+
+            const scoreText2 = this.add.text(425, 50, "Score: " + scoreValue2, {
+                font: "30px",
+                align: "center",
+                color: "black",
+                backgroundColor: 'white',
+            });
+            scoreText2.scrollFactorX = 0;
+            scoreText2.scrollFactorY = 0;
+            this.scoreText2 = scoreText2;
+
+            /* Temp placeholder for player identifier */
+            this.playerName2 = playerUsername2;
+            this.playerName2 = this.add.text(
+                playerOne.x - 20,
+                playerOne.y - 25,
+                'NAME-HERE',{
+                    font: '15px',
+                    align: 'centre',
+                    color: 'black',
+                });
+
+            finishLine.setOnCollideWith(playerTwo.myBody, pair =>{
+                this.finishRace();
+            });
 
         }
 
@@ -213,18 +267,6 @@ class Forest extends Phaser.Scene {
             this.matter.world.drawDebug = !this.matter.world.drawDebug;
             this.matter.world.debugGraphic.visible = this.matter.world.drawDebug;
         }, this);
-
-        /* Finish Line */
-        let lineShape = this.add.line(2590, 300, 2570, 0, 2650, 600);
-        let finishLine = this.matter.add.gameObject(lineShape, {lineStyle: {width: 20, color: '0x00FF05', alpha: 0.3}});
-        finishLine.setStatic(true);
-        finishLine.setSensor(true);
-
-        // Create animated sprite marker for finish line
-        let finishMarker  = this.matter.add.sprite(2535, 458, 'finishTorch')
-        finishMarker.anims.play('finishMarker', true);
-        finishMarker.setStatic(true);
-        finishMarker.setSensor(true);
 
         /* Set Collision for Player and Finish Line */
         finishLine.setOnCollideWith(playerOne.myBody, pair =>{
@@ -327,7 +369,43 @@ class Forest extends Phaser.Scene {
             this.player2.playerMovement(time);
             this.player2.useAbility();
 
+            /* Updates to have player name follow player */
+            this.playerName2.x = this.player2.x - 20;
+            this.playerName2.y = this.player2.y - 25;
 
+            /* Set up elapsed time */
+            let elapsed2 = this.getTime()-this.start;
+            raceTime2 = elapsed2;
+
+            /* Create race time components */
+            let minutes2 = Math.floor(elapsed2 / 60000);
+            let seconds2 = Math.floor(elapsed2 / 1000);
+            const maxSeconds2 = 60;
+            let hSeconds2 = elapsed2 % 60;
+
+            /* Make race time components accessible */
+            this.minutes2 = minutes2;
+            this.seconds2 = seconds2;
+            this.hSeconds2 = hSeconds2;
+            this.elapsed2 = elapsed2;
+
+            /* Reset seconds value to 0 when equal to or greater than 60 - DOESN'T CURRENTLY WORK AS EXPECTED, only works once */
+            if (seconds2 >= maxSeconds2){
+                seconds2 -= 60;
+            }
+
+            /* Display 0 in front of seconds value if less than 10 */
+            if (seconds2 < 10){
+                seconds2 = '0' + seconds2;
+            }
+
+            // Calculate score as it's subtracted by elapsed time
+            this.scoreValue2 = 50000 - (Math.floor(elapsed2/5));
+
+            /* Update UI Components */
+            this.scoreText2.setText("Score: " + this.scoreValue2);
+            this.timeText2.setText('Time: 0' + minutes2 + ':' + seconds2 + ':' + hSeconds2);
+            this.playerName2.setText(playerUsername2);
         }
 
         /* Fail condition / Timed out connection */
@@ -376,34 +454,34 @@ class Forest extends Phaser.Scene {
         playerFinished = true;
 
         if(isSinglePlayer === false && isOnlinePlay === false){
-/*
-            console.log('Race Finished');
-            console.log('Lap Time: ' + this.minutes2 + ':' + this.seconds2 + ':' + this.hSeconds2);
-            console.log('Delta Race Time: ' + this.elapsed2);
-            console.log('Score: ' + this.scoreValue2);
+
+            console.log('P2 - Lap Time: ' + this.minutes2 + ':' + this.seconds2 + ':' + this.hSeconds2);
+            console.log('P2 - Delta Race Time: ' + this.elapsed2);
+            console.log('P2 - Score: ' + this.scoreValue2);
 
             playerScore2 = this.scoreValue2;
             raceTimeMinutes2 = this.minutes2;
             raceTimeSeconds2 = this.seconds2;
             raceTimeHSeconds2 = this.hSeconds2;
             deltaRaceTime2 = this.elapsed2;
-*/
 
             player2Finished = true;
 
             if(playerFinished === true && player2Finished === true){
                 // Add Delay to call
-                this.scene.start('resultsScreen');
+                this.scene.start('ResultsScreen');
             }
             else if(playerFinished === true && player2Finished === false){
                 // Stop player one's time counter/decrease
                 // Remove player 1's ability to control character
                 // Wait until player 2 has finished/timed out
+                return;
             }
             else if(playerFinished === false && player2Finished === true){
                 // Stop player two's time counter/decrease
                 // Remove player 2's ability to control character
                 // Wait until player 1 has finished/timed out
+                return;
             }
         }
         else{

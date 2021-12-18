@@ -14,8 +14,8 @@ class resultsScreen extends Phaser.Scene{
     create(){
 
         // Reset finished booleans to false
-        playerFinished = false;
-        player2Finished = false;
+        //playerFinished = false;
+        //player2Finished = false;
 
         this.add.rectangle(400, 300, 800, 600, 0x000000, 0.4); // Create an overlay mask
 

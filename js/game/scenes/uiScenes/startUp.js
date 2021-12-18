@@ -140,13 +140,17 @@ class startUp extends Phaser.Scene{
         /* BGM assets */
 
         // Menu Music
-        this.load.audio('theme', [
+        this.load.audio('menuTheme', [
             'gameAssets/audioAssets/bgm/Menu_Music.ogg',
             'gameAssets/audioAssets/bgm/Menu_Music.mp3'
         ]);
 
         // Forest Level BGM
+
+
         // City Level BGM
+        this.load.audio('cityLevelBGM', 'gameAssets/audioAssets/bgm/voxel-revolution-by-kevin-macleod-from-filmmusic-io.mp3');
+
         // Results BGM(?)
 
         /* SFX assets */

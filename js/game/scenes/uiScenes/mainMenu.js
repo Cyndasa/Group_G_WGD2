@@ -86,7 +86,7 @@ class mainMenu extends Phaser.Scene{
         this.scene.launch('MainMenuButtons')
 
         /* Start BGM music */
-        this.menuMusic = this.sound.add("theme");
+        this.menuMusic = this.sound.add("menuTheme");
         const musicConfig = {
             mute: 0,
             volume: 0.6,
