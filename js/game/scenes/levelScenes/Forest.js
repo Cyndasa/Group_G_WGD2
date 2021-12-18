@@ -203,6 +203,8 @@ class Forest extends Phaser.Scene {
                 this.finishRace();
             });
 
+            this.collectible.setOnCollideWith(playerTwo.myBody, playerTwo.collectPowerUp, null, this);
+
         }
 
         // Online Multiplayer
@@ -282,6 +284,11 @@ class Forest extends Phaser.Scene {
         finishLine.setOnCollideWith(playerOne.myBody, pair =>{
             this.finishRace();
         });
+
+        playerOne.setOnCollideWith(this.collectible, pair =>{
+            playerOne.collectPowerUp()
+        }, null, this);
+
 
         /* UI Components */
 

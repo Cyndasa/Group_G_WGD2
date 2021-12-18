@@ -60,16 +60,20 @@ class startUp extends Phaser.Scene{
         this.load.image('cityBG', 'gameAssets/imageAssets/City/Environmet/background/back.png');
         this.load.image('cityMG', 'gameAssets/imageAssets/City/Environmet/background/middle.png');
         this.load.image('cityFG', 'gameAssets/imageAssets/City/Environmet/background/front.png')
-        // Tilemap
+        // Tile Map files
+        this.load.tilemapTiledJSON('cityMap', '../gameAssets/imageAssets/City/Worldfiles/City.json');
+        this.load.image('cityTiles', '../../../../gameAssets/imageAssets/City/Environmet/tileset.png');
 
 
-        /* Mountains dusk */
+
+        /* Mountains dusk  */
         this.load.image('mountainBG', 'gameAssets/imageAssets/levelImages/mountainSet/parallax-mountain-bg.png');
         this.load.image('mountainMG', 'gameAssets/imageAssets/levelImages/mountainSet/parallax-mountain-montain-far.png');
         this.load.image('mountainMG2', 'gameAssets/imageAssets/levelImages/mountainSet/parallax-mountain-mountains.png');
         this.load.image('mountainFG', 'gameAssets/imageAssets/levelImages/mountainSet/parallax-mountain-trees.png');
         this.load.image('mountainFG2', 'gameAssets/imageAssets/levelImages/mountainSet/parallax-mountain-foreground-trees.png');
-        // Tilemap
+        // Tile Map for Trailer Scene
+
 
 
         /* UI buttons */
@@ -177,13 +181,13 @@ class startUp extends Phaser.Scene{
         /* Character sprite animations */
 
         /* Heads the Fox */
-/*        this.anims.create({
+        this.anims.create({
             key: 'left',
             frames: this.anims.generateFrameNumbers('headsFox', { start: 0, end: 5 }),
-            /!*frameRate: 16,*!/
+            /*frameRate: 16,*/
             frameRate: 12,
             repeat: -1
-        });*/
+        });
         this.anims.create({
             key: 'headsRun',
             frames: this.anims.generateFrameNumbers('headsFox', { start: 6, end: 11 }),

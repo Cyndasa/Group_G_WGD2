@@ -62,13 +62,52 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite {
                 // Stats
                 this.runSpeed = 4;
                 this.sprintSpeed = 5;
-                this.jumpHeight = 6;
+                this.jumpHeight = 5;
                 this.staminaDuration = 2;
                 // Display/Animation
                 this.char = 'aztecOne';
                 this.charKeyIdle = 'aztec1Idle';
                 this.charKeyRun = 'aztec1Run';
                 this.charKeyJump = 'aztec1Jump';
+
+                break;
+            case 'AztecTwo':
+                // Stats
+                this.runSpeed = 3;
+                this.sprintSpeed = 6;
+                this.jumpHeight = 6;
+                this.staminaDuration = 3;
+                // Display/Animation
+                this.char = 'aztecTwo';
+                this.charKeyIdle = 'aztec2Idle';
+                this.charKeyRun = 'aztec2Run';
+                this.charKeyJump = 'aztec2Jump';
+
+                break;
+            case 'AztecThree':
+                // Stats
+                this.runSpeed = 3;
+                this.sprintSpeed = 6;
+                this.jumpHeight = 7;
+                this.staminaDuration = 7;
+                // Display/Animation
+                this.char = 'aztecThree';
+                this.charKeyIdle = 'aztec3Idle';
+                this.charKeyRun = 'aztec3Run';
+                this.charKeyJump = 'aztec3Jump';
+
+                break;
+            case 'AztecFour':
+                // Stats
+                this.runSpeed = 5;
+                this.sprintSpeed = 6;
+                this.jumpHeight = 5;
+                this.staminaDuration = 1;
+                // Display/Animation
+                this.char = 'aztecFour';
+                this.charKeyIdle = 'aztec4Idle';
+                this.charKeyRun = 'aztec4Run';
+                this.charKeyJump = 'aztec4Jump';
 
                 break;
             case 'TheDude':
@@ -82,6 +121,32 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite {
                 this.charKeyIdle = 'theDudeIdle';
                 this.charKeyRun = 'theDudeRun';
                 this.charKeyJump = 'theDudeJump';
+
+                break;
+            case 'TheOwlet':
+                // Stats
+                this.runSpeed = 4;
+                this.sprintSpeed = 6;
+                this.jumpHeight = 9;
+                this.staminaDuration = 4;
+                // Display/Animation
+                this.char = 'theOwlet';
+                this.charKeyIdle = 'theOwletIdle';
+                this.charKeyRun = 'theOwletRun';
+                this.charKeyJump = 'theOwletJump';
+
+                break;
+            case 'ThePinkMon':
+                // Stats
+                this.runSpeed = 6;
+                this.sprintSpeed = 7;
+                this.jumpHeight = 8;
+                this.staminaDuration = 5;
+                // Display/Animation
+                this.char = 'thePinkMon';
+                this.charKeyIdle = 'thePinkMonIdle';
+                this.charKeyRun = 'thePinkMonRun';
+                this.charKeyJump = 'thePinkMonJump';
 
                 break;
             default:
@@ -241,6 +306,23 @@ class PlayerManager extends Phaser.Physics.Matter.Sprite {
         }
 
     };
+
+    collectPowerUp(player, collectable){
+        console.log('player has ollided with a power up');
+        player.hasPowerUp += 1; // Debug check
+        collectable.disableBody(true, true);
+
+        if(player.hasPowerUp === true){
+            collectable.disableBody(true, true);
+        }
+        else if(player.hasPowerUp === false){
+            player.hasPowerUp = true;
+            collectable.disableBody(true, true);
+        }
+
+        //play collect sound
+
+    }
 
     useAbility(){
         // If player has ability use it

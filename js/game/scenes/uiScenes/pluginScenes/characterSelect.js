@@ -64,7 +64,7 @@ class characterSelect extends Phaser.Scene{
         /* Create Character Select buttons */
 
         /* Heads the Fox select */
-        let headsSelect = this.add.image(75, 250, 'headsTheFoxCharSelect').setScale(0.275);
+        let headsSelect = this.add.image(50, 240, 'headsTheFoxCharSelect').setScale(0.25);
         headsSelect.setTint('0x404040');
         headsSelect.setInteractive();
 
@@ -96,7 +96,7 @@ class characterSelect extends Phaser.Scene{
         });
 
         /* Aztec 1 select */
-        let aztec1Select = this.add.image(175, 250, 'aztec1CharSelect').setScale(0.275);
+        let aztec1Select = this.add.image(130, 240, 'aztec1CharSelect').setScale(0.25);
         aztec1Select.setTint('0x404040');
         aztec1Select.setInteractive();
 
@@ -127,8 +127,104 @@ class characterSelect extends Phaser.Scene{
             }
         });
 
+        /* Aztec 2 select */
+        let aztec2Select = this.add.image(210, 240, 'aztec2CharSelect').setScale(0.25);
+        aztec2Select.setTint('0x404040');
+        aztec2Select.setInteractive();
+
+        aztec2Select.on("pointerup",()=>{
+            if(this.isSelected === true){
+                this.isSelected = false;
+                playerCharacter = null;
+                console.log('player has currently selected ' + playerCharacter);
+            }
+            else{
+                this.isSelected = true;
+                aztec2Select.clearTint();
+                playerCharacter = 'AztecTwo';
+                console.log('player has currently selected ' + playerCharacter);
+                // set character to display in section
+            }
+        });
+
+        aztec2Select.on('pointerover', ()=>{
+            if(this.isSelected === false){
+                aztec2Select.clearTint();
+            }
+        });
+
+        aztec2Select.on('pointerout', ()=>{
+            if(this.isSelected === false){
+                aztec2Select.setTint('0x404040');
+            }
+        });
+
+        /* Aztec 3 select */
+        let aztec3Select = this.add.image(50, 320, 'aztec3CharSelect').setScale(0.25);
+        aztec3Select.setTint('0x404040');
+        aztec3Select.setInteractive();
+
+        aztec3Select.on("pointerup",()=>{
+            if(this.isSelected === true){
+                this.isSelected = false;
+                playerCharacter = null;
+                console.log('player has currently selected ' + playerCharacter);
+            }
+            else{
+                this.isSelected = true;
+                aztec3Select.clearTint();
+                playerCharacter = 'AztecThree';
+                console.log('player has currently selected ' + playerCharacter);
+                // set character to display in section
+            }
+        });
+
+        aztec3Select.on('pointerover', ()=>{
+            if(this.isSelected === false){
+                aztec3Select.clearTint();
+            }
+        });
+
+        aztec3Select.on('pointerout', ()=>{
+            if(this.isSelected === false){
+                aztec3Select.setTint('0x404040');
+            }
+        });
+
+        /* Aztec 4 select */
+        let aztec4Select = this.add.image(130, 320, 'aztec4CharSelect').setScale(0.25);
+        aztec4Select.setTint('0x404040');
+        aztec4Select.setInteractive();
+
+        aztec4Select.on("pointerup",()=>{
+            if(this.isSelected === true){
+                this.isSelected = false;
+                playerCharacter = null;
+                console.log('player has currently selected ' + playerCharacter);
+            }
+            else{
+                this.isSelected = true;
+                aztec4Select.clearTint();
+                playerCharacter = 'AztecFour';
+                console.log('player has currently selected ' + playerCharacter);
+                // set character to display in section
+            }
+        });
+
+        aztec4Select.on('pointerover', ()=>{
+            if(this.isSelected === false){
+                aztec4Select.clearTint();
+            }
+        });
+
+        aztec4Select.on('pointerout', ()=>{
+            if(this.isSelected === false){
+                aztec4Select.setTint('0x404040');
+            }
+        });
+
         /* The Dude select */
-        let theDudeSelect = this.add.image(275, 250, 'theDudeCharSelect').setScale(0.275);
+        let theDudeSelect = this.add.image(290, 240, 'theDudeCharSelect').setScale(0.25);
         theDudeSelect.setTint('0x404040');
         theDudeSelect.setInteractive();
 
@@ -156,6 +252,70 @@ class characterSelect extends Phaser.Scene{
         theDudeSelect.on('pointerout', ()=>{
             if(this.isSelected === false){
                 theDudeSelect.setTint('0x404040');
+            }
+        });
+
+        /* The Owlet select */
+        let theOwletSelect = this.add.image(210, 320, 'theOwletCharSelect').setScale(0.25);
+        theOwletSelect.setTint('0x404040');
+        theOwletSelect.setInteractive();
+
+        theOwletSelect.on("pointerup",()=>{
+            if(this.isSelected === true){
+                this.isSelected = false;
+                playerCharacter = null;
+                console.log('player has currently selected ' + playerCharacter);
+            }
+            else{
+                this.isSelected = true;
+                theOwletSelect.clearTint();
+                playerCharacter = 'TheOwlet';
+                console.log('player has currently selected ' + playerCharacter);
+                // set character to display in section
+            }
+        });
+
+        theOwletSelect.on('pointerover', ()=>{
+            if(this.isSelected === false){
+                theOwletSelect.clearTint();
+            }
+        });
+
+        theOwletSelect.on('pointerout', ()=>{
+            if(this.isSelected === false){
+                theOwletSelect.setTint('0x404040');
+            }
+        });
+
+        /* The Pink Mon select */
+        let thePinkMonSelect = this.add.image(290, 320, 'thePinkMonCharSelect').setScale(0.25);
+        thePinkMonSelect.setTint('0x404040');
+        thePinkMonSelect.setInteractive();
+
+        thePinkMonSelect.on("pointerup",()=>{
+            if(this.isSelected === true){
+                this.isSelected = false;
+                playerCharacter = null;
+                console.log('player has currently selected ' + playerCharacter);
+            }
+            else{
+                this.isSelected = true;
+                thePinkMonSelect.clearTint();
+                playerCharacter = 'ThePinkMon';
+                console.log('player has currently selected ' + playerCharacter);
+                // set character to display in section
+            }
+        });
+
+        thePinkMonSelect.on('pointerover', ()=>{
+            if(this.isSelected === false){
+                thePinkMonSelect.clearTint();
+            }
+        });
+
+        thePinkMonSelect.on('pointerout', ()=>{
+            if(this.isSelected === false){
+                thePinkMonSelect.setTint('0x404040');
             }
         });
 

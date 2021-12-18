@@ -41,14 +41,14 @@ class City extends Phaser.Scene {
 
     preload ()
     {
-        // load all assets tile sprites
+/*        // load all assets tile sprites
         this.load.image("bg_1", "../../../../gameAssets/imageAssets/City/Environmet/background/back.png");
         this.load.image("bg_2", "../../../../gameAssets/imageAssets/City/Environmet/background/middle.png");
         this.load.image("bg_3", "../../../../gameAssets/imageAssets/City/Environmet/background/front.png");
         // load tiled
         this.load.tilemapTiledJSON('map', '../gameAssets/imageAssets/City/Worldfiles/City.json');
         this.load.image('tiles', '../../../../gameAssets/imageAssets/City/Environmet/tileset.png');
-/*        // load spritesheet
+        // load spritesheet
         this.load.spritesheet('player', 'gameAssets/imageAssets/characterSprites/foxSprite/Player-Movement.png',{ frameWidth: 33, frameHeight: 32 });*/
     }
 
@@ -56,7 +56,7 @@ class City extends Phaser.Scene {
     {
         // ---------------background ----------------
         // create an tiled sprite with the size of our game screen
-        this.bg_1 = this.add.tileSprite(0, 0, game.config.width * 3.0, game.config.height, "bg_1").setScale(3.8);
+        this.bg_1 = this.add.tileSprite(0, 0, game.config.width * 3.0, game.config.height, "cityBG").setScale(3.8);
         // Set its pivot to the top left corner
         this.bg_1.setOrigin(0, -0.0);
         // fixe it so it won't move when the camera moves.
@@ -64,17 +64,17 @@ class City extends Phaser.Scene {
         this.bg_1.setScrollFactor(0);
 
         // Add a second background layer. Repeat as in bg_1
-        this.bg_2 = this.add.tileSprite(0, 0, game.config.width * 3.0, game.config.height, "bg_2").setScale(3.4);
+        this.bg_2 = this.add.tileSprite(0, 0, game.config.width * 3.0, game.config.height, "cityMG").setScale(3.4);
         this.bg_2.setOrigin(0, -0.03);
         this.bg_2.setScrollFactor(0);
 
-        this.bg_3 = this.add.tileSprite(0, 0, game.config.width * 3.0, game.config.height, "bg_3").setScale(3.25);
+        this.bg_3 = this.add.tileSprite(0, 0, game.config.width * 3.0, game.config.height, "cityFG").setScale(3.25);
         this.bg_3.setOrigin(0, -0.04);
         this.bg_3.setScrollFactor(0);
 
         //---------tiledmaps------------
-        var map = this.make.tilemap({ key: 'map' });
-        var tileset = map.addTilesetImage("CityTiles" , "tiles");
+        var map = this.make.tilemap({ key: 'cityMap' });
+        var tileset = map.addTilesetImage("CityTiles" , "cityTiles");
         var layer = map.createLayer('Ground', tileset, 0, 85);
 
         //--------Collisions-------------
@@ -167,28 +167,28 @@ class City extends Phaser.Scene {
 
         this.anims.create({
             key: 'left',
-            frames: this.anims.generateFrameNumbers('player', { start: 0, end: 5 }),
+            frames: this.anims.generateFrameNumbers('headsFox', { start: 0, end: 5 }),
             /*frameRate: 16,*/
             frameRate: 12,
             repeat: -1
         });
         this.anims.create({
-            key: 'right',
-            frames: this.anims.generateFrameNumbers('player', { start: 6, end: 11 }),
+            key: 'headsRun',
+            frames: this.anims.generateFrameNumbers('headsFox', { start: 6, end: 11 }),
             /*frameRate: 16,*/
             frameRate: 12,
             repeat: -1
         });
         this.anims.create({
-            key: 'idle',
-            frames: this.anims.generateFrameNumbers('player', { start: 12, end: 15 }),
+            key: 'headsIdle',
+            frames: this.anims.generateFrameNumbers('headsFox', { start: 12, end: 15 }),
             /*frameRate: 16,*/
             frameRate: 12,
             repeat: -1
         });
         this.anims.create({
-            key: 'jump',
-            frames: this.anims.generateFrameNumbers('player', { start: 16, end: 17 }),
+            key: 'headsJump',
+            frames: this.anims.generateFrameNumbers('headsFox', { start: 16, end: 17 }),
             /*frameRate: 16,*/
             frameRate: 12,
             repeat: -1
@@ -368,7 +368,7 @@ class City extends Phaser.Scene {
         else if (cursors.right.isDown && !playerController.blocked.right)
         {
             smoothedControls.moveRight(delta);
-            matterSprite.anims.play('right', true);
+            matterSprite.anims.play('headsRun', true);
 
             // Lerp the velocity towards the max run using the smoothed controls. This simulates a
             // player controlled acceleration.
@@ -381,7 +381,7 @@ class City extends Phaser.Scene {
         else
         {
             smoothedControls.reset();
-            matterSprite.anims.play('idle', true);
+            matterSprite.anims.play('headsIdle', true);
         }
 
         // Jumping & wall jumping
@@ -410,7 +410,7 @@ class City extends Phaser.Scene {
                 matterSprite.setVelocityX(-playerController.speed.run);
                 playerController.lastJumpedAt = time;
             }
-            matterSprite.anims.play('right', true);
+            //matterSprite.anims.play('right', true);
         }
 
         smoothMoveCameraTowards(matterSprite, 1);
