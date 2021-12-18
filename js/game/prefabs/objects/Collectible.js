@@ -8,8 +8,12 @@ class Collectible extends Phaser.Physics.Matter.Sprite{
 
     /* Constructor for placing object in scene */
     constructor(scene, x, y,) {
-        super(scene.matter.world, x, y, "collectible");
+        super(scene.matter.world, x, y);
         scene.add.existing(this);
+        this.setStatic(true);
+        this.setTexture('powerUpsSheet');
+        this.anims.play('powerUps');
+
 
     }
 

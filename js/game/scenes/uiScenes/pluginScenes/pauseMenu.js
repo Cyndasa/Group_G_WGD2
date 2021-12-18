@@ -13,13 +13,21 @@ class pauseMenu extends Phaser.Scene{
 
         /* UI Components */
         this.add.rectangle(400, 300, 800, 600, 0x000000, 0.4); // Create an overlay mask
-        this.add.text(300, 150, 'Paused', {font: '50px', align: 'center'});
+        //this.add.text(300, 150, 'Paused', {font: '50px', align: 'center'});
+
+        const pausedText = this.add.bitmapText(400, 125, 'arcade', '', 40);
+        pausedText.setOrigin(0.5);
+        pausedText.setCenterAlign();
+        pausedText.setTint('0xFFFFFF');
+        pausedText.setText([
+            '-- Paused --',
+        ]);
 
 
         /* Create buttons */
 
         // Resume button
-        let resumeButton = this.add.image(400, 250, '').setDepth(2);
+        let resumeButton = this.add.image(400, 250, 'resumeButton').setDepth(2);
         resumeButton.setInteractive();
         resumeButton.on('pointerover', ()=>{
             resumeButton.setTint('0xFF00F5');
@@ -32,7 +40,7 @@ class pauseMenu extends Phaser.Scene{
         });
 
         // Restart button
-        let restartButton = this.add.image(400, 350, '').setDepth(2);
+        let restartButton = this.add.image(400, 350, 'restartButton').setDepth(2);
         restartButton.setInteractive();
         restartButton.on('pointerover', ()=>{
             restartButton.setTint('0xFF00F5');
@@ -42,11 +50,12 @@ class pauseMenu extends Phaser.Scene{
         });
         restartButton.on('pointerup', ()=>{
             this.scene.start(curGameScene);
+            this.scene.stop('PauseMenu'); // close this scene
         });
 
 
         // Quit button
-        let quitButton = this.add.image(400, 450, '').setDepth(2);
+        let quitButton = this.add.image(400, 450, 'exitButton').setDepth(2);
         quitButton.setInteractive();
         quitButton.on('pointerover', ()=>{
             quitButton.setTint('0xFF00F5');
@@ -72,7 +81,7 @@ class pauseMenu extends Phaser.Scene{
 
     unPause(){
         this.scene.resume(curGameScene); // Resume game scene
-        this.scene.stop(); // close this scene
+        this.scene.stop('PauseMenu'); // close this scene
 
     };
 

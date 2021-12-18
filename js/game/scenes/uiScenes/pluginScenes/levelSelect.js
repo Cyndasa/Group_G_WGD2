@@ -34,6 +34,8 @@ class levelSelect extends Phaser.Scene{
         forestSelect.setInteractive();
 
         forestSelect.on("pointerup",()=>{
+            this.scene.stop('MainMenu');
+            this.scene.stop('LevelSelect');
             this.scene.start('Forest');
         });
 
@@ -55,6 +57,8 @@ class levelSelect extends Phaser.Scene{
         citySelect.setInteractive();
 
         citySelect.on("pointerup",()=>{
+            this.scene.stop('MainMenu');
+            this.scene.stop('LevelSelect');
             this.scene.start('City');
         });
 
@@ -90,7 +94,7 @@ class levelSelect extends Phaser.Scene{
 
 
         /* Return button */
-        const returnButton = this.add.image(400, 540, 'exitButton');
+        const returnButton = this.add.image(400, 540, 'returnButton');
         returnButton.setInteractive();
         returnButton.setScale(1.5);
         returnButton.setScrollFactor(0);

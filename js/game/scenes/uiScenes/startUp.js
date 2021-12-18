@@ -22,7 +22,7 @@ class startUp extends Phaser.Scene{
             y: height / 2 - 50,
             text: 'Loading Level',
             style: {
-                font: '30px',
+                font: '24px',
                 fill: '#ffffff',
             },
         });
@@ -73,9 +73,7 @@ class startUp extends Phaser.Scene{
 
 
         /* UI buttons */
-        this.load.image('playButton', 'gameAssets/imageAssets/uiImages/Buttons/Play/Play-Unclicked.png');
         this.load.image('optionsButton', 'gameAssets/imageAssets/uiImages/Buttons/Options/Options-Unclicked.png');
-        this.load.image('exitButton', 'gameAssets/imageAssets/uiImages/Buttons/Exit/Exit-Unclicked.png');
         this.load.image('muteButton', 'gameAssets/imageAssets/uiImages/Buttons/MuteButtons/Mute.png');
         this.load.image('unMuteButton', 'gameAssets/imageAssets/uiImages/Buttons/MuteButtons/Unmute.png');
         this.load.image('singlePlayer', 'gameAssets/imageAssets/uiImages/Buttons/Single/Single-Unclicked.png');
@@ -95,20 +93,6 @@ class startUp extends Phaser.Scene{
         this.load.image('p1Button', 'gameAssets/imageAssets/uiImages/Buttons/Select/P1-Unclicked.png');
         this.load.image('p2Button', 'gameAssets/imageAssets/uiImages/Buttons/Select/P2-Unclicked.png');
         this.load.image('startButton', 'gameAssets/imageAssets/uiImages/Buttons/Start/Start-Unclicked.png');
-
-        // Start
-        // Profile
-        // Return
-        // Local
-        // Multiplayer
-        // Confirm
-        // Continue
-        // Select
-        // P1 Select
-        // P2 Select
-        // Resume
-        // Restart
-        // Quit (although exit will probably work)
 
 
         /* Fonts */
@@ -130,39 +114,46 @@ class startUp extends Phaser.Scene{
         /* Team Aztec */
        this.load.image('aztec1CharSelect', 'gameAssets/imageAssets/uiImages/charSelect/aztec1CharSel.png');
        this.load.spritesheet('aztecOne', 'gameAssets/imageAssets/characterSprites/teamAztec/aztec1_sheet.png',{frameWidth: 32, frameHeight: 32});
-/*        this.load.image('CharSelect', '');
-        this.load.spritesheet('', '', {frameWidth: 32, frameHeight: 32});
-        this.load.image('CharSelect', '');
-        this.load.spritesheet('', '', {frameWidth: 32, frameHeight: 32});
-        this.load.image('CharSelect', '');
-        this.load.spritesheet('', '', {frameWidth: 32, frameHeight: 32});*/
+        this.load.image('aztec2CharSelect', 'gameAssets/imageAssets/uiImages/charSelect/aztec2CharSel.png');
+        this.load.spritesheet('aztecTwo', 'gameAssets/imageAssets/characterSprites/teamAztec/aztec2_sheet.png', {frameWidth: 32, frameHeight: 32});
+        this.load.image('aztec3CharSelect', 'gameAssets/imageAssets/uiImages/charSelect/aztec3CharSel.png');
+        this.load.spritesheet('aztecThree', 'gameAssets/imageAssets/characterSprites/teamAztec/aztec3_sheet.png', {frameWidth: 32, frameHeight: 32});
+        this.load.image('aztec4CharSelect', 'gameAssets/imageAssets/uiImages/charSelect/aztec4CharSel.png');
+        this.load.spritesheet('aztecFour', 'gameAssets/imageAssets/characterSprites/teamAztec/aztec4_sheet.png', {frameWidth: 32, frameHeight: 32});
 
         /* Team Monster */
-/*        this.load.image('CharSelect', '');
-        this.load.spritesheet('', '', {frameWidth: 32, frameHeight: 32});
-        this.load.image('CharSelect', '');
-        this.load.spritesheet('', '', {frameWidth: 32, frameHeight: 32});
-        this.load.image('CharSelect', '');
-        this.load.spritesheet('', '', {frameWidth: 32, frameHeight: 32});*/
+        this.load.image('theDudeCharSelect', 'gameAssets/imageAssets/uiImages/charSelect/theDudeCharSel.png');
+        this.load.spritesheet('theDude', 'gameAssets/imageAssets/characterSprites/teamMonster/dude_monster_sheet.png', {frameWidth: 32, frameHeight: 32});
+        this.load.image('theOwletCharSelect', 'gameAssets/imageAssets/uiImages/charSelect/theOwletCharSel.png');
+        this.load.spritesheet('theOwlet', 'gameAssets/imageAssets/characterSprites/teamMonster/owlet_monster_sheet.png', {frameWidth: 32, frameHeight: 32});
+        this.load.image('thePinkMonCharSelect', 'gameAssets/imageAssets/uiImages/charSelect/thePinkMonCharSel.png');
+        this.load.spritesheet('thePinkMon', 'gameAssets/imageAssets/characterSprites/teamMonster/pink_monster_sheet.png', {frameWidth: 32, frameHeight: 32});
 
         /* Props */
-        this.load.spritesheet('finishTorch', 'gameAssets/imageAssets/props/fireTorch.png', {frameWidth: 32, frameHeight: 32});
+        this.load.spritesheet('finishTorch', 'gameAssets/imageAssets/props/fireTorch.png', {frameWidth: 16, frameHeight: 32});
 
         /* Power-ups */
-
+        this.load.spritesheet('powerUpsSheet', 'gameAssets/imageAssets/props/power_up_sheet.png',{frameWidth: 16, frameHeight: 16 });
 
         /* Music assets */
 
         /* BGM assets */
 
         // Menu Music
-        this.load.audio('theme', [
+        this.load.audio('menuTheme', [
             'gameAssets/audioAssets/bgm/Menu_Music.ogg',
             'gameAssets/audioAssets/bgm/Menu_Music.mp3'
         ]);
 
+        // Credits Music
+        this.load.audio('creditsMusic', 'gameAssets/audioAssets/bgm/canon-in-d-for-8-bit-synths-by-kevin-macleod-from-filmmusic-io.mp3');
+
         // Forest Level BGM
+        this.load.audio('forestLevelBGM', 'gameAssets/audioAssets/bgm/kawai-kitsune-by-kevin-macleod-from-filmmusic-io.mp3');
+
         // City Level BGM
+        this.load.audio('cityLevelBGM', 'gameAssets/audioAssets/bgm/voxel-revolution-by-kevin-macleod-from-filmmusic-io.mp3');
+
         // Results BGM(?)
 
         /* SFX assets */
@@ -209,7 +200,7 @@ class startUp extends Phaser.Scene{
         this.anims.create({
             key: 'headsJump',
             frames: this.anims.generateFrameNumbers('headsFox', { start: 16, end: 17 }),
-            frameRate: 24,
+            frameRate: 3,
             repeat: -1
         });
 
@@ -229,12 +220,135 @@ class startUp extends Phaser.Scene{
         this.anims.create({
             key: 'aztec1Jump',
             frames: this.anims.generateFrameNumbers('aztecOne', { start: 13, end: 14 }),
-            frameRate: 24,
+            frameRate: 3,
             repeat: -1
         });
 
 
-        /* Props */
+        /* Aztec 2 */
+        this.anims.create({
+            key: 'aztec2Idle',
+            frames: this.anims.generateFrameNumbers('aztecTwo', { start: 0, end: 5 }),
+            frameRate: 12,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'aztec2Run',
+            frames: this.anims.generateFrameNumbers('aztecTwo', { start: 6, end: 13 }),
+            frameRate: 12,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'aztec2Jump',
+            frames: this.anims.generateFrameNumbers('aztecTwo', { start: 13, end: 14 }),
+            frameRate: 3,
+            repeat: -1
+        });
+
+        /* Aztec 3 */
+        this.anims.create({
+            key: 'aztec3Idle',
+            frames: this.anims.generateFrameNumbers('aztecThree', { start: 0, end: 5 }),
+            frameRate: 12,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'aztec3Run',
+            frames: this.anims.generateFrameNumbers('aztecThree', { start: 6, end: 13 }),
+            frameRate: 12,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'aztec3Jump',
+            frames: this.anims.generateFrameNumbers('aztecThree', { start: 13, end: 14 }),
+            frameRate: 3,
+            repeat: -1
+        });
+
+        /* Aztec 4 */
+        this.anims.create({
+            key: 'aztec4Idle',
+            frames: this.anims.generateFrameNumbers('aztecFour', { start: 0, end: 5 }),
+            frameRate: 12,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'aztec4Run',
+            frames: this.anims.generateFrameNumbers('aztecFour', { start: 6, end: 13 }),
+            frameRate: 12,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'aztec4Jump',
+            frames: this.anims.generateFrameNumbers('aztecFour', { start: 13, end: 14 }),
+            frameRate: 3,
+            repeat: -1
+        });
+
+        /* The Dude */
+        this.anims.create({
+            key: 'theDudeIdle',
+            frames: this.anims.generateFrameNumbers('theDude', { start: 0, end: 3 }),
+            frameRate: 12,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'theDudeRun',
+            frames: this.anims.generateFrameNumbers('theDude', { start: 4, end: 9 }),
+            frameRate: 12,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'theDudeJump',
+            frames: this.anims.generateFrameNumbers('theDude', { start: 10, end: 17 }),
+            frameRate: 24,
+            repeat: -1
+        });
+
+        /* The Owlet */
+        this.anims.create({
+            key: 'theOwletIdle',
+            frames: this.anims.generateFrameNumbers('theOwlet', { start: 0, end: 3 }),
+            frameRate: 12,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'theOwletRun',
+            frames: this.anims.generateFrameNumbers('theOwlet', { start: 4, end: 9 }),
+            frameRate: 12,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'theOwletJump',
+            frames: this.anims.generateFrameNumbers('theOwlet', { start: 10, end: 17 }),
+            frameRate: 12,
+            repeat: -1
+        });
+
+        /* The Pink Mon */
+        this.anims.create({
+            key: 'thePinkMonIdle',
+            frames: this.anims.generateFrameNumbers('thePinkMon', { start: 0, end: 3 }),
+            frameRate: 12,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'thePinkMonRun',
+            frames: this.anims.generateFrameNumbers('thePinkMon', { start: 4, end: 9 }),
+            frameRate: 12,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'thePinkMonJump',
+            frames: this.anims.generateFrameNumbers('thePinkMon', { start: 10, end: 17 }),
+            frameRate: 12,
+            repeat: -1
+        });
+
+
+        /* Props & Other */
+
+        // Finish Marker
         this.anims.create({
             key: 'finishMarker',
             frames: this.anims.generateFrameNumbers('finishTorch', {start: 0, end: 5}),
@@ -242,10 +356,19 @@ class startUp extends Phaser.Scene{
             repeat: -1
         });
 
+        // Power Ups
+        this.anims.create({
+            key: 'powerUps',
+            frames: this.anims.generateFrameNumbers('powerUpsSheet', {start: 0, end: 3}),
+            frameRate: 16,
+            repeat: -1
+        });
+
 
 
         /* Start next scene */
         this.scene.start('MainMenu');
+        this.scene.stop('StartUp');
 
     };
 

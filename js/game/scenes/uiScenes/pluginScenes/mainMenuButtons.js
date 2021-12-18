@@ -27,7 +27,7 @@ class mainMenuButtons extends Phaser.Scene{
         /* Create menu buttons */
 
         /* Profile button */
-        const profileButton = this.add.image(400, 240, 'playButton');
+        const profileButton = this.add.image(400, 240, 'profileButton');
         profileButton.setInteractive();
         profileButton.setScale(1.5);
         profileButton.setScrollFactor(0);
@@ -105,8 +105,11 @@ class mainMenuButtons extends Phaser.Scene{
             this.sound.stopAll();
             // Possibly include clearing cache/saving user details
             this.scene.stop('MainMenu');
+            this.scene.stop('MainMenuButtons');
             this.scene.start('StartScreen');
         });
+
+        /* Small Credits button off to side */
 
         console.log(playerUsername); // DEBUG, CAN REMOVE FOR SUBMISSION
 

@@ -1,0 +1,34 @@
+Title: Aztec Asset Pack
+Creator/Author: GentooGames
+Link: https://gentoogames.itch.io/aztec-asset-pack
+License:
+
+Title: Free Tiny Hero Sprites Pixel Art
+Creator/Author: CraftPix
+Link: https://free-game-assets.itch.io/free-tiny-hero-sprites-pixel-art
+License: https://craftpix.net/file-licenses/
+
+Title: SunnyLand Asset Pack
+Creator/Author: Ansimuz
+Link: https://ansimuz.itch.io/sunny-land-pixel-game-art
+License: https://itch.io/game-assets/assets-cc0
+
+Title: Warped City 2
+Creator/Author: Ansimuz
+Link: https://ansimuz.itch.io/warped-city-2
+License:
+
+Title: Mountain Dusk Parallax background
+Creator/Author: Ansimuz
+Link: https://ansimuz.itch.io/mountain-dusk-parallax-background
+License: https://itch.io/game-assets/assets-cc4-by
+
+Title:
+Creator/Author:
+Link:
+License:
+
+Title:
+Creator/Author:
+Link:
+License:
