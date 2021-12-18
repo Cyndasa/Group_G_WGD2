@@ -55,6 +55,10 @@ class startUp extends Phaser.Scene{
         this.load.tilemapTiledJSON('forestMap', '../gameAssets/imageAssets/Forrest/environment/layers/Forest-Map.json');
         this.load.image('forestTiles', '../gameAssets/imageAssets/Forrest/environment/layers/tileset.png');
 
+        /* Trailer */
+        // Tile Map files
+        this.load.tilemapTiledJSON('trailerMap', '../gameAssets/imageAssets/Forrest/environment/layers/Trailer-Map.json');
+        this.load.image('tileset', '../gameAssets/imageAssets/Forrest/environment/layers/tileset.png');
 
         /* City */
         this.load.image('cityBG', 'gameAssets/imageAssets/City/Environmet/background/back.png');
@@ -98,7 +102,7 @@ class startUp extends Phaser.Scene{
         this.load.image('p2Button', 'gameAssets/imageAssets/uiImages/Buttons/Select/P2-Unclicked.png');
         this.load.image('startButton', 'gameAssets/imageAssets/uiImages/Buttons/Start/Start-Unclicked.png');
         // Credits Button
-
+        this.load.image('creditButton', 'gameAssets/imageAssets/uiImages/Buttons/Credits/Credits-Unclicked.png');
 
         /* Fonts */
         this.load.bitmapFont('arcade', 'gameAssets/imageAssets/fonts/arcade.png', 'gameAssets/imageAssets/fonts/arcade.xml');

@@ -41,8 +41,14 @@ class trailerScene extends Phaser.Scene {
         this.fgImage2.setScrollFactor(0); // Set scroll factor to zero to prevent movement
 
         /* TileSet */
+        //--------- tiledmaps ------------
+        var map = this.make.tilemap({ key: 'trailerMap' });
+        var tileset = map.addTilesetImage("tileset" , "forestTiles");
+        var layer = map.createLayer('Ground', tileset, 0, 85);
 
-
+        map.setCollisionByProperty({ collides: true });
+        this.matter.world.convertTilemapLayer(layer);
+        const spawnPoint = map.findObject("Objects", obj=> obj.name === "Spawn Point");
         /*  Key Bindings */
         /* Different key bindings for player options / local play */
         // Default key bindings

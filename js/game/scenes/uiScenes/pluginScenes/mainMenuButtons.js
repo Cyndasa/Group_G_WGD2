@@ -110,7 +110,7 @@ class mainMenuButtons extends Phaser.Scene{
         });
 
         /* Small Credits button off to side */
-        const creditsButton = this.add.image(50, 575, 'exitButton');
+        const creditsButton = this.add.image(50, 575, 'creditButton');
         creditsButton.setInteractive();
         creditsButton.setScale(0.75, 0.5);
         creditsButton.setScrollFactor(0);
