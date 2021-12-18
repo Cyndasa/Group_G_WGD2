@@ -25,7 +25,7 @@ class multiplayerModeSelect extends Phaser.Scene{
         /* Create menu buttons */
 
         /* Local play button */
-        const localPlayButton = this.add.image(400, 340, 'singlePlayer');
+        const localPlayButton = this.add.image(400, 340, 'localButton');
         localPlayButton.setInteractive();
         localPlayButton.setScale(1.5);
         localPlayButton.setScrollFactor(0);
